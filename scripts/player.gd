@@ -17,9 +17,9 @@ func _input(event) -> void:
 func _physics_process(delta: float) -> void:
 	velocitySandBox.x = MovementDirection() * MovementSpeed
 	if not is_on_floor():
-		velocitySandBox += get_gravity();
+		velocitySandBox += get_gravity() * delta;
 	
-	velocity = velocitySandBox * ALLMOVEMENTVARIABLE * delta
+	velocity.x = velocitySandBox.x * ALLMOVEMENTVARIABLE * delta
 	move_and_slide()
 
 func MovementDirection() -> float:
