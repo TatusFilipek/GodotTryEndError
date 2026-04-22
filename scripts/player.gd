@@ -4,6 +4,9 @@ const MovementSpeed = 150
 const gravityForce = 9.8
 const weight = 1
 
+const normalGravityMult = 1.0
+var gravityMultiplier = normalGravityMult
+
 const ALLMOVEMENTVARIABLE = 100
 
 var velocitySandBox = Vector2.ZERO
@@ -15,11 +18,16 @@ func _input(event) -> void:
 
 # physics update
 func _physics_process(delta: float) -> void:
-	velocitySandBox.x = MovementDirection() * MovementSpeed
-	if not is_on_floor():
-		velocitySandBox += get_gravity() * delta;
+	#velocitySandBox.x = MovementDirection() * MovementSpeed
+	velocity.x = MovementDirection() * MovementSpeed * delta
 	
-	velocity.x = velocitySandBox.x * ALLMOVEMENTVARIABLE * delta
+	if not is_on_floor():
+		#velocitySandBox += gravityForce * gravityMultiplier * delta;
+		velocity.y += gravityForce * gravityMultiplier * delta;
+	
+	#velocity.x = velocitySandBox.x * ALLMOVEMENTVARIABLE * delta
+	velocity.x *= ALLMOVEMENTVARIABLE
+	print(velocity.y)
 	move_and_slide()
 
 func MovementDirection() -> float:
@@ -27,7 +35,7 @@ func MovementDirection() -> float:
 	return movementDirection
 
 func Jump() -> void:
-	velocity.y = -500
+	velocity.y = -100
 
 
 #TODO:
