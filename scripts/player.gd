@@ -1,11 +1,15 @@
 extends CharacterBody2D
 
 const MovementSpeed = 150
-const gravityForce = 9.8
-const weight = 1
+const gravityForce = 100
 
-const normalGravityMult = 1.0
+const jumpForce = 150
+
+const normalGravityMult = 10.0
+const fallingGravityMult = 20.2
 var gravityMultiplier = normalGravityMult
+
+const gravityBuffer = 50
 
 const ALLMOVEMENTVARIABLE = 100
 
@@ -18,16 +22,12 @@ func _input(event) -> void:
 
 # physics update
 func _physics_process(delta: float) -> void:
-	#velocitySandBox.x = MovementDirection() * MovementSpeed
 	velocity.x = MovementDirection() * MovementSpeed * delta
 	
 	if not is_on_floor():
-		#velocitySandBox += gravityForce * gravityMultiplier * delta;
-		velocity.y += gravityForce * gravityMultiplier * delta;
+		velocity.y += CalcGravity() * delta;
 	
-	#velocity.x = velocitySandBox.x * ALLMOVEMENTVARIABLE * delta
 	velocity.x *= ALLMOVEMENTVARIABLE
-	print(velocity.y)
 	move_and_slide()
 
 func MovementDirection() -> float:
@@ -35,8 +35,19 @@ func MovementDirection() -> float:
 	return movementDirection
 
 func Jump() -> void:
-	velocity.y = -100
+	velocity.y = -jumpForce * transform.get_scale().y * 3
 
+func CalcGravity() -> float:
+	gravityMultiplier = normalGravityMult
+	if not is_on_floor():
+		if(velocity.y <= -gravityBuffer): gravityMultiplier = normalGravityMult
+		else: if(velocity.y > -gravityBuffer): gravityMultiplier = fallingGravityMult
+		
+	print(velocity.y)
+	return gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
 
 #TODO:
-	#Fix gravity
+	#Tinker with the gravity and jump force
+	#make a statemachine
+	#add a camera that follows a player
+	#add an enemy
