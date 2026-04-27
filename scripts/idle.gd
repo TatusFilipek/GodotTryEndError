@@ -4,6 +4,7 @@ class_name Idle
 func enter() -> void:
 	super.enter()
 	
+	animation.play("Idle")
 	#core.velocity.x = 0
 
 func exit() -> void:

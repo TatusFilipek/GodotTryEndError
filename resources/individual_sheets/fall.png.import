@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drjx1jfgilvty"
-path="res://.godot/imported/male_hero_template-idle.png-a6cfd0b466c1d14329ebeaeaf321d3ae.ctex"
+uid="uid://dqf5x0s6311b1"
+path="res://.godot/imported/fall.png-0e2b8f4b52e51e9ba1ac620cb6ea7399.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/individual_sheets/male_hero_template-idle.png"
-dest_files=["res://.godot/imported/male_hero_template-idle.png-a6cfd0b466c1d14329ebeaeaf321d3ae.ctex"]
+source_file="res://resources/individual_sheets/fall.png"
+dest_files=["res://.godot/imported/fall.png-0e2b8f4b52e51e9ba1ac620cb6ea7399.ctex"]
 
 [params]
 

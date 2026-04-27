@@ -15,8 +15,16 @@ var gravityMultiplier = normalGravityMult
 
 @export var ALLMOVEMENTVARIABLE = 100
 
+var lastSpriteOrientation : bool
+
+var sprite : AnimatedSprite2D
+
+func _ready() -> void:
+	sprite = get_node("AnimatedSprite2D")
+
 # physics update
 func _physics_process(delta: float) -> void:
+	GetSpriteOrientation()
 	move_and_slide()
 
 func MovementDirection() -> float:
@@ -33,11 +41,17 @@ func CalcGravity() -> float:
 		else: if(velocity.y > -gravityBuffer): gravityMultiplier = fallingGravityMult
 		
 	return gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
+	
+func GetSpriteOrientation() -> void:
+	if MovementDirection() != 0:
+		lastSpriteOrientation = (MovementDirection() < 0)
+	sprite.flip_h = lastSpriteOrientation
 
 #TODO:
 	#add a camera that follows a player
 	#add an enemy
 	#add a core that all entities will have
+	#before playing the animation check if the state needs to be changed
 
 #NOTE:
 	#if there is a bug that stops me whenever im jumping just like in the other game i made that means i have to remove the line that sets velocity to zero whenever i enter any idle state

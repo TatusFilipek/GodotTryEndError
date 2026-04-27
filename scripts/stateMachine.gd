@@ -7,11 +7,11 @@ var lastState : State
 
 func _ready() -> void:
 	var parent = get_parent()
+	var sprite = parent.get_node("AnimatedSprite2D")
 	
 	for child in get_children():
 		if child is State:
-			child.machine = self
-			child.core = parent
+			child.Setup(parent, self, sprite)
 	
 	if initial_state:
 		change_state(initial_state.name)

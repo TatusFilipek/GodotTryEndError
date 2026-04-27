@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ch27rgnyk7esb"
-path="res://.godot/imported/male_hero_template-fall_loop.png-fe2d48be349bfeffec114f2450c1b01f.ctex"
+path="res://.godot/imported/fallLoop.png-84c4e66bcf5a83ca083c80818e269248.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/individual_sheets/male_hero_template-fall_loop.png"
-dest_files=["res://.godot/imported/male_hero_template-fall_loop.png-fe2d48be349bfeffec114f2450c1b01f.ctex"]
+source_file="res://resources/individual_sheets/fallLoop.png"
+dest_files=["res://.godot/imported/fallLoop.png-84c4e66bcf5a83ca083c80818e269248.ctex"]
 
 [params]
 

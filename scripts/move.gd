@@ -3,6 +3,8 @@ class_name Move
 
 func enter() -> void:
 	super.enter()
+	
+	animation.play("Walk")
 
 func exit() -> void:
 	super.enter()
