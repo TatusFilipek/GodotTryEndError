@@ -1,21 +1,31 @@
+extends Node
 class_name StateMachine
 
-var lastState: State
-var state: State
+@export var initial_state: State
+var current_state: State
+var lastState : State
 
-func SwitchState(newState: State) -> void:
-	state.exit()
+func _ready() -> void:
+	var parent = get_parent()
 	
-	lastState = state
-	state = newState
+	for child in get_children():
+		if child is State:
+			child.machine = self
+			child.core = parent
 	
-	state._init()
+	if initial_state:
+		change_state(initial_state.name)
 
-func PhysicsUpdate(delta) -> void:
-	state.PhysicsUpdate(delta)
+func change_state(new_state_name: String) -> void:
+	var newState = get_node(new_state_name)
 	
-func Init(_state: State) -> void:
-	lastState = _state
-	state = _state
+	if current_state:
+		current_state.exit()
 	
-	state._init()
+	lastState = current_state
+	current_state = newState
+	current_state.enter()
+
+func _physics_process(delta: float) -> void:
+	if current_state:
+		current_state.physics_update(delta)
