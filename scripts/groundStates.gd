@@ -15,7 +15,7 @@ func physics_update(_delta: float) -> void:
 	if not core.is_on_floor():
 		machine.change_state("FallIdle")
 		
-	if Input.is_action_pressed("moveUp"):
+	if Input.is_action_just_pressed("moveUp"):
 		machine.change_state("Jump")
 
 	pass

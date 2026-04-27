@@ -37,7 +37,7 @@ func CalcGravity() -> float:
 #TODO:
 	#add a camera that follows a player
 	#add an enemy
-	#whenever i check for jump input i check if it is pressed not clicked
+	#add a core that all entities will have
 
 #NOTE:
 	#if there is a bug that stops me whenever im jumping just like in the other game i made that means i have to remove the line that sets velocity to zero whenever i enter any idle state
