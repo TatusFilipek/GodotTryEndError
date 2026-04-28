@@ -12,6 +12,7 @@ class_name Player
 var gravityMultiplier = normalGravityMult
 
 @export var gravityBuffer = 50
+@export var jumpApex = 125
 
 @export var ALLMOVEMENTVARIABLE = 100
 
@@ -30,9 +31,6 @@ func _physics_process(delta: float) -> void:
 func MovementDirection() -> float:
 	var movementDirection = Input.get_axis("moveLeft", "moveRight")
 	return movementDirection
-
-#func Jump() -> void:
-	#velocity.y = -jumpForce * transform.get_scale().y * 3
 
 func CalcGravity() -> float:
 	gravityMultiplier = normalGravityMult

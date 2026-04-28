@@ -4,7 +4,8 @@ class_name Move
 func enter() -> void:
 	super.enter()
 	
-	animation.play("Walk")
+	#animation.play("Walk")
+	playback.travel("Move")
 
 func exit() -> void:
 	super.enter()

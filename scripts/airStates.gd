@@ -18,8 +18,14 @@ func physics_update(_delta: float) -> void:
 		
 	core.velocity.y += core.CalcGravity() * _delta; # Gravity
 	
-	if core.velocity.y < 0:
-		animation.play("Jump")
-	else: if core.velocity.y > 0:
-		animation.play("Fall")
+	if playback:
+		if core.velocity.y < -core.jumpApex:
+			playback.travel("InAirUp")
+		elif core.velocity.y > core.jumpApex:
+			playback.travel("InAirDown")
+		else:
+			if core.velocity.y >= 0:
+				playback.travel("InAirDownApex")
+			else:
+				playback.travel("InAirUpApex")
 	pass

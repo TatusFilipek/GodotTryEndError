@@ -8,10 +8,12 @@ var lastState : State
 func _ready() -> void:
 	var parent = get_parent()
 	var sprite = parent.get_node("AnimatedSprite2D")
+	var animationTree = parent.get_node("AnimationTree")
+	var playback = animationTree.get("parameters/playback")
 	
 	for child in get_children():
 		if child is State:
-			child.Setup(parent, self, sprite)
+			child.Setup(parent, self, sprite, animationTree, playback)
 	
 	if initial_state:
 		change_state(initial_state.name)

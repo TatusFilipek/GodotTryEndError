@@ -81,6 +81,42 @@ region = Rect2(1024, 0, 128, 128)
 atlas = ExtResource("2_smehm")
 region = Rect2(1152, 0, 128, 128)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_jc3p3"]
+atlas = ExtResource("5_f1ej7")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_giy8y"]
+atlas = ExtResource("5_f1ej7")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdfoy"]
+atlas = ExtResource("2_3v2ag")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hhpqf"]
+atlas = ExtResource("2_3v2ag")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g5jhy"]
+atlas = ExtResource("2_3v2ag")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_holxr"]
+atlas = ExtResource("2_3v2ag")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mx1m4"]
+atlas = ExtResource("5_f1ej7")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gjji"]
+atlas = ExtResource("5_f1ej7")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2ulf"]
+atlas = ExtResource("5_f1ej7")
+region = Rect2(384, 0, 128, 128)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_hax0n"]
 atlas = ExtResource("5_f1ej7")
 region = Rect2(128, 0, 128, 128)
@@ -211,6 +247,48 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_jc3p3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_giy8y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdfoy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hhpqf")
+}],
+"loop": true,
+"name": &"InAirApex",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g5jhy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_holxr")
+}],
+"loop": true,
+"name": &"InAirDown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mx1m4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4gjji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u2ulf")
+}],
+"loop": true,
+"name": &"InAirUp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_hax0n")
 }, {
 "duration": 1.0,
@@ -270,33 +348,34 @@ animation = &"Idle"
 advance_on_start = true
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jej6c"]
+animation = &"InAirDown"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_oprun"]
+animation = &"InAirDownApex"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a8ls1"]
+animation = &"InAirUp"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qfm1y"]
+animation = &"InAirUpApex"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_f1ej7"]
 animation = &"Move"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_f1ej7"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_oprun"]
-switch_mode = 2
-advance_condition = &"xInput"
-advance_expression = "xInput != 0"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_a8ls1"]
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_qfm1y"]
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_fulsm"]
+states/End/position = Vector2(955, 109)
 states/Idle/node = SubResource("AnimationNodeAnimation_3v2ag")
-states/Idle/position = Vector2(381, 89)
-states/Move/node = SubResource("AnimationNodeAnimation_jej6c")
-states/Move/position = Vector2(615, 89)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_f1ej7"), "Idle", "Move", SubResource("AnimationNodeStateMachineTransition_oprun"), "Move", "End", SubResource("AnimationNodeStateMachineTransition_a8ls1")]
-
-[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_3v2ag"]
-graph_offset = Vector2(-474.84045, 85.801056)
-nodes/output/position = Vector2(520, 140)
-nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_qfm1y")
-nodes/StateMachine/position = Vector2(-100, 80)
-node_connections = [&"output", 0, &"StateMachine"]
+states/Idle/position = Vector2(317, 98)
+states/InAirDown/node = SubResource("AnimationNodeAnimation_jej6c")
+states/InAirDown/position = Vector2(652, 85)
+states/InAirDownApex/node = SubResource("AnimationNodeAnimation_oprun")
+states/InAirDownApex/position = Vector2(789, 85)
+states/InAirUp/node = SubResource("AnimationNodeAnimation_a8ls1")
+states/InAirUp/position = Vector2(652, 27)
+states/InAirUpApex/node = SubResource("AnimationNodeAnimation_qfm1y")
+states/InAirUpApex/position = Vector2(789, 27)
+states/Move/node = SubResource("AnimationNodeAnimation_f1ej7")
+states/Move/position = Vector2(495, 98)
 
 [sub_resource type="Animation" id="Animation_jej6c"]
 resource_name = "Idle"
@@ -326,6 +405,148 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [&"Idle"]
+}
+
+[sub_resource type="Animation" id="Animation_6e8lb"]
+resource_name = "InAirApex"
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"InAirApex"]
+}
+
+[sub_resource type="Animation" id="Animation_2gdjj"]
+resource_name = "InAirDown"
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"InAirDown"]
+}
+
+[sub_resource type="Animation" id="Animation_oprun"]
+resource_name = "InAirDownApex"
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"InAirApex", &"InAirApex"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_sc3ue"]
+resource_name = "InAirUp"
+length = 0.60002
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"InAirUp"]
+}
+
+[sub_resource type="Animation" id="Animation_a8ls1"]
+resource_name = "InAirUpApex"
+length = 0.40002
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"InAirApex", &"InAirApex"]
 }
 
 [sub_resource type="Animation" id="Animation_fulsm"]
@@ -405,6 +626,11 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_f1ej7"]
 _data = {
 &"Idle": SubResource("Animation_jej6c"),
+&"InAirApex": SubResource("Animation_6e8lb"),
+&"InAirDown": SubResource("Animation_2gdjj"),
+&"InAirDownApex": SubResource("Animation_oprun"),
+&"InAirUp": SubResource("Animation_sc3ue"),
+&"InAirUpApex": SubResource("Animation_a8ls1"),
 &"Move": SubResource("Animation_fulsm"),
 &"RESET": SubResource("Animation_3v2ag"),
 &"test": SubResource("Animation_f1ej7")
@@ -424,9 +650,8 @@ sprite_frames = SubResource("SpriteFrames_4r5pv")
 animation = &"Walk"
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=204356462]
-tree_root = SubResource("AnimationNodeBlendTree_3v2ag")
+tree_root = SubResource("AnimationNodeStateMachine_fulsm")
 anim_player = NodePath("../AnimationPlayer")
-parameters/StateMachine/conditions/xInput = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=411919955]
 libraries/ = SubResource("AnimationLibrary_f1ej7")
