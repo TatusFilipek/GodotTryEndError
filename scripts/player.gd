@@ -6,10 +6,10 @@ class_name Player
 @export var gravityForce = 100
 
 @export var jumpForce = 150
+@export var jumpVelocityCut = 0.3
 
 @export var normalGravityMult = 10.0
 @export var fallingGravityMult = 20.2
-var gravityMultiplier = normalGravityMult
 
 @export var gravityBuffer = 50
 @export var jumpApex = 125
@@ -19,6 +19,8 @@ var gravityMultiplier = normalGravityMult
 var lastSpriteOrientation : bool
 
 var sprite : AnimatedSprite2D
+
+var jumping : bool = false
 
 func _ready() -> void:
 	sprite = get_node("AnimatedSprite2D")
@@ -31,14 +33,6 @@ func _physics_process(delta: float) -> void:
 func MovementDirection() -> float:
 	var movementDirection = Input.get_axis("moveLeft", "moveRight")
 	return movementDirection
-
-func CalcGravity() -> float:
-	gravityMultiplier = normalGravityMult
-	if not is_on_floor():
-		if(velocity.y <= -gravityBuffer): gravityMultiplier = normalGravityMult
-		else: if(velocity.y > -gravityBuffer): gravityMultiplier = fallingGravityMult
-		
-	return gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
 	
 func GetSpriteOrientation() -> void:
 	if MovementDirection() != 0:

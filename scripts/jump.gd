@@ -5,6 +5,7 @@ func enter() -> void:
 	super.enter()
 	
 	core.velocity.y = -core.jumpForce
+	core.jumping = true
 	
 	machine.change_state("FallIdle")
 	

@@ -16,8 +16,21 @@ func physics_update(_delta: float) -> void:
 		machine.change_state("Idle")
 		return
 		
-	core.velocity.y += core.CalcGravity() * _delta; # Gravity
+	core.velocity.y += CalcGravity() * _delta; # Gravity
 	
+	# variable jump height
+	if core.velocity.y >= 0:
+		core.jumping = false
+	
+	if core.jumping and Input.is_action_just_released("moveUp"):
+		core.velocity.y *= core.jumpVelocityCut
+	# end variable jump height code
+	
+	SuperDuperAirStateAnims()
+	pass
+
+
+func SuperDuperAirStateAnims():
 	if playback:
 		if core.velocity.y < -core.jumpApex:
 			playback.travel("InAirUp")
@@ -28,4 +41,11 @@ func physics_update(_delta: float) -> void:
 				playback.travel("InAirDownApex")
 			else:
 				playback.travel("InAirUpApex")
-	pass
+
+func CalcGravity() -> float:
+	var gravityMultiplier = core.normalGravityMult
+	if not core.is_on_floor():
+		if(core.velocity.y <= -core.gravityBuffer): gravityMultiplier = core.normalGravityMult
+		else: if(core.velocity.y > -core.gravityBuffer): gravityMultiplier = core.fallingGravityMult
+		
+	return gravityMultiplier * core.gravityForce + core.velocity.y * gravityMultiplier/100
