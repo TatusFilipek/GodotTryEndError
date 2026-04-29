@@ -18,17 +18,16 @@ func physics_update(_delta: float) -> void:
 		
 	core.velocity.y += CalcGravity() * _delta; # Gravity
 	
-	# variable jump height
+	VariableJumpHeight()
+	SuperDuperAirStateAnims()
+	pass
+
+func VariableJumpHeight():
 	if core.velocity.y >= 0:
 		core.jumping = false
 	
 	if core.jumping and Input.is_action_just_released("moveUp"):
 		core.velocity.y *= core.jumpVelocityCut
-	# end variable jump height code
-	
-	SuperDuperAirStateAnims()
-	pass
-
 
 func SuperDuperAirStateAnims():
 	if playback:

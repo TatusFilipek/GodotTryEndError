@@ -40,6 +40,7 @@ func GetSpriteOrientation() -> void:
 	sprite.flip_h = lastSpriteOrientation
 
 #TODO:
+	#add buffer timers to jumping (cayote time and jump input buffer)
 	#add a camera that follows a player
 	#add an enemy
 	#add a core that all entities will have
