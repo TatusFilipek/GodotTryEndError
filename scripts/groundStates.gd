@@ -16,7 +16,9 @@ func physics_update(_delta: float) -> void:
 		machine.change_state("FallIdle")
 		return
 		
-	if Input.is_action_just_pressed("moveUp"):
+	if core.jumpInputBufferTimer > 0 and core.coyoteTimer > 0:
+		core.coyoteTimer = 0
+		core.jumpInputBufferTimer = 0
 		machine.change_state("Jump")
 		return
 

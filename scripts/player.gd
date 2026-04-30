@@ -14,6 +14,12 @@ class_name Player
 @export var gravityBuffer = 50
 @export var jumpApex = 125
 
+@export var coyoteTime = .1
+var coyoteTimer = 0
+
+@export var jumpInputBuffer = .1
+var jumpInputBufferTimer = 0
+
 @export var ALLMOVEMENTVARIABLE = 100
 
 var lastSpriteOrientation : bool
@@ -29,6 +35,16 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	GetSpriteOrientation()
 	move_and_slide()
+	
+	if is_on_floor():
+		coyoteTimer = coyoteTime
+	else:
+		coyoteTimer -= delta
+		
+	if Input.is_action_just_pressed("moveUp"):
+		jumpInputBufferTimer = jumpInputBuffer
+	else:
+		jumpInputBufferTimer -= delta
 
 func MovementDirection() -> float:
 	var movementDirection = Input.get_axis("moveLeft", "moveRight")
