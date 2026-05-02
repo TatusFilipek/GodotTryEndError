@@ -4,7 +4,6 @@ class_name Idle
 func enter() -> void:
 	super.enter()
 	
-	#animation.play("Idle")
 	playback.travel("Idle")
 	#core.velocity.x = 0
 
@@ -15,4 +14,4 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 		
 	if core.MovementDirection() != 0:
-		machine.change_state("Move")
+		machine.change_state("Walk")
