@@ -1,10 +1,10 @@
 extends GroundState
-class_name Walk
+class_name CrouchWalk
 
 func enter() -> void:
 	super.enter()
 	
-	playback.travel("Walk")
+	playback.travel("CrouchWalk")
 
 func exit() -> void:
 	super.enter()
@@ -12,16 +12,16 @@ func exit() -> void:
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
-	core.velocity.x = core.MovementDirection() * core.MovementSpeed * core.ALLMOVEMENTVARIABLE * _delta
+	core.velocity.x = core.MovementDirection() * core.MovementSpeed * core.crouchMovementMult * core.ALLMOVEMENTVARIABLE * _delta
 	
 	if Input.is_action_pressed("sprint"):
 		machine.change_state("Run")
 		return
 	
 	if core.MovementDirection() == 0:
-		machine.change_state("Idle")
+		machine.change_state("CrouchIdle")
 		return
 	
-	if Input.is_action_pressed("crouch"):
-		machine.change_state("CrouchWalk")
+	if not Input.is_action_pressed("crouch"):
+		machine.change_state("Walk")
 		return

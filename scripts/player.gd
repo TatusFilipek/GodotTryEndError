@@ -4,6 +4,7 @@ class_name Player
 
 @export var MovementSpeed = 75
 @export var sprintMovementMult = 1.5
+@export var crouchMovementMult = .75
 
 @export var gravityForce = 100
 
