@@ -12,6 +12,5 @@ func physics_update(_delta: float) -> void:
 	
 	core.velocity.x = core.MovementDirection() * core.MovementSpeed * core.sprintMovementMult * core.ALLMOVEMENTVARIABLE * _delta
 	
-	
 	if core.MovementDirection() == 0:
 		machine.change_state("FallIdle")
