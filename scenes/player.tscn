@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://djjqk5e40jq5t" path="res://resources/PaidCharacter/Run/player run 48x48.png" id="8_fulsm"]
 [ext_resource type="Script" uid="uid://7ptg1tpkbmfd" path="res://scripts/jump.gd" id="8_smehm"]
 [ext_resource type="Texture2D" uid="uid://cuouymd85u68j" path="res://resources/PaidCharacter/Walk/PlayerWalk 48x48.png" id="10_4r5pv"]
+[ext_resource type="Script" path="res://scripts/crouchIdle.gd" id="15_oprun"]
+[ext_resource type="Script" path="res://scripts/crouchWalk.gd" id="16_a8ls1"]
 [ext_resource type="Script" uid="uid://dpm8a2rnxl14j" path="res://scripts/run.gd" id="17_qfm1y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a8ls1"]
@@ -461,6 +463,66 @@ states/Run/position = Vector2(429, 20)
 states/Walk/node = SubResource("AnimationNodeAnimation_4r5pv")
 states/Walk/position = Vector2(429, 90)
 
+[sub_resource type="Animation" id="Animation_f1ej7"]
+resource_name = "CrouchIdle"
+length = 1.6666834
+loop_mode = 1
+step = 0.16666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"CrouchIdle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.33333334, 0.5, 0.6666667, 0.8333334, 1, 1.1666667, 1.3333334, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_qfm1y"]
+resource_name = "CrouchWalk"
+length = 0.8333417
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"CrouchWalk"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.4166667, 0.5, 0.5833334, 0.6666667, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+
 [sub_resource type="Animation" id="Animation_jej6c"]
 resource_name = "Idle"
 length = 1.6666834
@@ -696,6 +758,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_f1ej7"]
 _data = {
+&"CrouchIdle": SubResource("Animation_f1ej7"),
+&"CrouchWalk": SubResource("Animation_qfm1y"),
 &"Idle": SubResource("Animation_jej6c"),
 &"InAirDown": SubResource("Animation_2gdjj"),
 &"InAirDownApex": SubResource("Animation_oprun"),
@@ -750,3 +814,9 @@ script = ExtResource("8_smehm")
 
 [node name="Run" type="Node2D" parent="StateMachine" unique_id=1260511020]
 script = ExtResource("17_qfm1y")
+
+[node name="CrouchIdle" type="Node2D" parent="StateMachine" unique_id=778978323]
+script = ExtResource("15_oprun")
+
+[node name="CrouchWalk" type="Node2D" parent="StateMachine" unique_id=1025389769]
+script = ExtResource("16_a8ls1")
