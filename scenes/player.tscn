@@ -175,7 +175,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_42b1b")
 }],
 "loop": true,
-"name": &"IdleNew",
+"name": &"Idle",
 "speed": 6.0
 }, {
 "frames": [{
@@ -198,7 +198,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_tk41t")
 }],
 "loop": true,
-"name": &"InAirNew",
+"name": &"InAir",
 "speed": 6.0
 }, {
 "frames": [{
@@ -227,7 +227,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_qsb7e")
 }],
 "loop": true,
-"name": &"RunNew",
+"name": &"Run",
 "speed": 12.0
 }, {
 "frames": [{
@@ -256,7 +256,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_p21yu")
 }],
 "loop": true,
-"name": &"WalkNew",
+"name": &"Walk",
 "speed": 6.0
 }]
 
@@ -301,9 +301,9 @@ states/Walk/position = Vector2(429, 90)
 
 [sub_resource type="Animation" id="Animation_jej6c"]
 resource_name = "Idle"
-length = 2.00002
+length = 1.6666834
 loop_mode = 1
-step = 0.2
+step = 0.16666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -311,7 +311,7 @@ tracks/0/path = NodePath("AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8000001),
+"times": PackedFloat32Array(0, 0.16666667, 0.33333334, 0.5, 0.6666667, 0.8333333, 1, 1.1666666, 1.3333334, 1.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -326,7 +326,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"IdleNew"]
+"values": [&"Idle"]
 }
 
 [sub_resource type="Animation" id="Animation_2gdjj"]
@@ -340,7 +340,7 @@ tracks/0/path = NodePath("AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
+"times": PackedFloat32Array(0, 0.16666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [4, 5]
@@ -355,13 +355,13 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"InAirNew"]
+"values": [&"InAir"]
 }
 
 [sub_resource type="Animation" id="Animation_oprun"]
 resource_name = "InAirDownApex"
-length = 0.20002
-step = 0.2
+length = 0.16666667
+step = 0.16666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -372,7 +372,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"InAirNew"]
+"values": [&"InAir"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -381,7 +381,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.19999999),
+"times": PackedFloat32Array(0, 0.16666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [3, 4]
@@ -389,7 +389,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_sc3ue"]
 resource_name = "InAirUp"
-length = 0.40002
+length = 0.33333334
 step = 0.16666667
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -398,7 +398,7 @@ tracks/0/path = NodePath("AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
+"times": PackedFloat32Array(0, 0.16666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 1]
@@ -413,13 +413,13 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"InAirNew"]
+"values": [&"InAir"]
 }
 
 [sub_resource type="Animation" id="Animation_a8ls1"]
 resource_name = "InAirUpApex"
-length = 0.20002
-step = 0.2
+length = 0.16666667
+step = 0.16666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -442,7 +442,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"InAirNew"]
+"values": [&"InAir"]
 }
 
 [sub_resource type="Animation" id="Animation_3v2ag"]
@@ -499,7 +499,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"RunNew"]
+"values": [&"Run"]
 }
 
 [sub_resource type="Animation" id="Animation_irpag"]
@@ -517,7 +517,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"WalkNew"]
+"values": [&"Walk"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -556,7 +556,6 @@ jumpForce = 500
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_4r5pv")
 animation = &"Walk"
-autoplay = "Walk"
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=204356462]
 tree_root = SubResource("AnimationNodeStateMachine_fulsm")
