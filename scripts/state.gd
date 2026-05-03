@@ -7,6 +7,8 @@ var animation : AnimatedSprite2D
 var animationTree : AnimationTree
 var playback : AnimationNodeStateMachinePlayback
 
+var isActive
+
 func Setup(_core : Player, _machine : StateMachine, _animation : AnimatedSprite2D, _animationTree: AnimationTree, _playback : AnimationNodeStateMachinePlayback) -> void:
 	core = _core
 	machine = _machine
@@ -16,11 +18,13 @@ func Setup(_core : Player, _machine : StateMachine, _animation : AnimatedSprite2
 
 func enter() -> void:
 	print(name, ' Enter')
+	isActive = true
 	#playback.travel(name)
 	pass
 
 func exit() -> void:
 	print(name, ' Exit')
+	isActive = false
 	pass
 
 func physics_update(_delta: float) -> void:

@@ -11,6 +11,7 @@ func exit() -> void:
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
+	if not isActive: return
 	
 	if core.MovementDirection() != 0:
 		machine.change_state("FallMove")

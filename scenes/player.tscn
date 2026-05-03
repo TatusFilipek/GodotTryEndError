@@ -13,8 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://djjqk5e40jq5t" path="res://resources/PaidCharacter/Run/player run 48x48.png" id="8_fulsm"]
 [ext_resource type="Script" uid="uid://7ptg1tpkbmfd" path="res://scripts/jump.gd" id="8_smehm"]
 [ext_resource type="Texture2D" uid="uid://cuouymd85u68j" path="res://resources/PaidCharacter/Walk/PlayerWalk 48x48.png" id="10_4r5pv"]
-[ext_resource type="Script" path="res://scripts/crouchIdle.gd" id="15_oprun"]
-[ext_resource type="Script" path="res://scripts/crouchWalk.gd" id="16_a8ls1"]
+[ext_resource type="Script" uid="uid://dt4i2ifit1v28" path="res://scripts/crouchIdle.gd" id="15_oprun"]
+[ext_resource type="Script" uid="uid://smy5w2wn2om4" path="res://scripts/crouchWalk.gd" id="16_a8ls1"]
+[ext_resource type="Script" uid="uid://dqdxma8wlxahj" path="res://scripts/slide.gd" id="17_fulsm"]
 [ext_resource type="Script" uid="uid://dpm8a2rnxl14j" path="res://scripts/run.gd" id="17_qfm1y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a8ls1"]
@@ -497,7 +498,7 @@ tracks/1/keys = {
 resource_name = "CrouchWalk"
 length = 0.8333417
 loop_mode = 1
-step = 0.083333336
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -820,3 +821,6 @@ script = ExtResource("15_oprun")
 
 [node name="CrouchWalk" type="Node2D" parent="StateMachine" unique_id=1025389769]
 script = ExtResource("16_a8ls1")
+
+[node name="Slide" type="Node2D" parent="StateMachine" unique_id=1399589531]
+script = ExtResource("17_fulsm")

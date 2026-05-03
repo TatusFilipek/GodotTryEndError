@@ -6,6 +6,10 @@ class_name Player
 @export var sprintMovementMult = 1.5
 @export var crouchMovementMult = .75
 
+@export var slideForce = 150
+@export var slideVelocityLoss = 50
+@export var slideCancelVelocity = 40
+
 @export var gravityForce = 100
 
 @export var jumpForce = 150
@@ -26,6 +30,7 @@ var jumpInputBufferTimer = 0
 @export var ALLMOVEMENTVARIABLE = 100
 
 var lastSpriteOrientation : bool
+var facingDirection = 1
 
 var sprite : AnimatedSprite2D
 
@@ -56,6 +61,7 @@ func MovementDirection() -> float:
 func GetSpriteOrientation() -> void:
 	if MovementDirection() != 0:
 		lastSpriteOrientation = (MovementDirection() < 0)
+		facingDirection = ceil(MovementDirection())
 	sprite.flip_h = lastSpriteOrientation
 
 #TODO:
