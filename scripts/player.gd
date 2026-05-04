@@ -31,6 +31,7 @@ var jumpInputBufferTimer = 0
 
 @export var CheckWall : RayCast2D
 @export var CheckLedge : RayCast2D
+@export var CheckHead : RayCast2D
 @export var Collider : CollisionShape2D
 
 var lastSpriteOrientation : bool
@@ -44,6 +45,7 @@ func _ready() -> void:
 	sprite = get_node("AnimatedSprite2D")
 	CheckLedge = get_node("CheckLedge")
 	CheckWall = get_node("CheckWall")
+	CheckHead = get_node("CheckHead")
 	Collider = get_node("collider")
 
 # physics update
@@ -76,9 +78,11 @@ func GetSpriteOrientation() -> void:
 		CheckLedge.position.x *= -1
 		CheckWall.target_position.x *= -1
 		CheckWall.position.x *= -1
+		CheckHead.target_position.x *= -1
+		CheckHead.position.x *= -1
 
 func IsLedgeDetected() -> bool:
-	return CheckWall.is_colliding() and not CheckLedge.is_colliding()
+	return CheckWall.is_colliding() and not CheckHead.is_colliding()
 
 func GetLedgePosition() -> Vector2:
 	var ledgePos : Vector2

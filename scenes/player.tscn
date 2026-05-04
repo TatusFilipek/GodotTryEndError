@@ -993,7 +993,12 @@ Collider = NodePath("collider")
 [node name="CheckWall" type="RayCast2D" parent="." unique_id=425645109]
 modulate = Color(0, 0, 0, 1)
 position = Vector2(16, -9)
-target_position = Vector2(5, 0)
+target_position = Vector2(15, 0)
+
+[node name="CheckHead" type="RayCast2D" parent="." unique_id=566196917]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(16, -40)
+target_position = Vector2(15, 0)
 
 [node name="CheckLedge" type="RayCast2D" parent="." unique_id=922726246]
 modulate = Color(0, 0, 0, 1)
