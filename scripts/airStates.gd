@@ -16,7 +16,7 @@ func physics_update(_delta: float) -> void:
 		machine.change_state("Idle")
 		return
 	
-	if Input.is_action_just_pressed("moveUp") and core.coyoteTimer > 0:
+	if Input.is_action_just_pressed("jump") and core.coyoteTimer > 0:
 		core.coyoteTimer = 0
 		machine.change_state("Jump")
 		return
@@ -40,7 +40,7 @@ func VariableJumpHeight():
 	if core.velocity.y >= 0:
 		core.jumping = false
 	
-	if core.jumping and Input.is_action_just_released("moveUp"):
+	if core.jumping and Input.is_action_just_released("jump"):
 		core.velocity.y *= core.jumpVelocityCut
 
 func SuperDuperAirStateAnims():

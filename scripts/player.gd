@@ -58,7 +58,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		coyoteTimer -= delta
 		
-	if Input.is_action_just_pressed("moveUp"):
+	if Input.is_action_just_pressed("jump"):
 		jumpInputBufferTimer = jumpInputBuffer
 	else:
 		jumpInputBufferTimer -= delta
@@ -94,11 +94,12 @@ func GetLedgePosition() -> Vector2:
 	ledgePos.x = CheckWall.get_collision_point().x
 	ledgePos.y = CheckLedge.get_collision_point().y
 	
+	return ledgePos
+
+func SetLedgeOffset(ledgePos : Vector2) -> Vector2:
 	#Player-Ledge offset idk how to calculate it smarter, will probably need to be fixxed later
 	ledgePos.x -= CheckWall.position.x
 	ledgePos.y -= CheckLedge.position.y
-	
-	print(ledgePos)
 	
 	return ledgePos
 

@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://dhhhm4p43sjki" path="res://scripts/fallIdle.gd" id="6_tuyoq"]
 [ext_resource type="Script" uid="uid://vp0ng54ecqcr" path="res://scripts/fallMove.gd" id="7_fjrip"]
 [ext_resource type="Texture2D" uid="uid://bynxqffhb2wes" path="res://resources/PaidCharacter/Slide/Player Slide 48x48.png" id="7_fulsm"]
+[ext_resource type="Texture2D" uid="uid://bbsi56vwwwedl" path="res://resources/PaidCharacter/Ledge Grab-Climb/LazyLedgeClimb4.png" id="7_i4ail"]
 [ext_resource type="Texture2D" uid="uid://45u06q3hfgrn" path="res://resources/PaidCharacter/Jump/player new jump 48x48.png" id="7_qfm1y"]
 [ext_resource type="Texture2D" uid="uid://djjqk5e40jq5t" path="res://resources/PaidCharacter/Run/player run 48x48.png" id="8_fulsm"]
 [ext_resource type="Script" uid="uid://7ptg1tpkbmfd" path="res://scripts/jump.gd" id="8_smehm"]
@@ -20,6 +21,7 @@
 [ext_resource type="Script" uid="uid://dqdxma8wlxahj" path="res://scripts/slide.gd" id="17_fulsm"]
 [ext_resource type="Script" uid="uid://dpm8a2rnxl14j" path="res://scripts/run.gd" id="17_qfm1y"]
 [ext_resource type="Script" uid="uid://bntmo2bm6v3f4" path="res://scripts/ledgeGrab.gd" id="19_4r5pv"]
+[ext_resource type="Script" uid="uid://bd8y141svybmq" path="res://scripts/ledgeClimb.gd" id="22_a38lo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a8ls1"]
 atlas = ExtResource("2_f1ej7")
@@ -184,6 +186,26 @@ region = Rect2(144, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_4gjji"]
 atlas = ExtResource("6_60mlk")
 region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2ulf"]
+atlas = ExtResource("7_i4ail")
+region = Rect2(0, 0, 48, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_irpag"]
+atlas = ExtResource("7_i4ail")
+region = Rect2(48, 0, 48, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bpsgo"]
+atlas = ExtResource("7_i4ail")
+region = Rect2(96, 0, 48, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jx8is"]
+atlas = ExtResource("7_i4ail")
+region = Rect2(144, 0, 48, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vx63k"]
+atlas = ExtResource("7_i4ail")
+region = Rect2(192, 0, 48, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fuw3a"]
 atlas = ExtResource("8_fulsm")
@@ -433,6 +455,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_u2ulf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_irpag")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bpsgo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jx8is")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vx63k")
+}],
+"loop": true,
+"name": &"LedgeClimbLazy",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_fuw3a")
 }, {
 "duration": 1.0,
@@ -582,6 +624,7 @@ states/Slide/node = SubResource("AnimationNodeAnimation_hhpqf")
 states/Slide/position = Vector2(532, 87)
 states/Walk/node = SubResource("AnimationNodeAnimation_4r5pv")
 states/Walk/position = Vector2(429, 90)
+graph_offset = Vector2(-23, -31)
 
 [sub_resource type="Animation" id="Animation_f1ej7"]
 resource_name = "CrouchIdle"
@@ -802,7 +845,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"Ledge"]
+"values": [&"LedgeClimbLazy"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -831,7 +874,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"Ledge"]
+"values": [&"LedgeClimbLazy"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -985,6 +1028,7 @@ height = 94.0
 
 [node name="Player" type="CharacterBody2D" unique_id=97587854 node_paths=PackedStringArray("CheckWall", "CheckLedge", "Collider")]
 script = ExtResource("1_0wfyh")
+sprintMovementMult = 1.75
 jumpForce = 500
 CheckWall = NodePath("CheckWall")
 CheckLedge = NodePath("CheckLedge")
@@ -992,18 +1036,18 @@ Collider = NodePath("collider")
 
 [node name="CheckWall" type="RayCast2D" parent="." unique_id=425645109]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(16, -9)
+position = Vector2(16, -31)
 target_position = Vector2(15, 0)
 
 [node name="CheckHead" type="RayCast2D" parent="." unique_id=566196917]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(16, -40)
+position = Vector2(16, -48)
 target_position = Vector2(15, 0)
 
 [node name="CheckLedge" type="RayCast2D" parent="." unique_id=922726246]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(26, -36)
-target_position = Vector2(0, 36)
+position = Vector2(26, -39)
+target_position = Vector2(0, 39)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=862734885]
 scale = Vector2(3, 3)
@@ -1055,3 +1099,4 @@ script = ExtResource("17_fulsm")
 script = ExtResource("19_4r5pv")
 
 [node name="LedgeClimb" type="Node2D" parent="StateMachine" unique_id=1906993582]
+script = ExtResource("22_a38lo")
