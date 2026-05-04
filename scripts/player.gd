@@ -51,7 +51,7 @@ func _physics_process(delta: float) -> void:
 	GetSpriteOrientation()
 	move_and_slide()
 	
-	if is_on_floor():
+	if is_on_floor() or IsLedgeDetected():
 		coyoteTimer = coyoteTime
 	else:
 		coyoteTimer -= delta
@@ -71,7 +71,7 @@ func GetSpriteOrientation() -> void:
 		facingDirection = ceil(MovementDirection())
 	sprite.flip_h = lastSpriteOrientation
 	
-	if sign(CheckLedge.target_position.x) != sign(facingDirection):
+	if sign(CheckWall.target_position.x) != sign(facingDirection):
 		CheckLedge.target_position.x *= -1
 		CheckLedge.position.x *= -1
 		CheckWall.target_position.x *= -1
@@ -82,6 +82,8 @@ func IsLedgeDetected() -> bool:
 
 func GetLedgePosition() -> Vector2:
 	var ledgePos : Vector2
+	
+	#there is a bug where i jump from ledge to ledge and it doesnt set the new ledge position idk why
 	
 	ledgePos.x = CheckWall.get_collision_point().x
 	ledgePos.y = CheckLedge.get_collision_point().y

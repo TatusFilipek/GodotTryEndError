@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bl1pu4bo1b8v6" path="res://scripts/idle.gd" id="4_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://1f1yfkkkni6i" path="res://resources/PaidCharacter/Idle/Player Idle 48x48.png" id="5_a8ls1"]
 [ext_resource type="Script" uid="uid://cgbkl5js40oui" path="res://scripts/walk.gd" id="5_qlg0r"]
+[ext_resource type="Texture2D" uid="uid://61n3ptcvm8mq" path="res://resources/PaidCharacter/Ledge Grab-Climb/player ledge climb 48x48.png" id="6_60mlk"]
 [ext_resource type="Script" uid="uid://dhhhm4p43sjki" path="res://scripts/fallIdle.gd" id="6_tuyoq"]
 [ext_resource type="Script" uid="uid://vp0ng54ecqcr" path="res://scripts/fallMove.gd" id="7_fjrip"]
 [ext_resource type="Texture2D" uid="uid://bynxqffhb2wes" path="res://resources/PaidCharacter/Slide/Player Slide 48x48.png" id="7_fulsm"]
@@ -163,6 +164,26 @@ region = Rect2(192, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_tk41t"]
 atlas = ExtResource("7_qfm1y")
 region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hhpqf"]
+atlas = ExtResource("6_60mlk")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g5jhy"]
+atlas = ExtResource("6_60mlk")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_holxr"]
+atlas = ExtResource("6_60mlk")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mx1m4"]
+atlas = ExtResource("6_60mlk")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gjji"]
+atlas = ExtResource("6_60mlk")
+region = Rect2(192, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fuw3a"]
 atlas = ExtResource("8_fulsm")
@@ -392,6 +413,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_hhpqf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g5jhy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_holxr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mx1m4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4gjji")
+}],
+"loop": true,
+"name": &"Ledge",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_fuw3a")
 }, {
 "duration": 1.0,
@@ -500,6 +541,12 @@ animation = &"InAirUp"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qfm1y"]
 animation = &"InAirUpApex"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u2ulf"]
+animation = &"LedgeClimb"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6e8lb"]
+animation = &"LedgeGrab"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fulsm"]
 animation = &"Run"
 
@@ -514,17 +561,21 @@ states/CrouchIdle/node = SubResource("AnimationNodeAnimation_60mlk")
 states/CrouchIdle/position = Vector2(317, 27)
 states/CrouchWalk/node = SubResource("AnimationNodeAnimation_i4ail")
 states/CrouchWalk/position = Vector2(429, 164)
-states/End/position = Vector2(955, 109)
+states/End/position = Vector2(1092, 115)
 states/Idle/node = SubResource("AnimationNodeAnimation_3v2ag")
 states/Idle/position = Vector2(317, 98)
 states/InAirDown/node = SubResource("AnimationNodeAnimation_jej6c")
-states/InAirDown/position = Vector2(652, 85)
+states/InAirDown/position = Vector2(789, 91)
 states/InAirDownApex/node = SubResource("AnimationNodeAnimation_oprun")
-states/InAirDownApex/position = Vector2(789, 85)
+states/InAirDownApex/position = Vector2(926, 91)
 states/InAirUp/node = SubResource("AnimationNodeAnimation_a8ls1")
-states/InAirUp/position = Vector2(652, 27)
+states/InAirUp/position = Vector2(789, 33)
 states/InAirUpApex/node = SubResource("AnimationNodeAnimation_qfm1y")
-states/InAirUpApex/position = Vector2(789, 27)
+states/InAirUpApex/position = Vector2(926, 33)
+states/LedgeClimb/node = SubResource("AnimationNodeAnimation_u2ulf")
+states/LedgeClimb/position = Vector2(650, 29)
+states/LedgeGrab/node = SubResource("AnimationNodeAnimation_6e8lb")
+states/LedgeGrab/position = Vector2(650, 87)
 states/Run/node = SubResource("AnimationNodeAnimation_fulsm")
 states/Run/position = Vector2(429, 20)
 states/Slide/node = SubResource("AnimationNodeAnimation_hhpqf")
@@ -738,6 +789,63 @@ tracks/1/keys = {
 "values": [&"InAir"]
 }
 
+[sub_resource type="Animation" id="Animation_lxlsd"]
+resource_name = "LedgeClimb"
+step = 0.16666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Ledge"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_ha2mi"]
+resource_name = "LedgeGrab"
+length = 0.33335
+step = 0.16666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Ledge"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
 [sub_resource type="Animation" id="Animation_3v2ag"]
 length = 0.001
 tracks/0/type = "value"
@@ -863,6 +971,8 @@ _data = {
 &"InAirDownApex": SubResource("Animation_oprun"),
 &"InAirUp": SubResource("Animation_sc3ue"),
 &"InAirUpApex": SubResource("Animation_a8ls1"),
+&"LedgeClimb": SubResource("Animation_lxlsd"),
+&"LedgeGrab": SubResource("Animation_ha2mi"),
 &"RESET": SubResource("Animation_3v2ag"),
 &"Run": SubResource("Animation_fulsm"),
 &"Slide": SubResource("Animation_g5jhy"),
@@ -873,23 +983,22 @@ _data = {
 radius = 16.0
 height = 94.0
 
-[node name="Player" type="CharacterBody2D" unique_id=97587854 node_paths=PackedStringArray("CheckWall", "CheckLedge")]
+[node name="Player" type="CharacterBody2D" unique_id=97587854 node_paths=PackedStringArray("CheckWall", "CheckLedge", "Collider")]
 script = ExtResource("1_0wfyh")
 jumpForce = 500
 CheckWall = NodePath("CheckWall")
 CheckLedge = NodePath("CheckLedge")
+Collider = NodePath("collider")
 
 [node name="CheckWall" type="RayCast2D" parent="." unique_id=425645109]
 modulate = Color(0, 0, 0, 1)
 position = Vector2(16, -9)
 target_position = Vector2(15, 0)
-collide_with_areas = true
 
 [node name="CheckLedge" type="RayCast2D" parent="." unique_id=922726246]
 modulate = Color(0, 0, 0, 1)
 position = Vector2(26, -36)
 target_position = Vector2(0, 20)
-collide_with_areas = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=862734885]
 scale = Vector2(3, 3)

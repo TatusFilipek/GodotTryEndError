@@ -1,8 +1,13 @@
 extends State
 class_name LedgeGrab
 
+
 func enter() -> void:
 	super.enter()
+	
+	playback.travel("LedgeGrab")
+	core.velocity = Vector2.ZERO
+	
 	core.position = core.GetLedgePosition()
 	pass
 
@@ -17,4 +22,15 @@ func physics_update(_delta: float) -> void:
 	if Input.is_action_pressed("moveDown"):
 		machine.change_state("FallIdle")
 		return
+	
+	if not core.IsLedgeDetected():
+		machine.change_state("FallIdle")
+		return
+	
+	#if there is space to fit a player and up and a certain direcion is pressed then go to ledge climb, if there isnt space or only up is pressed preform jump
+	if core.jumpInputBufferTimer > 0:
+		core.jumpInputBufferTimer = 0
+		machine.change_state("Jump")
+		return
+	
 	pass
