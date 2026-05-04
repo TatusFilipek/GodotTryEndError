@@ -2,6 +2,7 @@ extends State
 class_name LedgeClimb
 
 #TODO: Fix this shit asap
+#fixxed somehow but still its not optimised, i could save the last ledge pos to a variable so i dont have to use the same function twice
 
 var ledgePos : Vector2
 var postAnimPos : Vector2
@@ -17,13 +18,13 @@ func enter() -> void:
 	#postAnimPos.x += core.CheckWall.position.x + 17 * core.facingDirection
 	#postAnimPos.y += core.CheckLedge.position.y
 	
-		
-	rayPosition = core.position
-		
+	
+	rayPosition = core.GetLedgePosition()
+	
 	rayPosition.x += core.CheckWall.position.x + 17 * core.facingDirection
 	rayPosition.y += core.CheckLedge.position.y
-	
-	#core.position = rayPosition
+		
+	core.position = rayPosition
 	
 	pass
 
@@ -36,7 +37,7 @@ func physics_update(_delta: float) -> void:
 	if not isActive: return
 	
 	#if animation complete snap player to rayposition and change state to idle
-	core.position = rayPosition
+	#core.position = rayPosition
 	
 	machine.change_state("Idle")
 	return

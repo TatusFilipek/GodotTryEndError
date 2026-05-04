@@ -30,7 +30,8 @@ func physics_update(_delta: float) -> void:
 		machine.change_state("FallIdle")
 		return
 	
-	if sign(core.MovementDirection()) == sign(core.CheckWall.target_position.x) and Input.is_action_pressed("moveUp"):
+	#if sign(core.MovementDirection()) == sign(core.CheckWall.target_position.x) and Input.is_action_pressed("moveUp"):
+	if Input.is_action_pressed("moveUp"):
 		var rayPosition : Vector2
 		
 		rayPosition = ledgePos
@@ -38,7 +39,9 @@ func physics_update(_delta: float) -> void:
 		rayPosition.x += core.CheckWall.position.x + 17 * core.facingDirection
 		rayPosition.y += core.CheckLedge.position.y
 		
-		core.position = rayPosition
+		core.postAnimPos = rayPosition
+		
+		#core.position = rayPosition
 		
 		#machine.change_state("Idle")
 		

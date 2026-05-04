@@ -26,5 +26,5 @@ position = Vector2(907, 414)
 position = Vector2(1025, 407)
 
 [node name="Obstacle3" parent="." unique_id=967182385 instance=ExtResource("2_0wfyh")]
-position = Vector2(429, 302)
+position = Vector2(81, 265)
 scale = Vector2(1, 0.68000245)
