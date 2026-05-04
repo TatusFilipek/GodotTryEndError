@@ -1,14 +1,13 @@
 extends State
 class_name LedgeGrab
 
-
 func enter() -> void:
 	super.enter()
 	
 	playback.travel("LedgeGrab")
 	core.velocity = Vector2.ZERO
 	
-	core.position = core.GetLedgePosition()
+	core.global_position = core.GetLedgePosition()
 	pass
 
 func exit() -> void:
@@ -32,5 +31,4 @@ func physics_update(_delta: float) -> void:
 		core.jumpInputBufferTimer = 0
 		machine.change_state("Jump")
 		return
-	
 	pass

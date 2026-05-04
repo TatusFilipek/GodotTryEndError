@@ -84,13 +84,17 @@ func GetLedgePosition() -> Vector2:
 	var ledgePos : Vector2
 	
 	#there is a bug where i jump from ledge to ledge and it doesnt set the new ledge position idk why
+	#bug fixxed
+	#NOTE: the couse of the bug was the length of the raycast. When checking for it the length must be the opposite of the offset for it to work correctly
 	
 	ledgePos.x = CheckWall.get_collision_point().x
 	ledgePos.y = CheckLedge.get_collision_point().y
 	
 	#Player-Ledge offset idk how to calculate it smarter, will probably need to be fixxed later
 	ledgePos.x -= CheckWall.position.x
-	ledgePos.y += 47
+	ledgePos.y -= CheckLedge.position.y
+	
+	print(ledgePos)
 	
 	return ledgePos
 

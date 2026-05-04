@@ -22,6 +22,10 @@ func physics_update(_delta: float) -> void:
 		return
 	
 	#check for ledge and if ledge detected grab on it
+	
+	core.CheckWall.force_raycast_update()
+	core.CheckLedge.force_raycast_update()
+	
 	if core.IsLedgeDetected() and core.MovementDirection() != 0 and core.velocity.y > 0:
 		machine.change_state("LedgeGrab")
 		return
