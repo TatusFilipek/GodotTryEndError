@@ -4,6 +4,8 @@ class_name Slide
 func enter() -> void:
 	super.enter()
 	
+	playback.travel("Slide")
+	
 	core.velocity.x = core.facingDirection * core.slideForce
 	
 	pass

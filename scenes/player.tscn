@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://cgbkl5js40oui" path="res://scripts/walk.gd" id="5_qlg0r"]
 [ext_resource type="Script" uid="uid://dhhhm4p43sjki" path="res://scripts/fallIdle.gd" id="6_tuyoq"]
 [ext_resource type="Script" uid="uid://vp0ng54ecqcr" path="res://scripts/fallMove.gd" id="7_fjrip"]
+[ext_resource type="Texture2D" uid="uid://bynxqffhb2wes" path="res://resources/PaidCharacter/Slide/Player Slide 48x48.png" id="7_fulsm"]
 [ext_resource type="Texture2D" uid="uid://45u06q3hfgrn" path="res://resources/PaidCharacter/Jump/player new jump 48x48.png" id="7_qfm1y"]
 [ext_resource type="Texture2D" uid="uid://djjqk5e40jq5t" path="res://resources/PaidCharacter/Run/player run 48x48.png" id="8_fulsm"]
 [ext_resource type="Script" uid="uid://7ptg1tpkbmfd" path="res://scripts/jump.gd" id="8_smehm"]
@@ -192,6 +193,38 @@ region = Rect2(288, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qsb7e"]
 atlas = ExtResource("8_fulsm")
+region = Rect2(336, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jc3p3"]
+atlas = ExtResource("7_fulsm")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hax0n"]
+atlas = ExtResource("7_fulsm")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4otl"]
+atlas = ExtResource("7_fulsm")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2b1d"]
+atlas = ExtResource("7_fulsm")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cs1tg"]
+atlas = ExtResource("7_fulsm")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2dvfe"]
+atlas = ExtResource("7_fulsm")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_giy8y"]
+atlas = ExtResource("7_fulsm")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdfoy"]
+atlas = ExtResource("7_fulsm")
 region = Rect2(336, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qjsmb"]
@@ -387,6 +420,35 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_jc3p3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hax0n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t4otl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2b1d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cs1tg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2dvfe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_giy8y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdfoy")
+}],
+"loop": true,
+"name": &"Slide",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_qjsmb")
 }, {
 "duration": 1.0,
@@ -440,6 +502,9 @@ animation = &"InAirUpApex"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fulsm"]
 animation = &"Run"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hhpqf"]
+animation = &"Slide"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4r5pv"]
 animation = &"Walk"
 
@@ -461,6 +526,8 @@ states/InAirUpApex/node = SubResource("AnimationNodeAnimation_qfm1y")
 states/InAirUpApex/position = Vector2(789, 27)
 states/Run/node = SubResource("AnimationNodeAnimation_fulsm")
 states/Run/position = Vector2(429, 20)
+states/Slide/node = SubResource("AnimationNodeAnimation_hhpqf")
+states/Slide/position = Vector2(532, 87)
 states/Walk/node = SubResource("AnimationNodeAnimation_4r5pv")
 states/Walk/position = Vector2(429, 90)
 
@@ -727,6 +794,35 @@ tracks/1/keys = {
 "values": [&"Run"]
 }
 
+[sub_resource type="Animation" id="Animation_g5jhy"]
+resource_name = "Slide"
+length = 1.3333501
+step = 0.16666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Slide"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.33333334, 0.5, 0.6666667, 0.8333334, 1, 1.1666667, 1.3333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 7]
+}
+
 [sub_resource type="Animation" id="Animation_irpag"]
 resource_name = "Walk"
 length = 1.3333501
@@ -768,6 +864,7 @@ _data = {
 &"InAirUpApex": SubResource("Animation_a8ls1"),
 &"RESET": SubResource("Animation_3v2ag"),
 &"Run": SubResource("Animation_fulsm"),
+&"Slide": SubResource("Animation_g5jhy"),
 &"Walk": SubResource("Animation_irpag")
 }
 

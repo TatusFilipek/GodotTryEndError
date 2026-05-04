@@ -6,8 +6,8 @@ class_name Player
 @export var sprintMovementMult = 1.5
 @export var crouchMovementMult = .75
 
-@export var slideForce = 150
-@export var slideVelocityLoss = 50
+@export var slideForce = 250
+@export var slideVelocityLoss = 100
 @export var slideCancelVelocity = 40
 
 @export var gravityForce = 100
