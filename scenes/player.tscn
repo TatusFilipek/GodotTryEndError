@@ -18,6 +18,7 @@
 [ext_resource type="Script" uid="uid://smy5w2wn2om4" path="res://scripts/crouchWalk.gd" id="16_a8ls1"]
 [ext_resource type="Script" uid="uid://dqdxma8wlxahj" path="res://scripts/slide.gd" id="17_fulsm"]
 [ext_resource type="Script" uid="uid://dpm8a2rnxl14j" path="res://scripts/run.gd" id="17_qfm1y"]
+[ext_resource type="Script" uid="uid://bntmo2bm6v3f4" path="res://scripts/ledgeGrab.gd" id="19_4r5pv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a8ls1"]
 atlas = ExtResource("2_f1ej7")
@@ -872,9 +873,23 @@ _data = {
 radius = 16.0
 height = 94.0
 
-[node name="Player" type="CharacterBody2D" unique_id=97587854]
+[node name="Player" type="CharacterBody2D" unique_id=97587854 node_paths=PackedStringArray("CheckWall", "CheckLedge")]
 script = ExtResource("1_0wfyh")
 jumpForce = 500
+CheckWall = NodePath("CheckWall")
+CheckLedge = NodePath("CheckLedge")
+
+[node name="CheckWall" type="RayCast2D" parent="." unique_id=425645109]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(16, -9)
+target_position = Vector2(15, 0)
+collide_with_areas = true
+
+[node name="CheckLedge" type="RayCast2D" parent="." unique_id=922726246]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(26, -36)
+target_position = Vector2(0, 20)
+collide_with_areas = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=862734885]
 scale = Vector2(3, 3)
@@ -921,3 +936,8 @@ script = ExtResource("16_a8ls1")
 
 [node name="Slide" type="Node2D" parent="StateMachine" unique_id=1399589531]
 script = ExtResource("17_fulsm")
+
+[node name="LedgeGrab" type="Node2D" parent="StateMachine" unique_id=1316515253]
+script = ExtResource("19_4r5pv")
+
+[node name="LedgeClimb" type="Node2D" parent="StateMachine" unique_id=1906993582]

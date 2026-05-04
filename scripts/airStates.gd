@@ -23,6 +23,11 @@ func physics_update(_delta: float) -> void:
 		machine.change_state("Jump")
 		return
 	
+	#check for ledge and if ledge detected grab on it
+	if core.IsLedgeDetected() and core.MovementDirection() != 0 and core.velocity.y > 0:
+		core.velocity = Vector2.ZERO
+		machine.change_state("LedgeGrab")
+	
 	VariableJumpHeight()
 	SuperDuperAirStateAnims()
 	pass

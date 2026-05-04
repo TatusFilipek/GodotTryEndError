@@ -29,6 +29,10 @@ var jumpInputBufferTimer = 0
 
 @export var ALLMOVEMENTVARIABLE = 100
 
+@export var CheckWall : RayCast2D
+@export var CheckLedge : RayCast2D
+@export var Collider : CollisionShape2D
+
 var lastSpriteOrientation : bool
 var facingDirection = 1
 
@@ -38,6 +42,9 @@ var jumping : bool = false
 
 func _ready() -> void:
 	sprite = get_node("AnimatedSprite2D")
+	CheckLedge = get_node("CheckLedge")
+	CheckWall = get_node("CheckWall")
+	Collider = get_node("collider")
 
 # physics update
 func _physics_process(delta: float) -> void:
@@ -63,9 +70,31 @@ func GetSpriteOrientation() -> void:
 		lastSpriteOrientation = (MovementDirection() < 0)
 		facingDirection = ceil(MovementDirection())
 	sprite.flip_h = lastSpriteOrientation
+	
+	if sign(CheckLedge.target_position.x) != sign(facingDirection):
+		CheckLedge.target_position.x *= -1
+		CheckLedge.position.x *= -1
+		CheckWall.target_position.x *= -1
+		CheckWall.position.x *= -1
+
+func IsLedgeDetected() -> bool:
+	return CheckWall.is_colliding() and not CheckLedge.is_colliding()
+
+func GetLedgePosition() -> Vector2:
+	var ledgePos : Vector2
+	
+	ledgePos.x = CheckWall.get_collision_point().x
+	ledgePos.y = CheckLedge.get_collision_point().y
+	
+	#Player-Ledge offset idk how to calculate it smarter, will probably need to be fixxed later
+	ledgePos.x -= CheckWall.position.x
+	ledgePos.y += 47
+	
+	return ledgePos
 
 #TODO:
-	#add buffer timers to jumping (cayote time and jump input buffer)
+	#add ledge grab and ledge climb
+	#add dashing or rolling i will decide later
 	#add a camera that follows a player
 	#add an enemy
 	#add a core that all entities will have
@@ -73,4 +102,4 @@ func GetSpriteOrientation() -> void:
 
 #NOTE:
 	#if there is a bug that stops me whenever im jumping just like in the other game i made that means i have to remove the line that sets velocity to zero whenever i enter any idle state
-	
+	#rolling when crouching or idle and dashing in every other state

@@ -7,10 +7,15 @@
 [node name="Main" type="Node2D" unique_id=2109837604]
 
 [node name="player" parent="." unique_id=97587854 instance=ExtResource("1_vhmy2")]
-position = Vector2(963, 231)
+position = Vector2(342, 276)
 
 [node name="Obstacle" parent="." unique_id=721769094 instance=ExtResource("2_0wfyh")]
 position = Vector2(771, 526)
+scale = Vector2(8.559999, 1)
+
+[node name="Obstacle2" parent="." unique_id=925072103 instance=ExtResource("2_0wfyh")]
+z_index = -1
+position = Vector2(52, 397)
 scale = Vector2(8.559999, 1)
 
 [node name="ObstacleNotFull" parent="." unique_id=767406574 instance=ExtResource("3_sugp2")]
@@ -19,3 +24,7 @@ position = Vector2(907, 414)
 
 [node name="ObstacleNotFull2" parent="." unique_id=705936925 instance=ExtResource("3_sugp2")]
 position = Vector2(1025, 407)
+
+[node name="Obstacle3" parent="." unique_id=967182385 instance=ExtResource("2_0wfyh")]
+position = Vector2(429, 302)
+scale = Vector2(1, 0.68000245)
