@@ -13,6 +13,7 @@ func enter() -> void:
 	
 	playback.travel("LedgeClimb")
 	core.velocity = Vector2.ZERO
+	core.canChangeDir = false
 	
 	postAnimPos = core.GetLedgePosition()
 	
@@ -22,6 +23,7 @@ func enter() -> void:
 
 func exit() -> void:
 	super.exit()
+	core.canChangeDir = true
 	pass
 
 func physics_update(_delta: float) -> void:

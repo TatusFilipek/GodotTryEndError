@@ -32,6 +32,9 @@ var jumpInputBufferTimer = 0
 @export var CheckWall : RayCast2D
 @export var CheckLedge : RayCast2D
 @export var CheckHead : RayCast2D
+@export var CheckCeil : RayCast2D
+@export var CheckPostWall : RayCast2D
+@export var CheckSpace : ShapeCast2D
 @export var Collider : CollisionShape2D
 
 var lastSpriteOrientation : bool
@@ -40,12 +43,16 @@ var facingDirection = 1
 var sprite : AnimatedSprite2D
 
 var jumping : bool = false
+var canChangeDir : bool = true
 
 func _ready() -> void:
 	sprite = get_node("AnimatedSprite2D")
 	CheckLedge = get_node("CheckLedge")
 	CheckWall = get_node("CheckWall")
 	CheckHead = get_node("CheckHead")
+	CheckCeil = get_node("CheckCeil")
+	CheckPostWall = get_node("CheckPostWall")
+	CheckSpace = get_node("CheckSpace")
 	Collider = get_node("collider")
 
 # physics update
@@ -68,24 +75,40 @@ func MovementDirection() -> float:
 	return movementDirection
 	
 func GetSpriteOrientation() -> void:
-	if MovementDirection() != 0:
-		lastSpriteOrientation = (MovementDirection() < 0)
-		facingDirection = ceil(MovementDirection())
-	sprite.flip_h = lastSpriteOrientation
-	
-	if sign(CheckWall.target_position.x) != sign(facingDirection):
-		CheckLedge.target_position.x *= -1
-		CheckLedge.position.x *= -1
-		CheckWall.target_position.x *= -1
-		CheckWall.position.x *= -1
-		CheckHead.target_position.x *= -1
-		CheckHead.position.x *= -1
+	if canChangeDir:
+		if MovementDirection() != 0:
+			lastSpriteOrientation = (MovementDirection() < 0)
+			facingDirection = ceil(MovementDirection())
+		sprite.flip_h = lastSpriteOrientation
+		
+		if sign(CheckWall.target_position.x) != sign(facingDirection):
+			CheckLedge.target_position.x *= -1
+			CheckLedge.position.x *= -1
+			CheckWall.target_position.x *= -1
+			CheckWall.position.x *= -1
+			CheckHead.target_position.x *= -1
+			CheckHead.position.x *= -1
+			CheckCeil.target_position.x *= -1
+			CheckCeil.position.x *= -1
+			CheckPostWall.target_position.x *= -1
+			CheckPostWall.position.x *= -1
+			CheckSpace.target_position.x *= -1
+			CheckSpace.position.x *= -1
 
 func IsLedgeDetected() -> bool:
+	CheckWall.force_raycast_update()
+	CheckHead.force_raycast_update()
 	return CheckWall.is_colliding() and not CheckHead.is_colliding()
 
+func IsSpaceToClimb() -> bool:
+	CheckSpace.force_shapecast_update()
+	return not CheckSpace.is_colliding()
+	
 func GetLedgePosition() -> Vector2:
 	var ledgePos : Vector2
+	
+	CheckWall.force_raycast_update()
+	CheckLedge.force_raycast_update()
 	
 	#there is a bug where i jump from ledge to ledge and it doesnt set the new ledge position idk why
 	#bug fixxed

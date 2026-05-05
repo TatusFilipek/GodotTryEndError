@@ -22,6 +22,9 @@
 [ext_resource type="Script" uid="uid://bntmo2bm6v3f4" path="res://scripts/ledgeGrab.gd" id="19_4r5pv"]
 [ext_resource type="Script" uid="uid://bd8y141svybmq" path="res://scripts/ledgeClimb.gd" id="22_a38lo"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i4ail"]
+size = Vector2(15, 90)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_a8ls1"]
 atlas = ExtResource("2_f1ej7")
 region = Rect2(0, 0, 48, 48)
@@ -1015,6 +1018,11 @@ CheckWall = NodePath("CheckWall")
 CheckLedge = NodePath("CheckLedge")
 Collider = NodePath("collider")
 
+[node name="CheckSpace" type="ShapeCast2D" parent="." unique_id=2018620845]
+position = Vector2(23, -92.5)
+shape = SubResource("RectangleShape2D_i4ail")
+target_position = Vector2(70, 0)
+
 [node name="CheckWall" type="RayCast2D" parent="." unique_id=425645109]
 modulate = Color(0, 0, 0, 1)
 position = Vector2(16, -31)
@@ -1024,6 +1032,16 @@ target_position = Vector2(15, 0)
 modulate = Color(0, 0, 0, 1)
 position = Vector2(16, -48)
 target_position = Vector2(15, 0)
+
+[node name="CheckPostWall" type="RayCast2D" parent="." unique_id=1509780365]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(16, -48)
+target_position = Vector2(85, 0)
+
+[node name="CheckCeil" type="RayCast2D" parent="." unique_id=291518083]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(76, -48)
+target_position = Vector2(0, -90)
 
 [node name="CheckLedge" type="RayCast2D" parent="." unique_id=922726246]
 modulate = Color(0, 0, 0, 1)

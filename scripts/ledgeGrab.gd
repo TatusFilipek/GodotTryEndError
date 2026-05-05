@@ -31,14 +31,7 @@ func physics_update(_delta: float) -> void:
 		return
 	
 	#if sign(core.MovementDirection()) == sign(core.CheckWall.target_position.x) and Input.is_action_pressed("moveUp"):
-	if Input.is_action_pressed("moveUp"):
-		var rayPosition : Vector2
-		
-		rayPosition = ledgePos
-		
-		rayPosition.x += 2*(core.CheckWall.position.x + 17 * core.facingDirection)
-		rayPosition.y += 2*(core.CheckLedge.position.y)
-		
+	if Input.is_action_pressed("moveUp") and core.IsSpaceToClimb():
 		machine.change_state("LedgeClimb")
 		return
 	
