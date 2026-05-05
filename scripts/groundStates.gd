@@ -21,5 +21,9 @@ func physics_update(_delta: float) -> void:
 		core.jumpInputBufferTimer = 0
 		machine.change_state("Jump")
 		return
+	
+	if core.is_on_wall():
+		machine.change_state("WallTouch")
+		return
 
 	pass

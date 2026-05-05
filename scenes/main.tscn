@@ -16,6 +16,7 @@ scale = Vector2(8.559999, 1)
 [node name="Obstacle2" parent="." unique_id=925072103 instance=ExtResource("2_0wfyh")]
 z_index = -1
 position = Vector2(52, 397)
+rotation = 0.29093677
 scale = Vector2(8.559999, 1)
 
 [node name="ObstacleNotFull" parent="." unique_id=767406574 instance=ExtResource("3_sugp2")]
@@ -26,5 +27,5 @@ position = Vector2(907, 414)
 position = Vector2(1025, 407)
 
 [node name="Obstacle3" parent="." unique_id=967182385 instance=ExtResource("2_0wfyh")]
-position = Vector2(442, 296)
+position = Vector2(700, 300)
 scale = Vector2(1, 0.68000245)

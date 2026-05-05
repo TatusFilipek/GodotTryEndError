@@ -129,3 +129,4 @@ func SetLedgeOffset(ledgePos : Vector2) -> Vector2:
 #NOTE:
 	#if there is a bug that stops me whenever im jumping just like in the other game i made that means i have to remove the line that sets velocity to zero whenever i enter any idle state
 	#rolling when crouching or idle and dashing in every other state
+	#add a raycast checking for floor infront of me if it isnt found then enter inairstate if it is then decend the slope normally
