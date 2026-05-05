@@ -1033,16 +1033,6 @@ modulate = Color(0, 0, 0, 1)
 position = Vector2(16, -48)
 target_position = Vector2(15, 0)
 
-[node name="CheckPostWall" type="RayCast2D" parent="." unique_id=1509780365]
-modulate = Color(0, 0, 0, 1)
-position = Vector2(16, -48)
-target_position = Vector2(85, 0)
-
-[node name="CheckCeil" type="RayCast2D" parent="." unique_id=291518083]
-modulate = Color(0, 0, 0, 1)
-position = Vector2(76, -48)
-target_position = Vector2(0, -90)
-
 [node name="CheckLedge" type="RayCast2D" parent="." unique_id=922726246]
 modulate = Color(0, 0, 0, 1)
 position = Vector2(26, -39)

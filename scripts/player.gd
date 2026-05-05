@@ -32,8 +32,6 @@ var jumpInputBufferTimer = 0
 @export var CheckWall : RayCast2D
 @export var CheckLedge : RayCast2D
 @export var CheckHead : RayCast2D
-@export var CheckCeil : RayCast2D
-@export var CheckPostWall : RayCast2D
 @export var CheckSpace : ShapeCast2D
 @export var Collider : CollisionShape2D
 
@@ -50,8 +48,6 @@ func _ready() -> void:
 	CheckLedge = get_node("CheckLedge")
 	CheckWall = get_node("CheckWall")
 	CheckHead = get_node("CheckHead")
-	CheckCeil = get_node("CheckCeil")
-	CheckPostWall = get_node("CheckPostWall")
 	CheckSpace = get_node("CheckSpace")
 	Collider = get_node("collider")
 
@@ -88,10 +84,6 @@ func GetSpriteOrientation() -> void:
 			CheckWall.position.x *= -1
 			CheckHead.target_position.x *= -1
 			CheckHead.position.x *= -1
-			CheckCeil.target_position.x *= -1
-			CheckCeil.position.x *= -1
-			CheckPostWall.target_position.x *= -1
-			CheckPostWall.position.x *= -1
 			CheckSpace.target_position.x *= -1
 			CheckSpace.position.x *= -1
 
