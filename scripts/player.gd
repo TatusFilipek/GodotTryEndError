@@ -41,8 +41,6 @@ var sprite : AnimatedSprite2D
 
 var jumping : bool = false
 
-var postAnimPos : Vector2
-
 func _ready() -> void:
 	sprite = get_node("AnimatedSprite2D")
 	CheckLedge = get_node("CheckLedge")

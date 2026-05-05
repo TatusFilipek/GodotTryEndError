@@ -39,12 +39,6 @@ func physics_update(_delta: float) -> void:
 		rayPosition.x += core.CheckWall.position.x + 17 * core.facingDirection
 		rayPosition.y += core.CheckLedge.position.y
 		
-		core.postAnimPos = rayPosition
-		
-		#core.position = rayPosition
-		
-		#machine.change_state("Idle")
-		
 		#var newRayCast = RayCast2D.new()
 		#newRayCast.position = rayPosition
 		#
