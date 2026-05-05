@@ -46,6 +46,8 @@ var sprite : AnimatedSprite2D
 var jumping : bool = false
 var canChangeDir : bool = true
 
+var spriteRotation : float
+
 func _ready() -> void:
 	sprite = get_node("AnimatedSprite2D")
 	CheckLedge = get_node("CheckLedge")
@@ -77,9 +79,14 @@ func MovementDirection() -> float:
 	return movementDirection
 	
 func GetSpriteOrientation() -> void:
+	CheckFloorBack.force_raycast_update()
+	CheckFloorFront.force_raycast_update()
+	
 	if is_on_floor_only() and CheckFloorFront.is_colliding() and CheckFloorBack.is_colliding():
-		sprite.rotation = get_floor_angle(Vector2(0, -1))
-		#sprite.rotate(get_floor_angle(Vector2(0, -1)))
+		spriteRotation = abs(CheckFloorFront.get_collision_point().y - CheckFloorBack.get_collision_point().y) * .03
+		
+		sprite.rotation = spriteRotation
+		#sprite.rotate(spriteRotation)
 	else:
 		sprite.rotation = 0
 		
@@ -141,12 +148,10 @@ func CalcGravity() -> float:
 	return gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
 
 #TODO:
-	#add ledge grab and ledge climb
-	#add dashing or rolling i will decide later
 	#add a camera that follows a player
+	#add dashing or rolling i will decide later
 	#add an enemy
 	#add a core that all entities will have
-	#before playing the animation check if the state needs to be changed
 
 #NOTE:
 	#if there is a bug that stops me whenever im jumping just like in the other game i made that means i have to remove the line that sets velocity to zero whenever i enter any idle state

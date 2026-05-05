@@ -1307,6 +1307,7 @@ radius = 16.0
 height = 96.0
 
 [node name="Player" type="CharacterBody2D" unique_id=97587854 node_paths=PackedStringArray("CheckWall", "CheckLedge", "CheckHead", "CheckFloorFront", "CheckFloorBack", "CheckSpace", "Collider", "Sprite")]
+floor_snap_length = 15.0
 script = ExtResource("1_0wfyh")
 sprintMovementMult = 1.75
 jumpForce = 500
@@ -1331,13 +1332,13 @@ target_position = Vector2(15, 0)
 
 [node name="CheckFloorFront" type="RayCast2D" parent="." unique_id=1992772984]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(16, 30)
-target_position = Vector2(0, 31)
+position = Vector2(16, 31)
+target_position = Vector2(0, 30)
 
 [node name="CheckFloorBack" type="RayCast2D" parent="." unique_id=723136818]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(-16, 30)
-target_position = Vector2(0, 31)
+position = Vector2(-16, 31)
+target_position = Vector2(0, 30)
 
 [node name="CheckHead" type="RayCast2D" parent="." unique_id=566196917]
 modulate = Color(0, 0, 0, 1)
