@@ -32,7 +32,8 @@ var jumpInputBufferTimer = 0
 @export var CheckWall : RayCast2D
 @export var CheckLedge : RayCast2D
 @export var CheckHead : RayCast2D
-@export var CheckFloor : RayCast2D
+@export var CheckFloorFront : RayCast2D
+@export var CheckFloorBack : RayCast2D
 @export var CheckSpace : ShapeCast2D
 @export var Collider : CollisionShape2D
 @export var Sprite : AnimatedSprite2D
@@ -51,7 +52,8 @@ func _ready() -> void:
 	CheckWall = get_node("CheckWall")
 	CheckHead = get_node("CheckHead")
 	CheckSpace = get_node("CheckSpace")
-	CheckFloor = get_node("CheckFloor")
+	CheckFloorFront = get_node("CheckFloorFront")
+	CheckFloorBack = get_node("CheckFloorBack")
 	Collider = get_node("collider")
 	Sprite = get_node("AnimatedSprite2D")
 
@@ -75,9 +77,12 @@ func MovementDirection() -> float:
 	return movementDirection
 	
 func GetSpriteOrientation() -> void:
-	if is_on_floor() or CheckFloor.is_colliding():
-		print(get_floor_angle(Vector2(0, -1)))
-		sprite.rotate(get_floor_angle(Vector2(0, -1)))
+	if is_on_floor_only() and CheckFloorFront.is_colliding() and CheckFloorBack.is_colliding():
+		sprite.rotation = get_floor_angle(Vector2(0, -1))
+		#sprite.rotate(get_floor_angle(Vector2(0, -1)))
+	else:
+		sprite.rotation = 0
+		
 	if canChangeDir:
 		if MovementDirection() != 0:
 			lastSpriteOrientation = (MovementDirection() < 0)
@@ -93,7 +98,8 @@ func GetSpriteOrientation() -> void:
 			CheckHead.position.x *= -1
 			CheckSpace.target_position.x *= -1
 			CheckSpace.position.x *= -1
-			CheckFloor.position.x *= -1
+			CheckFloorFront.position.x *= -1
+			CheckFloorBack.position.x *= -1
 
 func IsLedgeDetected() -> bool:
 	CheckWall.force_raycast_update()
@@ -145,4 +151,3 @@ func CalcGravity() -> float:
 #NOTE:
 	#if there is a bug that stops me whenever im jumping just like in the other game i made that means i have to remove the line that sets velocity to zero whenever i enter any idle state
 	#rolling when crouching or idle and dashing in every other state
-	#add a raycast checking for floor infront of me if it isnt found then enter inairstate if it is then decend the slope normally
