@@ -3,8 +3,9 @@ class_name LedgeClimb
 
 #TODO: Fix this shit asap
 #fixxed somehow but still its not optimised, i could save the last ledge pos to a variable so i dont have to use the same function twice
+#fixxed everything including animation
+#NOTE: can still tinker with the offsets, they arent perfect, they could be better
 
-var ledgePos : Vector2
 var postAnimPos : Vector2
 
 func enter() -> void:
@@ -16,10 +17,7 @@ func enter() -> void:
 	postAnimPos = core.GetLedgePosition()
 	
 	postAnimPos.x += core.CheckWall.position.x + 17 * core.facingDirection
-	postAnimPos.y += core.CheckLedge.position.y
-		
-	#core.position = postAnimPos
-	
+	postAnimPos.y += core.CheckLedge.position.y - 7
 	pass
 
 func exit() -> void:

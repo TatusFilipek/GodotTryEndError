@@ -36,12 +36,9 @@ func physics_update(_delta: float) -> void:
 		
 		rayPosition = ledgePos
 		
-		rayPosition.x += core.CheckWall.position.x + 17 * core.facingDirection
-		rayPosition.y += core.CheckLedge.position.y
+		rayPosition.x += 2*(core.CheckWall.position.x + 17 * core.facingDirection)
+		rayPosition.y += 2*(core.CheckLedge.position.y)
 		
-		#var newRayCast = RayCast2D.new()
-		#newRayCast.position = rayPosition
-		#
 		machine.change_state("LedgeClimb")
 		return
 	

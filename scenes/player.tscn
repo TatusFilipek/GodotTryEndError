@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://bl1pu4bo1b8v6" path="res://scripts/idle.gd" id="4_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://1f1yfkkkni6i" path="res://resources/PaidCharacter/Idle/Player Idle 48x48.png" id="5_a8ls1"]
 [ext_resource type="Script" uid="uid://cgbkl5js40oui" path="res://scripts/walk.gd" id="5_qlg0r"]
-[ext_resource type="Texture2D" uid="uid://61n3ptcvm8mq" path="res://resources/PaidCharacter/Ledge Grab-Climb/player ledge climb 48x48.png" id="6_60mlk"]
 [ext_resource type="Script" uid="uid://dhhhm4p43sjki" path="res://scripts/fallIdle.gd" id="6_tuyoq"]
 [ext_resource type="Script" uid="uid://vp0ng54ecqcr" path="res://scripts/fallMove.gd" id="7_fjrip"]
 [ext_resource type="Texture2D" uid="uid://bynxqffhb2wes" path="res://resources/PaidCharacter/Slide/Player Slide 48x48.png" id="7_fulsm"]
@@ -166,26 +165,6 @@ region = Rect2(192, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_tk41t"]
 atlas = ExtResource("7_qfm1y")
 region = Rect2(240, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hhpqf"]
-atlas = ExtResource("6_60mlk")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g5jhy"]
-atlas = ExtResource("6_60mlk")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_holxr"]
-atlas = ExtResource("6_60mlk")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mx1m4"]
-atlas = ExtResource("6_60mlk")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4gjji"]
-atlas = ExtResource("6_60mlk")
-region = Rect2(192, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u2ulf"]
 atlas = ExtResource("7_i4ail")
@@ -436,26 +415,6 @@ animations = [{
 "loop": true,
 "name": &"InAir",
 "speed": 6.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hhpqf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_g5jhy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_holxr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mx1m4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4gjji")
-}],
-"loop": true,
-"name": &"Ledge",
-"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
