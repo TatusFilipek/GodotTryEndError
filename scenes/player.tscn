@@ -1306,12 +1306,15 @@ _data = {
 radius = 16.0
 height = 94.0
 
-[node name="Player" type="CharacterBody2D" unique_id=97587854 node_paths=PackedStringArray("CheckWall", "CheckLedge", "Collider")]
+[node name="Player" type="CharacterBody2D" unique_id=97587854 node_paths=PackedStringArray("CheckWall", "CheckLedge", "CheckHead", "CheckFloor", "CheckSpace", "Collider")]
 script = ExtResource("1_0wfyh")
 sprintMovementMult = 1.75
 jumpForce = 500
 CheckWall = NodePath("CheckWall")
 CheckLedge = NodePath("CheckLedge")
+CheckHead = NodePath("CheckHead")
+CheckFloor = NodePath("CheckFloor")
+CheckSpace = NodePath("CheckSpace")
 Collider = NodePath("collider")
 
 [node name="CheckSpace" type="ShapeCast2D" parent="." unique_id=2018620845]
@@ -1323,6 +1326,11 @@ target_position = Vector2(70, 0)
 modulate = Color(0, 0, 0, 1)
 position = Vector2(16, -31)
 target_position = Vector2(15, 0)
+
+[node name="CheckFloor" type="RayCast2D" parent="." unique_id=1992772984]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(16, 46)
+target_position = Vector2(0, 15)
 
 [node name="CheckHead" type="RayCast2D" parent="." unique_id=566196917]
 modulate = Color(0, 0, 0, 1)

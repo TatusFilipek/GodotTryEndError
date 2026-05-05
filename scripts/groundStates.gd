@@ -12,7 +12,7 @@ func exit() -> void:
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
-	if not core.is_on_floor():
+	if not core.is_on_floor() and not core.CheckFloor.is_colliding():
 		machine.change_state("FallIdle")
 		return
 		
@@ -25,5 +25,6 @@ func physics_update(_delta: float) -> void:
 	if core.is_on_wall():
 		machine.change_state("WallTouch")
 		return
-
+	
+	core.velocity.y += core.CalcGravity() * _delta; # Gravity
 	pass

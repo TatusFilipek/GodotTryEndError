@@ -32,8 +32,10 @@ var jumpInputBufferTimer = 0
 @export var CheckWall : RayCast2D
 @export var CheckLedge : RayCast2D
 @export var CheckHead : RayCast2D
+@export var CheckFloor : RayCast2D
 @export var CheckSpace : ShapeCast2D
 @export var Collider : CollisionShape2D
+@export var Sprite : AnimatedSprite2D
 
 var lastSpriteOrientation : bool
 var facingDirection = 1
@@ -49,7 +51,9 @@ func _ready() -> void:
 	CheckWall = get_node("CheckWall")
 	CheckHead = get_node("CheckHead")
 	CheckSpace = get_node("CheckSpace")
+	CheckFloor = get_node("CheckFloor")
 	Collider = get_node("collider")
+	Sprite = get_node("AnimatedSprite2D")
 
 # physics update
 func _physics_process(delta: float) -> void:
@@ -71,6 +75,9 @@ func MovementDirection() -> float:
 	return movementDirection
 	
 func GetSpriteOrientation() -> void:
+	if is_on_floor() or CheckFloor.is_colliding():
+		print(get_floor_angle(Vector2(0, -1)))
+		sprite.rotate(get_floor_angle(Vector2(0, -1)))
 	if canChangeDir:
 		if MovementDirection() != 0:
 			lastSpriteOrientation = (MovementDirection() < 0)
@@ -86,6 +93,7 @@ func GetSpriteOrientation() -> void:
 			CheckHead.position.x *= -1
 			CheckSpace.target_position.x *= -1
 			CheckSpace.position.x *= -1
+			CheckFloor.position.x *= -1
 
 func IsLedgeDetected() -> bool:
 	CheckWall.force_raycast_update()
@@ -117,6 +125,14 @@ func SetLedgeOffset(ledgePos : Vector2) -> Vector2:
 	ledgePos.y -= CheckLedge.position.y
 	
 	return ledgePos
+
+func CalcGravity() -> float:
+	var gravityMultiplier = normalGravityMult
+	if not is_on_floor():
+		if(velocity.y <= -gravityBuffer): gravityMultiplier = normalGravityMult
+		else: if(velocity.y > -gravityBuffer): gravityMultiplier = fallingGravityMult
+		
+	return gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
 
 #TODO:
 	#add ledge grab and ledge climb

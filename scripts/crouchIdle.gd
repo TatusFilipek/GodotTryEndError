@@ -5,7 +5,6 @@ func enter() -> void:
 	super.enter()
 	
 	playback.travel("CrouchIdle")
-	#core.velocity.x = 0
 
 func exit() -> void:
 	super.exit()

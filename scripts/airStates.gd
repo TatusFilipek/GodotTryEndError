@@ -22,12 +22,11 @@ func physics_update(_delta: float) -> void:
 		return
 	
 	#check for ledge and if ledge detected grab on it
-	
 	if core.IsLedgeDetected() and core.MovementDirection() != 0 and core.velocity.y > 0:
 		machine.change_state("LedgeGrab")
 		return
 		
-	core.velocity.y += CalcGravity() * _delta; # Gravity
+	core.velocity.y += core.CalcGravity() * _delta; # Gravity
 	
 	VariableJumpHeight()
 	SuperDuperAirStateAnims()
@@ -51,11 +50,3 @@ func SuperDuperAirStateAnims():
 				playback.travel("InAirDownApex")
 			else:
 				playback.travel("InAirUpApex")
-
-func CalcGravity() -> float:
-	var gravityMultiplier = core.normalGravityMult
-	if not core.is_on_floor():
-		if(core.velocity.y <= -core.gravityBuffer): gravityMultiplier = core.normalGravityMult
-		else: if(core.velocity.y > -core.gravityBuffer): gravityMultiplier = core.fallingGravityMult
-		
-	return gravityMultiplier * core.gravityForce + core.velocity.y * gravityMultiplier/100
