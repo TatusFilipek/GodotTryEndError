@@ -3,8 +3,6 @@ class_name FallIdle
 
 func enter() -> void:
 	super.enter()
-	
-	#core.velocity.x = 0
 
 func exit() -> void:
 	super.exit()
@@ -15,3 +13,5 @@ func physics_update(_delta: float) -> void:
 	
 	if core.MovementDirection() != 0:
 		machine.change_state("FallMove")
+	
+	core.velocity.x = 0

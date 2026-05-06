@@ -20,3 +20,5 @@ func physics_update(_delta: float) -> void:
 	if not Input.is_action_pressed("crouch"):
 		machine.change_state("Idle")
 		return
+	
+	core.velocity.x = 0

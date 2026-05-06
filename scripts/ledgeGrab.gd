@@ -30,7 +30,6 @@ func physics_update(_delta: float) -> void:
 		machine.change_state("FallIdle")
 		return
 	
-	#if sign(core.MovementDirection()) == sign(core.CheckWall.target_position.x) and Input.is_action_pressed("moveUp"):
 	if Input.is_action_pressed("moveUp") and core.IsSpaceToClimb():
 		machine.change_state("LedgeClimb")
 		return

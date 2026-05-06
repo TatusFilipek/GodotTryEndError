@@ -5,7 +5,6 @@ func enter() -> void:
 	super.enter()
 	
 	playback.travel("Idle")
-	#core.velocity.x = 0
 
 func exit() -> void:
 	super.exit()
@@ -21,3 +20,5 @@ func physics_update(_delta: float) -> void:
 	if Input.is_action_pressed("crouch"):
 		machine.change_state("CrouchIdle")
 		return
+	
+	core.velocity.x = 0

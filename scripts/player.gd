@@ -93,7 +93,7 @@ func _physics_process(delta: float) -> void:
 			dashUses = dashGroundUses
 		else:
 			dashUses = dashInAirUses
-	
+
 func MovementDirection() -> float:
 	var movementDirection = Input.get_axis("moveLeft", "moveRight")
 	return movementDirection

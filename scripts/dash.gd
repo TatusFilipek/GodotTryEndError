@@ -17,11 +17,14 @@ func enter() -> void:
 	
 	#fix direction calculation
 	dashDirection.x = core.MovementDirection()
+	if core.MovementDirection() == 0 and core.LookDirection() == 0:
+		dashDirection.x = core.facingDirection
 	dashDirection.y = core.LookDirection()
 	
 	#turn off player sticking to ground and such
 	
 	dashDirection = dashDirection.normalized()
+	print(dashDirection)
 	
 	core.velocity = dashDirection * core.dashVelocity
 	
@@ -40,10 +43,13 @@ func physics_update(_delta: float) -> void:
 	if core.dashTimer <= 0:
 		machine.change_state("Idle")
 		return
-	else:
-		core.dashTimer -= _delta
+	
+	core.dashTimer -= _delta
 	
 	if Input.is_action_pressed("feint"):
 		machine.change_state("Roll")
 		return
+	
+	if not core.is_on_floor() and not core.CheckFloorFront.is_colliding() and not core.CheckFloorBack.is_colliding():
+		core.velocity.y += core.CalcGravity() * _delta
 	pass

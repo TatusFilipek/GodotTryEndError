@@ -11,8 +11,8 @@ func exit() -> void:
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
-	core.velocity.x = core.MovementDirection() * core.MovementSpeed * core.ALLMOVEMENTVARIABLE * _delta
 	if not isActive: return
+	core.velocity.x = core.MovementDirection() * core.MovementSpeed * core.ALLMOVEMENTVARIABLE * _delta
 	
 	if Input.is_action_pressed("sprint"):
 		machine.change_state("Run")
