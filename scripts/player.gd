@@ -15,6 +15,11 @@ class_name Player
 @export var jumpForce = 150
 @export var jumpVelocityCut = 0.3
 
+@export var dashVelocity = 350
+@export var dashCooldown = 1.5
+@export var dashGroundUses = 2
+@export var dashInAirUses = 1
+
 @export var normalGravityMult = 10.0
 @export var fallingGravityMult = 20.2
 
@@ -44,6 +49,7 @@ var facingDirection = 1
 var sprite : AnimatedSprite2D
 
 var jumping : bool = false
+var dashing : bool = false
 var canChangeDir : bool = true
 
 var spriteRotation : float
@@ -148,11 +154,12 @@ func CalcGravity() -> float:
 	return gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
 
 #TODO:
-	#add a camera that follows a player
+	#resize collider when crouching 
+	#add more ifs for changing states
 	#add dashing or rolling i will decide later
 	#add an enemy
 	#add a core that all entities will have
 
 #NOTE:
 	#if there is a bug that stops me whenever im jumping just like in the other game i made that means i have to remove the line that sets velocity to zero whenever i enter any idle state
-	#rolling when crouching or idle and dashing in every other state
+	#do a normal dash but if one is cancelled u do a roll and dash cooldown is refreshed so you can dash again, only two dashes are allowed when on ground if in air only one and if dash is fully finished not cancelled all dashes are used and it is put on cooldown
