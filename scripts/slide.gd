@@ -28,9 +28,6 @@ func physics_update(_delta: float) -> void:
 	else:
 		core.velocity.x += core.facingDirection * (core.slideForce * (1 - -1 * core.spriteRotation) - abs(core.velocity.x)) * _delta
 	
-	if sign(core.velocity.x) != sign(core.facingDirection):
-		core.velocity.x *= -1
-	
 	if core.slideCancelVelocity > abs(core.velocity.x) and core.spriteRotation <= 0:
 		machine.change_state("Idle")
 		return
