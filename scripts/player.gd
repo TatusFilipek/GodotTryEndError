@@ -19,6 +19,9 @@ class_name Player
 @export var dashCooldown = 1.5
 @export var dashGroundUses = 2
 @export var dashInAirUses = 1
+@export var dashLen = 150
+var dashCooldownTimer = 0
+var dashUses = 0
 
 @export var normalGravityMult = 10.0
 @export var fallingGravityMult = 20.2
@@ -50,6 +53,7 @@ var sprite : AnimatedSprite2D
 
 var jumping : bool = false
 var dashing : bool = false
+var rolling : bool = false
 var canChangeDir : bool = true
 
 var spriteRotation : float
@@ -79,11 +83,28 @@ func _physics_process(delta: float) -> void:
 		jumpInputBufferTimer = jumpInputBuffer
 	else:
 		jumpInputBufferTimer -= delta
+	
+	if not dashing and not rolling:
+		dashCooldownTimer -= delta
+	
+	if dashCooldownTimer <= 0:
+		if is_on_floor() and CheckFloorFront.is_colliding() and CheckFloorBack.is_colliding():
+			dashUses = dashGroundUses
+		else:
+			dashUses = dashInAirUses
+	
+	#if Input.is_action_just_pressed("dash") and not dashing and not rolling:
+	
+	print(dashUses)
 
 func MovementDirection() -> float:
 	var movementDirection = Input.get_axis("moveLeft", "moveRight")
 	return movementDirection
-	
+
+func LookDirection() -> float:
+	var lookDirection = Input.get_axis("moveDown", "moveUp")
+	return lookDirection
+
 func GetSpriteOrientation() -> void:
 	CheckFloorBack.force_raycast_update()
 	CheckFloorFront.force_raycast_update()
@@ -122,7 +143,7 @@ func IsLedgeDetected() -> bool:
 func IsSpaceToClimb() -> bool:
 	CheckSpace.force_shapecast_update()
 	return not CheckSpace.is_colliding()
-	
+
 func GetLedgePosition() -> Vector2:
 	var ledgePos : Vector2
 	

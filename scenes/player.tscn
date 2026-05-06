@@ -26,6 +26,7 @@
 [ext_resource type="Script" uid="uid://bd8y141svybmq" path="res://scripts/ledgeClimb.gd" id="22_a38lo"]
 [ext_resource type="Script" path="res://scripts/wallTouch.gd" id="25_ke2ow"]
 [ext_resource type="Script" path="res://scripts/wallGrab.gd" id="26_ujl30"]
+[ext_resource type="Script" uid="uid://bpx3ue6tq56la" path="res://scripts/dash.gd" id="27_31cv2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i4ail"]
 size = Vector2(15, 90)
@@ -1409,3 +1410,8 @@ script = ExtResource("25_ke2ow")
 
 [node name="WallGrab" type="Node2D" parent="StateMachine" unique_id=132827733]
 script = ExtResource("26_ujl30")
+
+[node name="Dash" type="Node2D" parent="StateMachine" unique_id=638058683]
+script = ExtResource("27_31cv2")
+
+[node name="Roll" type="Node2D" parent="StateMachine" unique_id=1670216124]
