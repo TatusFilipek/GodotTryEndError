@@ -25,7 +25,11 @@ func physics_update(_delta: float) -> void:
 	if core.IsLedgeDetected() and core.MovementDirection() != 0 and core.velocity.y > 0:
 		machine.change_state("LedgeGrab")
 		return
-		
+	
+	if Input.is_action_just_pressed("dash") and not core.dashing and not core.rolling and core.dashUses > 0:
+		machine.change_state("Dash")
+		return
+	
 	core.velocity.y += core.CalcGravity() * _delta; # Gravity
 	
 	VariableJumpHeight()
