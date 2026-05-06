@@ -83,10 +83,10 @@ func GetSpriteOrientation() -> void:
 	CheckFloorFront.force_raycast_update()
 	
 	if is_on_floor_only() and CheckFloorFront.is_colliding() and CheckFloorBack.is_colliding():
-		spriteRotation = abs(CheckFloorFront.get_collision_point().y - CheckFloorBack.get_collision_point().y) * .03
+		spriteRotation = (CheckFloorFront.get_collision_point().y - CheckFloorBack.get_collision_point().y) * .03
 		
-		sprite.rotation = spriteRotation
-		#sprite.rotate(spriteRotation)
+		sprite.rotation = spriteRotation * facingDirection
+		#sprite.rotate(spriteRotation * facingDirection)
 	else:
 		sprite.rotation = 0
 		

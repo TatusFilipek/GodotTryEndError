@@ -1,6 +1,8 @@
 extends GroundState
 class_name Slide
 
+var velocityXSandBox : float
+
 func enter() -> void:
 	super.enter()
 	
@@ -19,12 +21,17 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: return
 	
-	core.velocity.x = sign(core.velocity.x) * (abs(core.velocity.x) - core.slideVelocityLoss * _delta)
+	#NOTE: this will need some fixxing
+	
+	if (1 - core.spriteRotation) >= 1:
+		core.velocity.x = core.facingDirection * (abs(core.velocity.x) - core.slideVelocityLoss * (1 - core.spriteRotation) * _delta)
+	else:
+		core.velocity.x += core.facingDirection * (core.slideForce * (1 - -1 * core.spriteRotation) - abs(core.velocity.x)) * _delta
 	
 	if sign(core.velocity.x) != sign(core.facingDirection):
 		core.velocity.x *= -1
 	
-	if core.slideCancelVelocity > abs(core.velocity.x):
+	if core.slideCancelVelocity > abs(core.velocity.x) and core.spriteRotation <= 0:
 		machine.change_state("Idle")
 		return
 	
