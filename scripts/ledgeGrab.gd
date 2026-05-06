@@ -1,17 +1,13 @@
 extends State
 class_name LedgeGrab
 
-var ledgePos : Vector2
-
 func enter() -> void:
 	super.enter()
 	
 	playback.travel("LedgeGrab")
 	core.velocity = Vector2.ZERO
 	
-	ledgePos = core.GetLedgePosition()
-	core.global_position = core.SetLedgeOffset(ledgePos)
-	
+	core.position = core.onLedgePosition
 	pass
 
 func exit() -> void:

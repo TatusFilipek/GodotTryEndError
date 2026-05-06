@@ -59,6 +59,9 @@ var canChangeDir : bool = true
 
 var spriteRotation : float
 
+var ledgePosition : Vector2
+var onLedgePosition : Vector2
+
 func _ready() -> void:
 	sprite = get_node("AnimatedSprite2D")
 	CheckLedge = get_node("CheckLedge")
@@ -103,8 +106,7 @@ func LookDirection() -> float:
 	return lookDirection
 
 func GetSpriteOrientation() -> void:
-	CheckFloorBack.force_raycast_update()
-	CheckFloorFront.force_raycast_update()
+	AllCheckUpdate()
 	
 	if is_on_floor_only() and CheckFloorFront.is_colliding() and CheckFloorBack.is_colliding():
 		spriteRotation = (CheckFloorFront.get_collision_point().y - CheckFloorBack.get_collision_point().y) * .03
@@ -133,28 +135,28 @@ func GetSpriteOrientation() -> void:
 			CheckFloorBack.position.x *= -1
 
 func IsLedgeDetected() -> bool:
-	CheckWall.force_raycast_update()
-	CheckHead.force_raycast_update()
-	return CheckWall.is_colliding() and not CheckHead.is_colliding()
+	AllCheckUpdate()
+	
+	var collision : bool = CheckWall.is_colliding() and not CheckHead.is_colliding()
+	
+	if collision == true:
+		SetLedgePosition()
+	
+	return collision
 
 func IsSpaceToClimb() -> bool:
-	CheckSpace.force_shapecast_update()
+	AllCheckUpdate()
 	return not CheckSpace.is_colliding()
 
-func GetLedgePosition() -> Vector2:
-	var ledgePos : Vector2
-	
-	CheckWall.force_raycast_update()
-	CheckLedge.force_raycast_update()
-	
+func SetLedgePosition() -> void:
 	#there is a bug where i jump from ledge to ledge and it doesnt set the new ledge position idk why
 	#bug fixxed
 	#NOTE: the couse of the bug was the length of the raycast. When checking for it the length must be the opposite of the offset for it to work correctly
 	
-	ledgePos.x = CheckWall.get_collision_point().x
-	ledgePos.y = CheckLedge.get_collision_point().y
+	ledgePosition.x = CheckWall.get_collision_point().x
+	ledgePosition.y = CheckLedge.get_collision_point().y
 	
-	return ledgePos
+	onLedgePosition = SetLedgeOffset(ledgePosition)
 
 func SetLedgeOffset(ledgePos : Vector2) -> Vector2:
 	#Player-Ledge offset idk how to calculate it smarter, will probably need to be fixxed later
@@ -170,6 +172,20 @@ func CalcGravity() -> float:
 		else: if(velocity.y > -gravityBuffer): gravityMultiplier = fallingGravityMult
 		
 	return gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
+
+func AllCheckUpdate() -> void:
+	CheckSpace.force_shapecast_update()
+	CheckSpace.force_update_transform()
+	CheckWall.force_raycast_update()
+	CheckWall.force_update_transform()
+	CheckFloorBack.force_raycast_update()
+	CheckFloorBack.force_update_transform()
+	CheckFloorFront.force_raycast_update()
+	CheckFloorFront.force_update_transform()
+	CheckHead.force_raycast_update()
+	CheckHead.force_update_transform()
+	CheckLedge.force_raycast_update()
+	CheckLedge.force_update_transform()
 
 #TODO:
 	#resize collider when crouching 

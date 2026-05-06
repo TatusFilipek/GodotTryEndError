@@ -15,7 +15,7 @@ func enter() -> void:
 	core.velocity = Vector2.ZERO
 	core.canChangeDir = false
 	
-	postAnimPos = core.GetLedgePosition()
+	postAnimPos = core.ledgePosition
 	
 	postAnimPos.x += core.CheckWall.position.x + 17 * core.facingDirection
 	postAnimPos.y += core.CheckLedge.position.y - 7

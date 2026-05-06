@@ -34,11 +34,7 @@ position = Vector2(907, 414)
 position = Vector2(1025, 407)
 
 [node name="Obstacle3" parent="." unique_id=967182385 instance=ExtResource("2_0wfyh")]
-position = Vector2(700, 300)
-scale = Vector2(1, 0.68000245)
-
-[node name="Obstacle5" parent="." unique_id=567600175 instance=ExtResource("2_0wfyh")]
-position = Vector2(712, 178.00002)
+position = Vector2(597, 357)
 scale = Vector2(1, 0.68000245)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1820339717 node_paths=PackedStringArray("followed")]

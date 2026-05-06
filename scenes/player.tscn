@@ -24,8 +24,8 @@
 [ext_resource type="Script" uid="uid://dpm8a2rnxl14j" path="res://scripts/run.gd" id="17_qfm1y"]
 [ext_resource type="Script" uid="uid://bntmo2bm6v3f4" path="res://scripts/ledgeGrab.gd" id="19_4r5pv"]
 [ext_resource type="Script" uid="uid://bd8y141svybmq" path="res://scripts/ledgeClimb.gd" id="22_a38lo"]
-[ext_resource type="Script" path="res://scripts/wallTouch.gd" id="25_ke2ow"]
-[ext_resource type="Script" path="res://scripts/wallGrab.gd" id="26_ujl30"]
+[ext_resource type="Script" uid="uid://cmy5pimb4msiu" path="res://scripts/wallTouch.gd" id="25_ke2ow"]
+[ext_resource type="Script" uid="uid://c8egsmms5t7tf" path="res://scripts/wallGrab.gd" id="26_ujl30"]
 [ext_resource type="Script" uid="uid://bpx3ue6tq56la" path="res://scripts/dash.gd" id="27_31cv2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i4ail"]
