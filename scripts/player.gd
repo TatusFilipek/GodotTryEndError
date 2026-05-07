@@ -65,6 +65,9 @@ var spriteRotation : float
 var ledgePosition : Vector2
 var onLedgePosition : Vector2
 
+var rollAnimFrame : int = 0
+var rollAnimProgress : float = 0
+
 func _ready() -> void:
 	sprite = get_node("AnimatedSprite2D")
 	CheckLedge = get_node("CheckLedge")

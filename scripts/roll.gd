@@ -1,7 +1,6 @@
 extends State
 class_name Roll
 
-
 func enter() -> void:
 	super.enter()
 	

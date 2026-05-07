@@ -6,6 +6,8 @@ func enter() -> void:
 	super.enter()
 	
 	playback.travel("RollInAir")
+	animation.set_frame_and_progress(core.rollAnimFrame, core.rollAnimProgress)
+	
 	pass
 
 func exit() -> void:
@@ -20,8 +22,15 @@ func physics_update(_delta: float) -> void:
 	
 	#TODO: fix later	
 	if core.isOnGround():
-		machine.change_state("Idle")
+		core.rollAnimFrame = animation.frame
+		core.rollAnimProgress = animation.frame_progress
+		
+		print(core.rollAnimFrame)
+		
+		machine.change_state("RollGround")
 		return
 
 func AnimationFinished() -> void:
+	core.rollAnimFrame = 0
+	core.rollAnimProgress = 0
 	machine.change_state("FallIdle")
