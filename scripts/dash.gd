@@ -2,8 +2,6 @@ extends State
 class_name Dash
 
 var dashDirection : Vector2
-var playerPositionStart : Vector2
-var playerPositionEnd : Vector2
 
 #TODO: fix being able to use dash twice while in the air when dashing from ground
 
@@ -36,6 +34,9 @@ func exit() -> void:
 	super.exit()
 	core.dashing = false
 	core.canChangeDir = true
+	
+	if not core.is_on_floor() and not core.CheckFloorBack.is_colliding() and not core.CheckFloorFront.is_colliding():
+		core.dashUses = 0
 	pass
 
 func physics_update(_delta: float) -> void:

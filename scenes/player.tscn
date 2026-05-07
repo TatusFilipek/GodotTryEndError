@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://1f1yfkkkni6i" path="res://resources/PaidCharacter/Idle/Player Idle 48x48.png" id="5_a8ls1"]
 [ext_resource type="Script" uid="uid://cgbkl5js40oui" path="res://scripts/walk.gd" id="5_qlg0r"]
 [ext_resource type="Script" uid="uid://dhhhm4p43sjki" path="res://scripts/fallIdle.gd" id="6_tuyoq"]
+[ext_resource type="Texture2D" uid="uid://uxyul2p0y4mp" path="res://resources/PaidCharacter/Roll/Player Roll 48x48.png" id="7_dt7fs"]
 [ext_resource type="Script" uid="uid://vp0ng54ecqcr" path="res://scripts/fallMove.gd" id="7_fjrip"]
 [ext_resource type="Texture2D" uid="uid://bynxqffhb2wes" path="res://resources/PaidCharacter/Slide/Player Slide 48x48.png" id="7_fulsm"]
 [ext_resource type="Texture2D" uid="uid://bbsi56vwwwedl" path="res://resources/PaidCharacter/Ledge Grab-Climb/LazyLedgeClimb4.png" id="7_i4ail"]
@@ -24,9 +25,10 @@
 [ext_resource type="Script" uid="uid://dpm8a2rnxl14j" path="res://scripts/run.gd" id="17_qfm1y"]
 [ext_resource type="Script" uid="uid://bntmo2bm6v3f4" path="res://scripts/ledgeGrab.gd" id="19_4r5pv"]
 [ext_resource type="Script" uid="uid://bd8y141svybmq" path="res://scripts/ledgeClimb.gd" id="22_a38lo"]
-[ext_resource type="Script" uid="uid://cmy5pimb4msiu" path="res://scripts/wallTouch.gd" id="25_ke2ow"]
+[ext_resource type="Script" path="res://scripts/wallTouch.gd" id="25_ke2ow"]
 [ext_resource type="Script" uid="uid://c8egsmms5t7tf" path="res://scripts/wallGrab.gd" id="26_ujl30"]
 [ext_resource type="Script" uid="uid://bpx3ue6tq56la" path="res://scripts/dash.gd" id="27_31cv2"]
+[ext_resource type="Script" uid="uid://dndphcfvsuwx" path="res://scripts/roll.gd" id="28_pf23h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i4ail"]
 size = Vector2(15, 90)
@@ -198,6 +200,34 @@ region = Rect2(192, 0, 48, 96)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ry8ed"]
 atlas = ExtResource("5_a8ls1")
 region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kft7l"]
+atlas = ExtResource("7_dt7fs")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2s4os"]
+atlas = ExtResource("7_dt7fs")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2em0j"]
+atlas = ExtResource("7_dt7fs")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qe2k6"]
+atlas = ExtResource("7_dt7fs")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_edwuo"]
+atlas = ExtResource("7_dt7fs")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5eiju"]
+atlas = ExtResource("7_dt7fs")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uukdq"]
+atlas = ExtResource("7_dt7fs")
+region = Rect2(288, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fuw3a"]
 atlas = ExtResource("8_fulsm")
@@ -546,6 +576,35 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_kft7l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2s4os")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2s4os")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2em0j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qe2k6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_edwuo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5eiju")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uukdq")
+}],
+"loop": false,
+"name": &"RollGround",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_fuw3a")
 }, {
 "duration": 1.0,
@@ -747,6 +806,9 @@ animation = &"LedgeClimb"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6e8lb"]
 animation = &"LedgeGrab"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3k3j0"]
+animation = &"RollGround"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fulsm"]
 animation = &"Run"
 
@@ -769,7 +831,7 @@ animation = &"WallTouch"
 states/CrouchIdle/node = SubResource("AnimationNodeAnimation_60mlk")
 states/CrouchIdle/position = Vector2(317, 27)
 states/CrouchWalk/node = SubResource("AnimationNodeAnimation_i4ail")
-states/CrouchWalk/position = Vector2(429, 164)
+states/CrouchWalk/position = Vector2(413, 164)
 states/End/position = Vector2(1244, 113)
 states/Idle/node = SubResource("AnimationNodeAnimation_3v2ag")
 states/Idle/position = Vector2(317, 98)
@@ -785,6 +847,8 @@ states/LedgeClimb/node = SubResource("AnimationNodeAnimation_u2ulf")
 states/LedgeClimb/position = Vector2(802, 27)
 states/LedgeGrab/node = SubResource("AnimationNodeAnimation_6e8lb")
 states/LedgeGrab/position = Vector2(802, 85)
+states/RollGround/node = SubResource("AnimationNodeAnimation_3k3j0")
+states/RollGround/position = Vector2(532, 156)
 states/Run/node = SubResource("AnimationNodeAnimation_fulsm")
 states/Run/position = Vector2(429, 20)
 states/Slide/node = SubResource("AnimationNodeAnimation_hhpqf")
@@ -1104,6 +1168,49 @@ tracks/1/keys = {
 "values": [&"Walk"]
 }
 
+[sub_resource type="Animation" id="Animation_0bpox"]
+resource_name = "RollGround"
+length = 0.66667503
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"RollGround"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.4166667, 0.5, 0.5833334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("StateMachine/Roll")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5833333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"AnimationFinished"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_fulsm"]
 resource_name = "Run"
 length = 0.66667503
@@ -1296,6 +1403,7 @@ _data = {
 &"LedgeClimb": SubResource("Animation_lxlsd"),
 &"LedgeGrab": SubResource("Animation_ha2mi"),
 &"RESET": SubResource("Animation_3v2ag"),
+&"RollGround": SubResource("Animation_0bpox"),
 &"Run": SubResource("Animation_fulsm"),
 &"Slide": SubResource("Animation_g5jhy"),
 &"Walk": SubResource("Animation_irpag"),
@@ -1415,3 +1523,4 @@ script = ExtResource("26_ujl30")
 script = ExtResource("27_31cv2")
 
 [node name="Roll" type="Node2D" parent="StateMachine" unique_id=1670216124]
+script = ExtResource("28_pf23h")

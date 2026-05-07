@@ -24,6 +24,9 @@ var dashCooldownTimer = 0
 var dashTimer = 0
 var dashUses = 0
 
+@export var rollVelocityLoss = 800
+@export var rollVelocityTreshold = 50
+
 @export var normalGravityMult = 10.0
 @export var fallingGravityMult = 20.2
 
