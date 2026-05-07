@@ -180,6 +180,18 @@ func CalcGravity() -> float:
 		
 	return gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
 
+func isCollidingRaycast(raycast : RayCast2D) -> bool:
+	raycast.force_raycast_update()
+	raycast.force_update_transform()
+	
+	return raycast.is_colliding()
+
+func isCollidingShapecast(shapecast : ShapeCast2D) -> bool:
+	shapecast.force_shapecast_update()
+	shapecast.force_update_transform()
+	
+	return shapecast.is_colliding()
+
 func AllCheckUpdate() -> void:
 	CheckSpace.force_shapecast_update()
 	CheckSpace.force_update_transform()
@@ -195,6 +207,8 @@ func AllCheckUpdate() -> void:
 	CheckLedge.force_update_transform()
 
 #TODO:
+	#remake all collision checks madescripts:
+		#
 	#resize collider when crouching 
 	#add more ifs for changing states
 	#add dashing or rolling i will decide later
@@ -203,4 +217,4 @@ func AllCheckUpdate() -> void:
 
 #NOTE:
 	#if there is a bug that stops me whenever im jumping just like in the other game i made that means i have to remove the line that sets velocity to zero whenever i enter any idle state
-	#do a normal dash but if one is cancelled u do a roll and dash cooldown is refreshed so you can dash again, only two dashes are allowed when on ground if in air only one and if dash is fully finished not cancelled all dashes are used and it is put on cooldown
+	#insted checking all raycasts all the time create a function that gets a the raycast as a argument and forces update and outputs if it collides with something
