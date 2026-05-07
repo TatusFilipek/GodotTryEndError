@@ -50,6 +50,11 @@ var jumpInputBufferTimer = 0
 @export var Collider : CollisionShape2D
 @export var Sprite : AnimatedSprite2D
 
+@onready var label : Label = $CanvasLayer/DebugHelper
+@onready var animationPlayer : AnimationPlayer = $AnimationPlayer
+@onready var animationTree : AnimationTree = $AnimationTree
+@onready var playback : AnimationNodeStateMachinePlayback = animationTree.get("parameters/playback")
+
 var lastSpriteOrientation : bool
 var facingDirection = 1
 
@@ -65,8 +70,7 @@ var spriteRotation : float
 var ledgePosition : Vector2
 var onLedgePosition : Vector2
 
-var rollAnimFrame : int = 0
-var rollAnimProgress : float = 0
+var rollAnimFrame : float = 0
 
 func _ready() -> void:
 	sprite = get_node("AnimatedSprite2D")
@@ -83,6 +87,8 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	GetSpriteOrientation()
 	move_and_slide()
+	
+	label.text = "Animacja: %s | Klatka: %d" % [sprite.animation, sprite.frame]
 	
 	if isOnGround() or IsLedgeDetected():
 		coyoteTimer = coyoteTime

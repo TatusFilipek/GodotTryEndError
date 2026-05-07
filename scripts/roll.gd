@@ -24,3 +24,12 @@ func physics_update(_delta: float) -> void:
 	else:
 		core.velocity.x = 0
 	pass
+
+func SetAnimFrame(_time : float) -> void:
+	animationPlayer.seek(_time, true)
+
+func StartAnim(_time : float, _animName : String) -> void:
+	animationTree.active = false
+	
+	animationPlayer.play(_animName)
+	animationPlayer.seek(_time, true)
