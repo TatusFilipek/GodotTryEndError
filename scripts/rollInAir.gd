@@ -24,9 +24,7 @@ func physics_update(_delta: float) -> void:
 	if core.isOnGround():
 		core.rollAnimFrame = animation.frame
 		core.rollAnimProgress = animation.frame_progress
-		
-		print(core.rollAnimFrame)
-		
+				
 		machine.change_state("RollGround")
 		return
 

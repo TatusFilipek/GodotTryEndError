@@ -6,9 +6,7 @@ func enter() -> void:
 	super.enter()
 	
 	playback.travel("RollGround")
-	print(core.rollAnimFrame)
 	animation.set_frame_and_progress(core.rollAnimFrame, core.rollAnimProgress)
-	print(core.rollAnimFrame)
 	
 	pass
 
