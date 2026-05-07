@@ -12,10 +12,9 @@ func exit() -> void:
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
-	core.CheckFloorBack.force_raycast_update()
-	core.CheckFloorFront.force_raycast_update()
+	core.AllCheckUpdate()
 	
-	if not core.is_on_floor() and not core.CheckFloorFront.is_colliding() and not core.CheckFloorBack.is_colliding():
+	if not core.isOnGround():
 		machine.change_state("FallIdle")
 		return
 		

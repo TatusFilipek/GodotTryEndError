@@ -12,7 +12,7 @@ func exit() -> void:
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
-	if core.is_on_floor():
+	if core.isOnGround():
 		machine.change_state("Idle")
 		return
 	

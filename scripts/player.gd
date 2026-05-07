@@ -24,7 +24,7 @@ var dashCooldownTimer = 0
 var dashTimer = 0
 var dashUses = 0
 
-@export var rollVelocityLoss = 800
+@export var rollVelocityLoss = 1200
 @export var rollVelocityTreshold = 50
 
 @export var normalGravityMult = 10.0
@@ -81,7 +81,7 @@ func _physics_process(delta: float) -> void:
 	GetSpriteOrientation()
 	move_and_slide()
 	
-	if is_on_floor() or IsLedgeDetected():
+	if isOnGround() or IsLedgeDetected():
 		coyoteTimer = coyoteTime
 	else:
 		coyoteTimer -= delta
@@ -95,7 +95,7 @@ func _physics_process(delta: float) -> void:
 		dashCooldownTimer -= delta
 	
 	if dashCooldownTimer <= 0:
-		if is_on_floor() and CheckFloorFront.is_colliding() and CheckFloorBack.is_colliding():
+		if isOnGround():
 			dashUses = dashGroundUses
 		else:
 			dashUses = dashInAirUses
@@ -168,9 +168,13 @@ func SetLedgeOffset(ledgePos : Vector2) -> Vector2:
 	
 	return ledgePos
 
+func isOnGround() -> bool:
+	AllCheckUpdate()
+	return is_on_floor() and (CheckFloorBack.is_colliding() or CheckFloorFront.is_colliding())
+
 func CalcGravity() -> float:
 	var gravityMultiplier = normalGravityMult
-	if not is_on_floor():
+	if not isOnGround():
 		if(velocity.y <= -gravityBuffer): gravityMultiplier = normalGravityMult
 		else: if(velocity.y > -gravityBuffer): gravityMultiplier = fallingGravityMult
 		

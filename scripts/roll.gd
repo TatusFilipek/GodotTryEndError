@@ -1,4 +1,4 @@
-extends GroundState
+extends State
 class_name Roll
 
 
@@ -7,8 +7,6 @@ func enter() -> void:
 	
 	core.canChangeDir = false
 	core.rolling = true
-	
-	playback.travel("RollGround")
 	pass
 
 func exit() -> void:
@@ -27,6 +25,3 @@ func physics_update(_delta: float) -> void:
 	else:
 		core.velocity.x = 0
 	pass
-
-func AnimationFinished() -> void:
-	machine.change_state("Idle")

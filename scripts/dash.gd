@@ -51,8 +51,12 @@ func physics_update(_delta: float) -> void:
 	core.dashTimer -= _delta
 	
 	if Input.is_action_pressed("feint"):
-		machine.change_state("Roll")
-		return
+		if core.isOnGround():
+			machine.change_state("RollGround")
+			return
+		else:
+			machine.change_state("RollInAir")
+			return
 	
 	if not core.is_on_floor() and not core.CheckFloorFront.is_colliding() and not core.CheckFloorBack.is_colliding():
 		core.velocity.y += core.CalcGravity() * _delta
