@@ -5,6 +5,8 @@ var dashDirection : Vector2
 var playerPositionStart : Vector2
 var playerPositionEnd : Vector2
 
+#TODO: fix being able to use dash twice while in the air when dashing from ground
+
 func enter() -> void:
 	super.enter()
 	
@@ -42,6 +44,7 @@ func physics_update(_delta: float) -> void:
 	
 	if core.dashTimer <= 0:
 		machine.change_state("Idle")
+		core.dashUses = 0
 		return
 	
 	core.dashTimer -= _delta

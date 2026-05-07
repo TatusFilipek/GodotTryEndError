@@ -19,7 +19,7 @@ class_name Player
 @export var dashCooldown = 1.5
 @export var dashGroundUses = 2
 @export var dashInAirUses = 1
-@export var dashDuration = .5
+@export var dashDuration = .3
 var dashCooldownTimer = 0
 var dashTimer = 0
 var dashUses = 0
