@@ -32,5 +32,5 @@ func physics_update(_delta: float) -> void:
 
 func AnimationFinished() -> void:
 	core.rollAnimFrame = 0
-	animationPlayer.stop()
+	animationPlayer.pause()
 	machine.change_state("FallIdle")
