@@ -9,7 +9,6 @@ func enter() -> void:
 
 func exit() -> void:
 	super.exit()
-	animationTree.active = true
 	pass
 
 func physics_update(_delta: float) -> void:

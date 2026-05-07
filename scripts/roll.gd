@@ -1,6 +1,10 @@
 extends State
 class_name Roll
 
+#NOTE:
+	#wiem co sie dzieje animacja ustawia sie na dobra klatke ale w tym samym czasie animacja odpala sie od poczatku co powoduje ze skacze co jakis czas pomiedzy klatkami puki sie nie zakaczy
+	#AI mi to rozwiazalo ale szczerze to jest taki slop
+
 func enter() -> void:
 	super.enter()
 	
@@ -13,6 +17,7 @@ func exit() -> void:
 	
 	core.canChangeDir = true
 	core.rolling = false
+	animationTree.active = true
 	pass
 
 func physics_update(_delta: float) -> void:
