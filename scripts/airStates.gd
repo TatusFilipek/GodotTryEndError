@@ -12,6 +12,10 @@ func exit() -> void:
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
+	if not core.isCollidingShapecast(core.CheckSpaceCrouch):
+			core.resizeCollider(0)
+			core.isCrouching = false
+	
 	if core.isOnGround():
 		machine.change_state("Idle")
 		return

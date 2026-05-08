@@ -9,6 +9,10 @@ func enter() -> void:
 	core.canChangeDir = false
 	core.dashing = true
 	
+	#resizing colliders
+	if Input.is_action_pressed("crouch"):
+		core.resizeCollider(30)
+	
 	core.dashCooldownTimer = core.dashCooldown
 	core.dashUses -= 1
 	core.dashTimer = core.dashDuration

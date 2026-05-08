@@ -1552,7 +1552,7 @@ target_position = Vector2(15, 0)
 
 [node name="CheckWallBottom" type="RayCast2D" parent="." unique_id=1281354039]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(16, 23)
+position = Vector2(16, 15)
 target_position = Vector2(15, 0)
 
 [node name="CheckFloorFront" type="RayCast2D" parent="." unique_id=1992772984]

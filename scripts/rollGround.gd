@@ -1,7 +1,6 @@
 extends Roll
 class_name RollGround
 
-
 func enter() -> void:
 	super.enter()
 	StartAnim(float(core.rollAnimFrame) / 8, "RollGround")

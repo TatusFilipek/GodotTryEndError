@@ -26,4 +26,8 @@ func physics_update(_delta: float) -> void:
 		machine.change_state("WallGrab")
 		return
 	
+	if Input.is_action_pressed("crouch"):
+		machine.change_state("CrouchIdle")
+		return
+	
 	pass

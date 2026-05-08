@@ -12,6 +12,10 @@ func exit() -> void:
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
+	if not core.isCollidingShapecast(core.CheckSpaceCrouch) and not Input.is_action_pressed("crouch"):
+			core.resizeCollider(0)
+			core.isCrouching = false
+	
 	if not core.isOnGround():
 		machine.change_state("FallIdle")
 		return
@@ -26,7 +30,9 @@ func physics_update(_delta: float) -> void:
 		machine.change_state("Dash")
 		return
 	
-	if core.isOnWall():
-		machine.change_state("WallTouch")
+	if core.is_on_wall():
+		#check for wall on bottom
+		if core.isCollidingRaycast(core.CheckWallTop) and machine.current_state.name != "WallTouch":
+			machine.change_state("WallTouch")
 		return
 	pass

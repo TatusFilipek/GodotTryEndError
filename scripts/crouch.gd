@@ -4,8 +4,7 @@ class_name Crouch
 func enter() -> void:
 	super.enter()
 	#resize collider
-	core.Collider.shape.set("height", 66)
-	core.Collider.position.y = 15
+	core.resizeCollider(30)
 	core.isCrouching = true
 	pass
 
@@ -17,9 +16,8 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: 
 		#resize collider
-		if not core.isCollidingShapecast(core.CheckSpaceCrouch):
-			core.Collider.shape.set("height", 96)
-			core.Collider.position.y = 0
+		if not core.isCollidingShapecast(core.CheckSpaceCrouch) and not Input.is_action_pressed("crouch"):
+			core.resizeCollider(0)
 			core.isCrouching = false
 		return
 	pass
@@ -27,7 +25,6 @@ func physics_update(_delta: float) -> void:
 func changeState(_name) -> void:
 	#resize collider
 	if core.isCollidingShapecast(core.CheckSpaceCrouch): return
-	core.Collider.shape.set("height", 96)
-	core.Collider.position.y = 0
+	core.resizeCollider(0)
 	core.isCrouching = false
 	machine.change_state(_name)

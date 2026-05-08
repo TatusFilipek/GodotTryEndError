@@ -188,7 +188,12 @@ func isOnGroundFully() -> bool:
 	return is_on_floor_only() and isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
 
 func isOnWall() -> bool:
-	return isCollidingRaycast(CheckWallTop) and not isCrouching and is_on_wall()
+	#fix this
+	return isCollidingRaycast(CheckWallTop)
+
+func resizeCollider(_size : float) -> void:
+	Collider.shape.set("height", 96 - _size)
+	Collider.position.y = _size / 2
 
 func CalcGravity() -> float:
 	var gravityMultiplier = normalGravityMult
