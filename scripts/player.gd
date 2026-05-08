@@ -93,7 +93,7 @@ func _physics_process(delta: float) -> void:
 	GetSpriteOrientation()
 	move_and_slide()
 	
-	label.text = "Animacja: %s | Klatka: %d" % [sprite.animation, sprite.frame]
+	label.text = "Animacja: %s | Klatka: %d \nCrouching: %s \nDashing: %s \nJumping: %s \nRolling: %s" % [sprite.animation, sprite.frame, isCrouching, dashing, jumping, rolling]
 	
 	if isOnGround() or IsLedgeDetected():
 		coyoteTimer = coyoteTime
@@ -109,7 +109,7 @@ func _physics_process(delta: float) -> void:
 		dashCooldownTimer -= delta
 	
 	#Optimise this
-	if dashCooldownTimer <= 0:
+	if dashCooldownTimer <= 0 and dashUses <= dashGroundUses:
 		if isOnGround():
 			dashUses = dashGroundUses
 		else:
