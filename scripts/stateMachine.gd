@@ -34,11 +34,17 @@ func change_state(new_state_name: String) -> void:
 func actionExit() -> void:
 	if parent.isOnGround():
 		if parent.isCollidingShapecast(parent.CheckSpaceCrouch) or Input.is_action_pressed("crouch"):
-			change_state("CrouchIdle")
+			ChangeStateMoveOrIdle("CrouchIdle", "CrouchWalk")
 		else:
-			change_state("Idle")
+			ChangeStateMoveOrIdle("Idle", "Walk")
 	else:
-		change_state("FallIdle")
+		ChangeStateMoveOrIdle("FallIdle", "FallMove")
+
+func ChangeStateMoveOrIdle(idleStateName : String, moveStateName : String) -> void:
+	if parent.MovementDirection() != 0:
+		change_state(moveStateName)
+	else:
+		change_state(idleStateName)
 
 func _physics_process(delta: float) -> void:
 	if current_state:

@@ -7,7 +7,7 @@ func enter() -> void:
 	core.velocity.y = -core.jumpForce
 	core.jumping = true
 	
-	machine.change_state("FallIdle")
+	machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
 	
 func exit() -> void:
 	super.exit()

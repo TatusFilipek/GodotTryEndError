@@ -17,7 +17,7 @@ func physics_update(_delta: float) -> void:
 			core.isCrouching = false
 	
 	if core.isOnGround():
-		machine.change_state("Idle")
+		machine.ChangeStateMoveOrIdle("Idle", "Walk")
 		return
 	
 	if Input.is_action_just_pressed("jump") and core.coyoteTimer > 0:

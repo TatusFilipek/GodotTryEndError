@@ -19,11 +19,11 @@ func physics_update(_delta: float) -> void:
 	if not isActive: return
 	
 	if Input.is_action_pressed("moveDown"):
-		machine.change_state("FallIdle")
+		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
 		return
 	
 	if not core.IsLedgeDetected():
-		machine.change_state("FallIdle")
+		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
 		return
 	
 	if Input.is_action_pressed("moveUp") and core.IsSpaceToClimb():

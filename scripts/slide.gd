@@ -28,7 +28,7 @@ func physics_update(_delta: float) -> void:
 	
 	if core.slideCancelVelocity > abs(core.velocity.x) and core.spriteRotation <= 0:
 		if core.isCollidingShapecast(core.CheckSpaceCrouch):
-			machine.change_state("CrouchIdle")
+			machine.ChangeStateMoveOrIdle("CrouchIdle", "CrouchWalk")
 		else:
 			changeState("Idle")
 		return

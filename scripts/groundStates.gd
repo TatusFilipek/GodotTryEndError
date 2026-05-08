@@ -17,7 +17,7 @@ func physics_update(_delta: float) -> void:
 			core.isCrouching = false
 	
 	if not core.isOnGround():
-		machine.change_state("FallIdle")
+		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
 		return
 		
 	if core.CanJump() and not core.isCollidingShapecast(core.CheckSpaceCrouch):

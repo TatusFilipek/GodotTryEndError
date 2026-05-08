@@ -56,6 +56,7 @@ var jumpInputBufferTimer = 0
 @onready var animationPlayer : AnimationPlayer = $AnimationPlayer
 @onready var animationTree : AnimationTree = $AnimationTree
 @onready var playback : AnimationNodeStateMachinePlayback = animationTree.get("parameters/playback")
+@onready var machine : StateMachine = $StateMachine
 
 var lastSpriteOrientation : bool
 var facingDirection = 1
@@ -93,7 +94,8 @@ func _physics_process(delta: float) -> void:
 	GetSpriteOrientation()
 	move_and_slide()
 	
-	label.text = "Animacja: %s | Klatka: %d \nCrouching: %s \nDashing: %s \nJumping: %s \nRolling: %s" % [sprite.animation, sprite.frame, isCrouching, dashing, jumping, rolling]
+	if machine.current_state:
+		label.text = "Stan: %s | Animacja: %s | Klatka: %d \nCrouching: %s \nDashing: %s \nJumping: %s \nRolling: %s" % [machine.current_state.name, sprite.animation, sprite.frame, isCrouching, dashing, jumping, rolling]
 	
 	if isOnGround() or IsLedgeDetected():
 		coyoteTimer = coyoteTime
@@ -219,8 +221,7 @@ func isCollidingShapecast(shapecast : ShapeCast2D) -> bool:
 	return shapecast.is_colliding()
 
 #TODO:
-	#resize collider when crouching
-	#add more ifs for changing states
+	#krzysio mi powiedzial bym zamienil znaczna czesc ifow na elify i w sumie mialo by to sens
 	#add an enemy
 	#add a core that all entities will have
 

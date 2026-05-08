@@ -18,7 +18,7 @@ func physics_update(_delta: float) -> void:
 	if not isActive: return
 	
 	if not core.isOnWall():
-		machine.change_state("Idle")
+		machine.ChangeStateMoveOrIdle("Idle", "Walk")
 		return
 	
 	#NOTE: add a raycast that checks for a body that can be moved, and if it is found change state to WallGrab
@@ -27,7 +27,7 @@ func physics_update(_delta: float) -> void:
 		return
 	
 	if Input.is_action_pressed("crouch"):
-		machine.change_state("CrouchIdle")
+		machine.ChangeStateMoveOrIdle("CrouchIdle", "CrouchWalk")
 		return
 	
 	pass

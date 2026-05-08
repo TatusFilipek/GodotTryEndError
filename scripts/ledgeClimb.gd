@@ -33,4 +33,4 @@ func physics_update(_delta: float) -> void:
 
 func AnimationFinished() -> void:
 	core.position = postAnimPos
-	machine.change_state("Idle")
+	machine.ChangeStateMoveOrIdle("Idle", "Walk")
