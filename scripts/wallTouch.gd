@@ -17,7 +17,7 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: return
 	
-	if not core.isCollidingRaycast(core.CheckWall):
+	if not core.isOnWall():
 		machine.change_state("Idle")
 		return
 	

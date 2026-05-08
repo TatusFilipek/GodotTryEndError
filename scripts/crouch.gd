@@ -6,6 +6,7 @@ func enter() -> void:
 	#resize collider
 	core.Collider.shape.set("height", 66)
 	core.Collider.position.y = 15
+	core.isCrouching = true
 	pass
 
 func exit() -> void:
@@ -19,6 +20,7 @@ func physics_update(_delta: float) -> void:
 		if not core.isCollidingShapecast(core.CheckSpaceCrouch):
 			core.Collider.shape.set("height", 96)
 			core.Collider.position.y = 0
+			core.isCrouching = false
 		return
 	pass
 
@@ -27,4 +29,5 @@ func changeState(_name) -> void:
 	if core.isCollidingShapecast(core.CheckSpaceCrouch): return
 	core.Collider.shape.set("height", 96)
 	core.Collider.position.y = 0
+	core.isCrouching = false
 	machine.change_state(_name)

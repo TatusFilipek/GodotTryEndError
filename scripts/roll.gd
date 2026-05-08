@@ -8,6 +8,8 @@ class_name Roll
 func enter() -> void:
 	super.enter()
 	
+	#lower collider
+	
 	core.canChangeDir = false
 	core.rolling = true
 	pass

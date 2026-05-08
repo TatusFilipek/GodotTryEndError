@@ -17,7 +17,7 @@ func enter() -> void:
 	
 	postAnimPos = core.ledgePosition
 	
-	postAnimPos.x += core.CheckWall.position.x + 17 * core.facingDirection
+	postAnimPos.x += core.CheckWallTop.position.x + 17 * core.facingDirection
 	postAnimPos.y += core.CheckLedge.position.y - 7
 	pass
 

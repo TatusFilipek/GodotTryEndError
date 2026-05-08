@@ -1522,12 +1522,11 @@ _data = {
 &"WallTouch": SubResource("Animation_wnwbv")
 }
 
-[node name="Player" type="CharacterBody2D" unique_id=97587854 node_paths=PackedStringArray("CheckWall", "CheckLedge", "CheckHead", "CheckFloorFront", "CheckFloorBack", "CheckSpace", "Collider", "Sprite")]
+[node name="Player" type="CharacterBody2D" unique_id=97587854 node_paths=PackedStringArray("CheckLedge", "CheckHead", "CheckFloorFront", "CheckFloorBack", "CheckSpace", "Collider", "Sprite")]
 floor_snap_length = 15.0
 script = ExtResource("1_0wfyh")
 sprintMovementMult = 1.75
 jumpForce = 500
-CheckWall = NodePath("CheckWall")
 CheckLedge = NodePath("CheckLedge")
 CheckHead = NodePath("CheckHead")
 CheckFloorFront = NodePath("CheckFloorFront")
@@ -1546,9 +1545,14 @@ position = Vector2(0, -33)
 shape = SubResource("RectangleShape2D_gl8cc")
 target_position = Vector2(0, 0)
 
-[node name="CheckWall" type="RayCast2D" parent="." unique_id=425645109]
+[node name="CheckWallTop" type="RayCast2D" parent="." unique_id=425645109]
 modulate = Color(0, 0, 0, 1)
 position = Vector2(16, -31)
+target_position = Vector2(15, 0)
+
+[node name="CheckWallBottom" type="RayCast2D" parent="." unique_id=1281354039]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(16, 23)
 target_position = Vector2(15, 0)
 
 [node name="CheckFloorFront" type="RayCast2D" parent="." unique_id=1992772984]

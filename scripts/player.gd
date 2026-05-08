@@ -41,7 +41,8 @@ var jumpInputBufferTimer = 0
 
 @export var ALLMOVEMENTVARIABLE = 100
 
-@export var CheckWall : RayCast2D
+@export var CheckWallTop : RayCast2D
+@export var CheckWallBottom : RayCast2D
 @export var CheckLedge : RayCast2D
 @export var CheckHead : RayCast2D
 @export var CheckFloorFront : RayCast2D
@@ -64,6 +65,7 @@ var sprite : AnimatedSprite2D
 var jumping : bool = false
 var dashing : bool = false
 var rolling : bool = false
+var isCrouching : bool = false
 var canChangeDir : bool = true
 
 var spriteRotation : float
@@ -76,7 +78,8 @@ var rollAnimFrame : float = 0
 func _ready() -> void:
 	sprite = get_node("AnimatedSprite2D")
 	CheckLedge = get_node("CheckLedge")
-	CheckWall = get_node("CheckWall")
+	CheckWallTop = get_node("CheckWallTop")
+	CheckWallBottom = get_node("CheckWallBottom")
 	CheckHead = get_node("CheckHead")
 	CheckSpace = get_node("CheckSpace")
 	CheckSpaceCrouch = get_node("CheckSpaceCrouch")
@@ -136,11 +139,13 @@ func GetSpriteOrientation() -> void:
 			facingDirection = ceil(MovementDirection())
 		sprite.flip_h = lastSpriteOrientation
 		
-		if sign(CheckWall.target_position.x) != sign(facingDirection):
+		if sign(CheckWallTop.target_position.x) != sign(facingDirection):
 			CheckLedge.target_position.x *= -1
 			CheckLedge.position.x *= -1
-			CheckWall.target_position.x *= -1
-			CheckWall.position.x *= -1
+			CheckWallTop.target_position.x *= -1
+			CheckWallTop.position.x *= -1
+			CheckWallBottom.target_position.x *= -1
+			CheckWallBottom.position.x *= -1
 			CheckHead.target_position.x *= -1
 			CheckHead.position.x *= -1
 			CheckSpace.target_position.x *= -1
@@ -149,7 +154,7 @@ func GetSpriteOrientation() -> void:
 			CheckFloorBack.position.x *= -1
 
 func IsLedgeDetected() -> bool:
-	var collision : bool = isCollidingRaycast(CheckWall) and not isCollidingRaycast(CheckHead)
+	var collision : bool = isCollidingRaycast(CheckWallTop) and not isCollidingRaycast(CheckHead)
 	
 	if collision == true:
 		SetLedgePosition()
@@ -164,14 +169,14 @@ func SetLedgePosition() -> void:
 	#bug fixxed
 	#NOTE: the couse of the bug was the length of the raycast. When checking for it the length must be the opposite of the offset for it to work correctly
 	
-	ledgePosition.x = CheckWall.get_collision_point().x
+	ledgePosition.x = CheckWallTop.get_collision_point().x
 	ledgePosition.y = CheckLedge.get_collision_point().y
 	
 	onLedgePosition = SetLedgeOffset(ledgePosition)
 
 func SetLedgeOffset(ledgePos : Vector2) -> Vector2:
 	#Player-Ledge offset idk how to calculate it smarter, will probably need to be fixxed later
-	ledgePos.x -= CheckWall.position.x
+	ledgePos.x -= CheckWallTop.position.x
 	ledgePos.y -= CheckLedge.position.y
 	
 	return ledgePos
@@ -182,6 +187,9 @@ func isOnGround() -> bool:
 func isOnGroundFully() -> bool:
 	return is_on_floor_only() and isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
 
+func isOnWall() -> bool:
+	return isCollidingRaycast(CheckWallTop) and not isCrouching and is_on_wall()
+
 func CalcGravity() -> float:
 	var gravityMultiplier = normalGravityMult
 	if not isOnGround():
@@ -189,6 +197,9 @@ func CalcGravity() -> float:
 		else: if(velocity.y > -gravityBuffer): gravityMultiplier = fallingGravityMult
 		
 	return gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
+
+func CanJump() -> bool:
+	return jumpInputBufferTimer > 0 and coyoteTimer > 0
 
 func isCollidingRaycast(raycast : RayCast2D) -> bool:
 	raycast.force_raycast_update()

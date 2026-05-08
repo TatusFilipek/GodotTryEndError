@@ -3,8 +3,6 @@ class_name Dash
 
 var dashDirection : Vector2
 
-#TODO: fix being able to use dash twice while in the air when dashing from ground
-
 func enter() -> void:
 	super.enter()
 	
@@ -43,7 +41,7 @@ func physics_update(_delta: float) -> void:
 	if not isActive: return
 	
 	if core.dashTimer <= 0:
-		machine.change_state("Idle")
+		machine.actionExit()
 		core.dashUses = 0
 		return
 	

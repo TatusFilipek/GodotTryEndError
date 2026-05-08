@@ -16,7 +16,7 @@ func physics_update(_delta: float) -> void:
 		machine.change_state("FallIdle")
 		return
 		
-	if core.jumpInputBufferTimer > 0 and core.coyoteTimer > 0:
+	if core.CanJump() and not core.isCollidingShapecast(core.CheckSpaceCrouch):
 		core.coyoteTimer = 0
 		core.jumpInputBufferTimer = 0
 		machine.change_state("Jump")
@@ -26,7 +26,7 @@ func physics_update(_delta: float) -> void:
 		machine.change_state("Dash")
 		return
 	
-	if core.is_on_wall():
+	if core.isOnWall():
 		machine.change_state("WallTouch")
 		return
 	pass

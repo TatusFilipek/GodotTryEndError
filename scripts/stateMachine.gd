@@ -5,8 +5,10 @@ class_name StateMachine
 var current_state: State
 var lastState : State
 
+var parent : Player
+
 func _ready() -> void:
-	var parent = get_parent()
+	parent = get_parent()
 	var sprite = parent.get_node("AnimatedSprite2D")
 	var animationTree = parent.get_node("AnimationTree")
 	var playback = animationTree.get("parameters/playback")
@@ -28,6 +30,15 @@ func change_state(new_state_name: String) -> void:
 	lastState = current_state
 	current_state = newState
 	current_state.enter()
+
+func actionExit() -> void:
+	if parent.isOnGround():
+		if parent.isCollidingShapecast(parent.CheckSpaceCrouch):
+			change_state("CrouchIdle")
+		else:
+			change_state("Idle")
+	else:
+		change_state("FallIdle")
 
 func _physics_process(delta: float) -> void:
 	if current_state:
