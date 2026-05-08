@@ -1,4 +1,4 @@
-extends GroundState
+extends Crouch
 class_name CrouchIdle
 
 func enter() -> void:
@@ -18,7 +18,7 @@ func physics_update(_delta: float) -> void:
 		return
 		
 	if not Input.is_action_pressed("crouch"):
-		machine.change_state("Idle")
+		changeState("Idle")
 		return
 	
 	core.velocity.x = 0

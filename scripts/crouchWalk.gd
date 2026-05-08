@@ -1,4 +1,4 @@
-extends GroundState
+extends Crouch
 class_name CrouchWalk
 
 func enter() -> void:
@@ -16,7 +16,7 @@ func physics_update(_delta: float) -> void:
 		core.velocity.x = core.MovementDirection() * core.MovementSpeed * core.crouchMovementMult * core.ALLMOVEMENTVARIABLE * _delta
 	
 	if Input.is_action_pressed("sprint"):
-		machine.change_state("Run")
+		changeState("Run")
 		return
 	
 	if core.MovementDirection() == 0:
@@ -24,5 +24,5 @@ func physics_update(_delta: float) -> void:
 		return
 	
 	if not Input.is_action_pressed("crouch"):
-		machine.change_state("Walk")
+		changeState("Walk")
 		return

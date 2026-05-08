@@ -12,8 +12,6 @@ func exit() -> void:
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
-	core.AllCheckUpdate()
-	
 	if not core.isOnGround():
 		machine.change_state("FallIdle")
 		return

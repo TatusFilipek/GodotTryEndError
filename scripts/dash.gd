@@ -24,7 +24,6 @@ func enter() -> void:
 	#turn off player sticking to ground and such
 	
 	dashDirection = dashDirection.normalized()
-	print(dashDirection)
 	
 	core.velocity = dashDirection * core.dashVelocity
 	
@@ -35,7 +34,7 @@ func exit() -> void:
 	core.dashing = false
 	core.canChangeDir = true
 	
-	if not core.is_on_floor() and not core.CheckFloorBack.is_colliding() and not core.CheckFloorFront.is_colliding():
+	if not core.isOnGround():
 		core.dashUses = 0
 	pass
 
@@ -55,9 +54,10 @@ func physics_update(_delta: float) -> void:
 			machine.change_state("RollGround")
 			return
 		else:
+			core.dashUses = 0
 			machine.change_state("RollInAir")
 			return
 	
-	if not core.is_on_floor() and not core.CheckFloorFront.is_colliding() and not core.CheckFloorBack.is_colliding():
+	if not core.isOnGround():
 		core.velocity.y += core.CalcGravity() * _delta
 	pass

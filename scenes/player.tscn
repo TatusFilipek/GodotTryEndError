@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://cuouymd85u68j" path="res://resources/PaidCharacter/Walk/PlayerWalk 48x48.png" id="10_4r5pv"]
 [ext_resource type="Texture2D" uid="uid://bwq3bqw7mh6cj" path="res://resources/PaidCharacter/Push/player push 48x48.png" id="11_ke2ow"]
 [ext_resource type="Texture2D" uid="uid://cx47duirq554j" path="res://resources/PaidCharacter/PushPull (idle state)/player push idle 48x48.png" id="11_l71n6"]
+[ext_resource type="Shape2D" uid="uid://cxmh5s01mxaif" path="res://Colliders/playerFull.tres" id="15_gl8cc"]
 [ext_resource type="Script" uid="uid://dt4i2ifit1v28" path="res://scripts/crouchIdle.gd" id="15_oprun"]
 [ext_resource type="Script" uid="uid://smy5w2wn2om4" path="res://scripts/crouchWalk.gd" id="16_a8ls1"]
 [ext_resource type="Script" uid="uid://dqdxma8wlxahj" path="res://scripts/slide.gd" id="17_fulsm"]
@@ -1518,10 +1519,6 @@ _data = {
 &"WallTouch": SubResource("Animation_wnwbv")
 }
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sugp2"]
-radius = 16.0
-height = 96.0
-
 [node name="Player" type="CharacterBody2D" unique_id=97587854 node_paths=PackedStringArray("CheckWall", "CheckLedge", "CheckHead", "CheckFloorFront", "CheckFloorBack", "CheckSpace", "Collider", "Sprite")]
 floor_snap_length = 15.0
 script = ExtResource("1_0wfyh")
@@ -1580,7 +1577,7 @@ anim_player = NodePath("../AnimationPlayer")
 libraries/ = SubResource("AnimationLibrary_f1ej7")
 
 [node name="collider" type="CollisionShape2D" parent="." unique_id=1589755770]
-shape = SubResource("CapsuleShape2D_sugp2")
+shape = ExtResource("15_gl8cc")
 
 [node name="StateMachine" type="Node2D" parent="." unique_id=1853781325 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3_dqkch")

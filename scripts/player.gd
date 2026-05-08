@@ -103,6 +103,7 @@ func _physics_process(delta: float) -> void:
 	if not dashing and not rolling:
 		dashCooldownTimer -= delta
 	
+	#Optimise this
 	if dashCooldownTimer <= 0:
 		if isOnGround():
 			dashUses = dashGroundUses
@@ -118,9 +119,8 @@ func LookDirection() -> float:
 	return lookDirection
 
 func GetSpriteOrientation() -> void:
-	AllCheckUpdate()
-	
-	if is_on_floor_only() and CheckFloorFront.is_colliding() and CheckFloorBack.is_colliding():
+
+	if isOnGroundFully():
 		spriteRotation = (CheckFloorFront.get_collision_point().y - CheckFloorBack.get_collision_point().y) * .03
 		
 		sprite.rotation = spriteRotation * facingDirection
@@ -147,9 +147,7 @@ func GetSpriteOrientation() -> void:
 			CheckFloorBack.position.x *= -1
 
 func IsLedgeDetected() -> bool:
-	AllCheckUpdate()
-	
-	var collision : bool = CheckWall.is_colliding() and not CheckHead.is_colliding()
+	var collision : bool = isCollidingRaycast(CheckWall) and not isCollidingRaycast(CheckHead)
 	
 	if collision == true:
 		SetLedgePosition()
@@ -157,8 +155,7 @@ func IsLedgeDetected() -> bool:
 	return collision
 
 func IsSpaceToClimb() -> bool:
-	AllCheckUpdate()
-	return not CheckSpace.is_colliding()
+	return not isCollidingShapecast(CheckSpace)
 
 func SetLedgePosition() -> void:
 	#there is a bug where i jump from ledge to ledge and it doesnt set the new ledge position idk why
@@ -178,8 +175,10 @@ func SetLedgeOffset(ledgePos : Vector2) -> Vector2:
 	return ledgePos
 
 func isOnGround() -> bool:
-	AllCheckUpdate()
-	return is_on_floor() and (CheckFloorBack.is_colliding() or CheckFloorFront.is_colliding())
+	return is_on_floor() and (isCollidingRaycast(CheckFloorBack) or isCollidingRaycast(CheckFloorFront))
+
+func isOnGroundFully() -> bool:
+	return is_on_floor_only() and isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
 
 func CalcGravity() -> float:
 	var gravityMultiplier = normalGravityMult
@@ -201,29 +200,11 @@ func isCollidingShapecast(shapecast : ShapeCast2D) -> bool:
 	
 	return shapecast.is_colliding()
 
-func AllCheckUpdate() -> void:
-	CheckSpace.force_shapecast_update()
-	CheckSpace.force_update_transform()
-	CheckWall.force_raycast_update()
-	CheckWall.force_update_transform()
-	CheckFloorBack.force_raycast_update()
-	CheckFloorBack.force_update_transform()
-	CheckFloorFront.force_raycast_update()
-	CheckFloorFront.force_update_transform()
-	CheckHead.force_raycast_update()
-	CheckHead.force_update_transform()
-	CheckLedge.force_raycast_update()
-	CheckLedge.force_update_transform()
-
 #TODO:
-	#remake all collision checks madescripts:
-		#
-	#resize collider when crouching 
+	#resize collider when crouching
 	#add more ifs for changing states
-	#add dashing or rolling i will decide later
 	#add an enemy
 	#add a core that all entities will have
 
 #NOTE:
 	#if there is a bug that stops me whenever im jumping just like in the other game i made that means i have to remove the line that sets velocity to zero whenever i enter any idle state
-	#insted checking all raycasts all the time create a function that gets a the raycast as a argument and forces update and outputs if it collides with something
