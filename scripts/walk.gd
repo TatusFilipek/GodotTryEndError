@@ -7,7 +7,7 @@ func enter() -> void:
 	playback.travel("Walk")
 
 func exit() -> void:
-	super.enter()
+	super.exit()
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)

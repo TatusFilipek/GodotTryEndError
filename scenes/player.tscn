@@ -36,6 +36,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i4ail"]
 size = Vector2(15, 90)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gl8cc"]
+size = Vector2(32, 30)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_a8ls1"]
 atlas = ExtResource("2_f1ej7")
 region = Rect2(0, 0, 48, 48)
@@ -1537,6 +1540,11 @@ Sprite = NodePath("AnimatedSprite2D")
 position = Vector2(23, -92.5)
 shape = SubResource("RectangleShape2D_i4ail")
 target_position = Vector2(70, 0)
+
+[node name="CheckSpaceCrouch" type="ShapeCast2D" parent="." unique_id=1338192958]
+position = Vector2(0, -33)
+shape = SubResource("RectangleShape2D_gl8cc")
+target_position = Vector2(0, 0)
 
 [node name="CheckWall" type="RayCast2D" parent="." unique_id=425645109]
 modulate = Color(0, 0, 0, 1)

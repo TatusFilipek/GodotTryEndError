@@ -7,7 +7,7 @@ func enter() -> void:
 	playback.travel("CrouchWalk")
 
 func exit() -> void:
-	super.enter()
+	super.exit()
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
@@ -19,10 +19,10 @@ func physics_update(_delta: float) -> void:
 		machine.change_state("CrouchIdle")
 		return
 	
-	if Input.is_action_pressed("sprint"):
-		changeState("Run")
-		return
-	
 	if not Input.is_action_pressed("crouch"):
 		changeState("Walk")
+		return
+	
+	if Input.is_action_pressed("sprint"):
+		machine.change_state("Slide")
 		return

@@ -16,13 +16,15 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: 
 		#resize collider
-		core.Collider.shape.set("height", 96)
-		core.Collider.position.y = 0
+		if not core.isCollidingShapecast(core.CheckSpaceCrouch):
+			core.Collider.shape.set("height", 96)
+			core.Collider.position.y = 0
 		return
 	pass
 
 func changeState(_name) -> void:
 	#resize collider
+	if core.isCollidingShapecast(core.CheckSpaceCrouch): return
 	core.Collider.shape.set("height", 96)
 	core.Collider.position.y = 0
 	machine.change_state(_name)

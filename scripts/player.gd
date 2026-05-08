@@ -47,6 +47,7 @@ var jumpInputBufferTimer = 0
 @export var CheckFloorFront : RayCast2D
 @export var CheckFloorBack : RayCast2D
 @export var CheckSpace : ShapeCast2D
+@export var CheckSpaceCrouch : ShapeCast2D
 @export var Collider : CollisionShape2D
 @export var Sprite : AnimatedSprite2D
 
@@ -78,6 +79,7 @@ func _ready() -> void:
 	CheckWall = get_node("CheckWall")
 	CheckHead = get_node("CheckHead")
 	CheckSpace = get_node("CheckSpace")
+	CheckSpaceCrouch = get_node("CheckSpaceCrouch")
 	CheckFloorFront = get_node("CheckFloorFront")
 	CheckFloorBack = get_node("CheckFloorBack")
 	Collider = get_node("collider")

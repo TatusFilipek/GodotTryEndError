@@ -1,7 +1,5 @@
-extends GroundState
+extends Crouch
 class_name Slide
-
-var velocityXSandBox : float
 
 func enter() -> void:
 	super.enter()
@@ -29,11 +27,14 @@ func physics_update(_delta: float) -> void:
 		core.velocity.x += core.facingDirection * (core.slideForce * (1 - -1 * core.spriteRotation) - abs(core.velocity.x)) * _delta
 	
 	if core.slideCancelVelocity > abs(core.velocity.x) and core.spriteRotation <= 0:
-		machine.change_state("Idle")
+		if core.isCollidingShapecast(core.CheckSpaceCrouch):
+			machine.change_state("CrouchIdle")
+		else:
+			changeState("Idle")
 		return
 	
 	if not Input.is_action_pressed("crouch"):
-		machine.change_state("Idle")
+		changeState("Idle")
 		return
 	
 	#add leaping
