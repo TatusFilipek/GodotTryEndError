@@ -17,12 +17,7 @@ func physics_update(_delta: float) -> void:
 	
 	if Input.is_action_pressed("sprint"):
 		machine.change_state("Run")
-		return
-	
-	if core.MovementDirection() == 0:
+	elif core.MovementDirection() == 0:
 		machine.change_state("Idle")
-		return
-	
-	if Input.is_action_pressed("crouch"):
+	elif Input.is_action_pressed("crouch"):
 		machine.change_state("CrouchWalk")
-		return

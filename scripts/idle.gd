@@ -15,10 +15,6 @@ func physics_update(_delta: float) -> void:
 	
 	if core.MovementDirection() != 0:
 		machine.change_state("Walk")
-		return
-		
-	if Input.is_action_pressed("crouch"):
+	elif Input.is_action_pressed("crouch"):
 		machine.change_state("CrouchIdle")
-		return
-	
-	core.velocity.x = 0
+	else: core.velocity.x = 0

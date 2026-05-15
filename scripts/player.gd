@@ -226,4 +226,5 @@ func isCollidingShapecast(shapecast : ShapeCast2D) -> bool:
 	#add a core that all entities will have
 
 #NOTE:
+	#if a bug accurse that switches the animations or stops the character unnecceseraly i have to check the ifs and elifs for changing states becouse i can change state and the rest of the code still runs
 	#if there is a bug that stops me whenever im jumping just like in the other game i made that means i have to remove the line that sets velocity to zero whenever i enter any idle state

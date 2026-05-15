@@ -31,11 +31,8 @@ func physics_update(_delta: float) -> void:
 			machine.ChangeStateMoveOrIdle("CrouchIdle", "CrouchWalk")
 		else:
 			changeState("Idle")
-		return
-	
-	if not Input.is_action_pressed("crouch"):
+	elif not Input.is_action_pressed("crouch"):
 		changeState("Idle")
-		return
 	
 	#add leaping
 	#if core.jumpInputBufferTimer > 0 and core.coyoteTimer > 0:

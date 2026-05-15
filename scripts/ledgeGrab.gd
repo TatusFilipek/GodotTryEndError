@@ -20,19 +20,12 @@ func physics_update(_delta: float) -> void:
 	
 	if Input.is_action_pressed("moveDown"):
 		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
-		return
-	
-	if not core.IsLedgeDetected():
+	elif not core.IsLedgeDetected():
 		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
-		return
-	
-	if Input.is_action_pressed("moveUp") and core.IsSpaceToClimb():
+	elif Input.is_action_pressed("moveUp") and core.IsSpaceToClimb():
 		machine.change_state("LedgeClimb")
-		return
-	
-	#if there is space to fit a player and up and a certain direcion is pressed then go to ledge climb, if there isnt space or only up is pressed preform jump
-	if core.jumpInputBufferTimer > 0:
+	elif core.jumpInputBufferTimer > 0:
 		core.jumpInputBufferTimer = 0
 		machine.change_state("Jump")
-		return
+	#if there is space to fit a player and up and a certain direcion is pressed then go to ledge climb, if there isnt space or only up is pressed preform jump
 	pass

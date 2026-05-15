@@ -17,8 +17,6 @@ func physics_update(_delta: float) -> void:
 	
 	if core.MovementDirection() == 0:
 		machine.change_state("Idle")
-		return
-	
-	if Input.is_action_pressed("crouch") and abs(core.velocity.x) > core.slideCancelVelocity:
+	elif Input.is_action_pressed("crouch") and abs(core.velocity.x) > core.slideCancelVelocity:
 		machine.change_state("Slide")
 		return
