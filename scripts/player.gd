@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name Player
 
-@export var MovementSpeed = 75
+@export var MovementSpeed = 125
 @export var sprintMovementMult = 1.5
 @export var crouchMovementMult = .75
 
@@ -11,6 +11,7 @@ class_name Player
 @export var slideCancelVelocity = 40
 
 @export var gravityForce = 100
+@export var airDrag = 5
 
 @export var jumpForce = 150
 @export var jumpVelocityCut = 0.3
@@ -95,7 +96,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	if machine.current_state:
-		label.text = "Stan: %s | Animacja: %s | Klatka: %d \nCrouching: %s \nDashing: %s \nJumping: %s \nRolling: %s" % [machine.current_state.name, sprite.animation, sprite.frame, isCrouching, dashing, jumping, rolling]
+		label.text = "Stan: %s | Animacja: %s | Klatka: %d \nCrouching: %s \nDashing: %s \nJumping: %s \nRolling: %s \nXVelocity: %f \nYVelocity: %f" % [machine.current_state.name, sprite.animation, sprite.frame, isCrouching, dashing, jumping, rolling, velocity.x, velocity.y]
 	
 	if isOnGround() or IsLedgeDetected():
 		coyoteTimer = coyoteTime

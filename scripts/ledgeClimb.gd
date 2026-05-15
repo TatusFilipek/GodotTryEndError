@@ -18,7 +18,7 @@ func enter() -> void:
 	postAnimPos = core.ledgePosition
 	
 	postAnimPos.x += core.CheckWallTop.position.x + 17 * core.facingDirection
-	postAnimPos.y += core.CheckLedge.position.y - 7
+	postAnimPos.y += core.CheckLedge.position.y
 	pass
 
 func exit() -> void:
@@ -33,4 +33,4 @@ func physics_update(_delta: float) -> void:
 
 func AnimationFinished() -> void:
 	core.position = postAnimPos
-	machine.ChangeStateMoveOrIdle("Idle", "Walk")
+	machine.actionExit()

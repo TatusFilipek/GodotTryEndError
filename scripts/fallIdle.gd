@@ -14,4 +14,4 @@ func physics_update(_delta: float) -> void:
 	if core.MovementDirection() != 0:
 		machine.change_state("FallMove")
 	
-	core.velocity.x = 0
+	core.velocity.x -= core.velocity.x * core.airDrag * .5 * _delta

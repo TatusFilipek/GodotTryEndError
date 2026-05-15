@@ -12,14 +12,15 @@ func enter() -> void:
 
 func exit() -> void:
 	super.exit()
-	core.velocity.x = 0
+	#NOTE: REMEMBER ABOUT IT
+	#core.velocity.x = 0
 	pass
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: return
 	
-	#NOTE: this will need some fixxing
+	#NOTE: this will need some fixxing or mayve it is all right
 	
 	if (1 - core.spriteRotation) >= 1:
 		core.velocity.x = core.facingDirection * (abs(core.velocity.x) - core.slideVelocityLoss * (1 - core.spriteRotation) * _delta)

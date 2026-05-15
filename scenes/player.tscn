@@ -918,7 +918,7 @@ states/WallPush/node = SubResource("AnimationNodeAnimation_31cv2")
 states/WallPush/position = Vector2(654, 28)
 states/WallTouch/node = SubResource("AnimationNodeAnimation_pf23h")
 states/WallTouch/position = Vector2(654, 98)
-graph_offset = Vector2(-57, -3)
+graph_offset = Vector2(0.14543757, -20.397482)
 
 [sub_resource type="Animation" id="Animation_f1ej7"]
 resource_name = "CrouchIdle"
