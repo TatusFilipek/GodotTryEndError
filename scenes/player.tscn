@@ -484,7 +484,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ke2ow")
 }],
-"loop": true,
+"loop": 1,
 "name": &"CrouchIdle",
 "speed": 6.0
 }, {
@@ -519,7 +519,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bj30b")
 }],
-"loop": true,
+"loop": 1,
 "name": &"CrouchWalk",
 "speed": 12.0
 }, {
@@ -554,7 +554,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_42b1b")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Idle",
 "speed": 6.0
 }, {
@@ -577,7 +577,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tk41t")
 }],
-"loop": true,
+"loop": 1,
 "name": &"InAir",
 "speed": 6.0
 }, {
@@ -600,7 +600,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ry8ed")
 }],
-"loop": true,
+"loop": 1,
 "name": &"LedgeClimbLazy",
 "speed": 8.0
 }, {
@@ -629,7 +629,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uukdq")
 }],
-"loop": false,
+"loop": 0,
 "name": &"RollGround",
 "speed": 12.0
 }, {
@@ -652,7 +652,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tlhxf")
 }],
-"loop": true,
+"loop": 1,
 "name": &"RollInAir",
 "speed": 12.0
 }, {
@@ -681,7 +681,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qsb7e")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Run",
 "speed": 12.0
 }, {
@@ -710,7 +710,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fdfoy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Slide",
 "speed": 6.0
 }, {
@@ -739,7 +739,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_p21yu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Walk",
 "speed": 6.0
 }, {
@@ -762,7 +762,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lw0jh")
 }],
-"loop": true,
+"loop": 1,
 "name": &"WallPull",
 "speed": 6.0
 }, {
@@ -797,7 +797,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_l7gmo")
 }],
-"loop": true,
+"loop": 1,
 "name": &"WallPush",
 "speed": 8.0
 }, {
@@ -826,7 +826,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fcu33")
 }],
-"loop": true,
+"loop": 1,
 "name": &"WallTouch",
 "speed": 6.0
 }]
