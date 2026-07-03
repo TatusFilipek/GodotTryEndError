@@ -1,0 +1,183 @@
+[gd_scene format=3 uid="uid://i5g6r71s8171"]
+
+[ext_resource type="Texture2D" uid="uid://dytlkv4xxcs83" path="res://icon.svg" id="1_x7gb6"]
+
+[node name="Node2D" type="Node2D" unique_id=612117433]
+metadata/_edit_horizontal_guides_ = [-116.0]
+
+[node name="body" type="Sprite2D" parent="." unique_id=2117245733]
+self_modulate = Color(0.39215687, 1, 0.39215687, 1)
+position = Vector2(1.1920929e-07, 0)
+scale = Vector2(0.24999999, 0.75)
+texture = ExtResource("1_x7gb6")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="head" type="Sprite2D" parent="body" unique_id=90954878]
+position = Vector2(7.9999995, -89.33333)
+scale = Vector2(1.156545, 0.38551497)
+texture = ExtResource("1_x7gb6")
+
+[node name="legR" type="Sprite2D" parent="body" unique_id=1028670190]
+self_modulate = Color(1, 0.39215687, 0.39215687, 1)
+z_index = 1
+position = Vector2(1.9999998, 93.09332)
+scale = Vector2(0.65625006, 0.64208317)
+texture = ExtResource("1_x7gb6")
+
+[node name="shin" type="Sprite2D" parent="body/legR" unique_id=11564680]
+self_modulate = Color(1, 0.39215687, 0.39215687, 1)
+position = Vector2(0, 116.363625)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_x7gb6")
+
+[node name="foot" type="Sprite2D" parent="body/legR/shin" unique_id=2115169293]
+self_modulate = Color(1, 0.39215687, 0.39215687, 1)
+position = Vector2(68.51031, 70.09463)
+scale = Vector2(1.9752355, 0.24695928)
+texture = ExtResource("1_x7gb6")
+
+[node name="legL" type="Sprite2D" parent="body" unique_id=232978578]
+self_modulate = Color(0.39215687, 0.39215687, 1, 1)
+z_index = -1
+position = Vector2(1.9999998, 93.09332)
+scale = Vector2(0.65625006, 0.64208317)
+texture = ExtResource("1_x7gb6")
+
+[node name="shin" type="Sprite2D" parent="body/legL" unique_id=732427251]
+self_modulate = Color(0.39215687, 0.39215687, 1, 1)
+position = Vector2(0, 116.363625)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_x7gb6")
+
+[node name="foot" type="Sprite2D" parent="body/legL/shin" unique_id=547957383]
+self_modulate = Color(0.39215687, 0.39215687, 1, 1)
+position = Vector2(68.51031, 70.09463)
+scale = Vector2(1.9752355, 0.24695928)
+texture = ExtResource("1_x7gb6")
+
+[node name="armR" type="Sprite2D" parent="body" unique_id=765475611]
+self_modulate = Color(1, 0.39215687, 0.39215687, 1)
+z_index = 1
+position = Vector2(-10.000002, -16.98669)
+scale = Vector2(0.65625006, 0.64208317)
+texture = ExtResource("1_x7gb6")
+
+[node name="forearm" type="Sprite2D" parent="body/armR" unique_id=797513969]
+self_modulate = Color(1, 0.39215687, 0.39215687, 1)
+position = Vector2(0, 116.363625)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_x7gb6")
+
+[node name="hand" type="Sprite2D" parent="body/armR/forearm" unique_id=679399114]
+self_modulate = Color(1, 0.39215687, 0.39215687, 1)
+position = Vector2(18.285715, 68.15585)
+scale = Vector2(1, 0.30519477)
+texture = ExtResource("1_x7gb6")
+
+[node name="armL" type="Sprite2D" parent="body" unique_id=214638537]
+self_modulate = Color(0.39215687, 0.39215687, 1, 1)
+z_index = -1
+position = Vector2(-10.000002, -16.98669)
+scale = Vector2(0.65625006, 0.64208317)
+texture = ExtResource("1_x7gb6")
+
+[node name="forearm" type="Sprite2D" parent="body/armL" unique_id=410837996]
+self_modulate = Color(0.39215687, 0.39215687, 1, 1)
+position = Vector2(0, 116.363625)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_x7gb6")
+
+[node name="hand" type="Sprite2D" parent="body/armL/forearm" unique_id=728427644]
+self_modulate = Color(0.39215687, 0.39215687, 1, 1)
+position = Vector2(18.285715, 68.15585)
+scale = Vector2(1, 0.30519477)
+texture = ExtResource("1_x7gb6")
+
+[node name="Skeleton2D" type="Skeleton2D" parent="." unique_id=1535537980]
+
+[node name="torso" type="Bone2D" parent="Skeleton2D" unique_id=634643202]
+position = Vector2(0, 48)
+rest = Transform2D(1, 0, 0, 1, 0, 48)
+
+[node name="head" type="Bone2D" parent="Skeleton2D/torso" unique_id=1833661969]
+position = Vector2(0, -96)
+rotation = -1.3089969
+scale = Vector2(2.197798, 0.90250677)
+rest = Transform2D(0.5688321, -2.12291, 0.8717546, 0.23358597, 0, -96)
+
+[node name="shoulders" type="Bone2D" parent="Skeleton2D/torso" unique_id=1211653016]
+position = Vector2(-4, -92)
+rest = Transform2D(1, 0, 0, 1, -4, -92)
+
+[node name="armR" type="Bone2D" parent="Skeleton2D/torso/shoulders" unique_id=384138114]
+position = Vector2(2, 7)
+rest = Transform2D(1, 0, 0, 1, 2, 7)
+
+[node name="forearmR" type="Bone2D" parent="Skeleton2D/torso/shoulders/armR" unique_id=1696280715]
+position = Vector2(-2, 55)
+rest = Transform2D(1, 0, 0, 1, -2, 55)
+
+[node name="handR" type="Bone2D" parent="Skeleton2D/torso/shoulders/armR/forearmR" unique_id=1981471240]
+position = Vector2(5, 51)
+rotation = 1.5707964
+scale = Vector2(0.8701116, 0.91190493)
+rest = Transform2D(-3.8033786e-08, 0.8701116, -0.91190493, -3.986063e-08, 5, 51)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="armL" type="Bone2D" parent="Skeleton2D/torso/shoulders" unique_id=245803264]
+position = Vector2(2, 7)
+rest = Transform2D(1, 0, 0, 1, 2, 7)
+
+[node name="forearmL" type="Bone2D" parent="Skeleton2D/torso/shoulders/armL" unique_id=437021375]
+position = Vector2(-2, 55)
+rest = Transform2D(1, 0, 0, 1, -2, 55)
+
+[node name="handL" type="Bone2D" parent="Skeleton2D/torso/shoulders/armL/forearmL" unique_id=1488501191]
+position = Vector2(5, 51)
+rotation = 1.5707964
+scale = Vector2(0.8701116, 0.91190493)
+rest = Transform2D(-3.8033786e-08, 0.8701116, -0.91190493, -3.986063e-08, 5, 51)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="hips" type="Bone2D" parent="Skeleton2D/torso" unique_id=977034786]
+position = Vector2(0, -9)
+rest = Transform2D(1, 0, 0, 1, 0, -9)
+
+[node name="legR" type="Bone2D" parent="Skeleton2D/torso/hips" unique_id=1231658407]
+position = Vector2(1, 5)
+rest = Transform2D(1, 0, 0, 1, 1, 5)
+
+[node name="shinR" type="Bone2D" parent="Skeleton2D/torso/hips/legR" unique_id=60386859]
+position = Vector2(0, 57)
+rest = Transform2D(1, 0, 0, 1, 0, 57)
+
+[node name="footR" type="Bone2D" parent="Skeleton2D/torso/hips/legR/shinR" unique_id=2089514037]
+position = Vector2(0, 56)
+rotation = 0.23096533
+scale = Vector2(1.829434, 3.1355257)
+rest = Transform2D(1.7808551, 0.41878918, -0.7177762, 3.0522645, 0, 56)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="legL" type="Bone2D" parent="Skeleton2D/torso/hips" unique_id=1065189175]
+position = Vector2(1, 5)
+rest = Transform2D(1, 0, 0, 1, 1, 5)
+
+[node name="shinL" type="Bone2D" parent="Skeleton2D/torso/hips/legL" unique_id=1658401313]
+position = Vector2(0, 57)
+rest = Transform2D(1, 0, 0, 1, 0, 57)
+
+[node name="footL" type="Bone2D" parent="Skeleton2D/torso/hips/legL/shinL" unique_id=1510923510]
+position = Vector2(0, 56)
+rotation = 0.2309653
+scale = Vector2(1.829434, 3.1355257)
+rest = Transform2D(1.7808551, 0.41878912, -0.7177761, 3.0522647, 0, 56)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
