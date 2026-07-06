@@ -15,7 +15,7 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: return
 	
-	core.velocity.y += core.CalcGravity() * _delta; # Gravity
+	core.velocity.y -= core.CalcGravity() * _delta; # Gravity
 	
 	if core.isOnGround():
 		#core.rollAnimFrame = animation.frame

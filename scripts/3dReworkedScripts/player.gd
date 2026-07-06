@@ -2,16 +2,16 @@ extends CharacterBody3D
 
 class_name Player
 
-@export var MovementSpeed = 1.25
+@export var MovementSpeed = 1.75
 @export var sprintMovementMult = 1.5
 @export var crouchMovementMult = .75
 
-@export var slideForce = 2.50
+@export var slideForce = 2.65
 @export var slideVelocityLoss = 1.00
 @export var slideCancelVelocity = .40
 
-@export var gravityForce = 1.00
-@export var airDrag = 5
+@export var gravityForce = 1.75
+@export var airDrag = 20
 
 @export var jumpForce = 10
 @export var jumpVelocityCut = 0.3
@@ -32,7 +32,7 @@ var dashUses = 0
 @export var fallingGravityMult = 20.2
 
 @export var gravityBuffer = .50
-@export var jumpApex = 125
+@export var jumpApex = 2
 
 @export var coyoteTime = .1
 var coyoteTimer = 0
@@ -130,7 +130,7 @@ func MovementDirection() -> float:
 	return movementDirection
 
 func LookDirection() -> float:
-	var lookDirection = Input.get_axis("moveUp", "moveDown")
+	var lookDirection = Input.get_axis("moveDown", "moveUp")
 	return lookDirection
 
 func GetSpriteOrientation() -> void:
@@ -216,7 +216,7 @@ func CalcGravity() -> float:
 		else: if(velocity.y > -gravityBuffer): gravityMultiplier = fallingGravityMult
 		
 	#return get_gravity().y
-	return -gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
+	return gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
 
 func CanJump() -> bool:
 	return jumpInputBufferTimer > 0 and coyoteTimer > 0

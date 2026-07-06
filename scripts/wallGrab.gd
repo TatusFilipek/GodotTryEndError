@@ -25,15 +25,15 @@ func physics_update(_delta: float) -> void:
 	if core.MovementDirection() * core.facingDirection > 0:
 		if playback.get_current_node() != "WallPush":
 			#playback.travel("WallPush")
-			print("fix Later")
+			print("fix Later | WallPush")
 
 	elif core.MovementDirection() * core.facingDirection < 0:
 		if playback.get_current_node() != "WallPull":
 			#playback.travel("WallPull")
-			print("fix Later")
+			print("fix Later | WallPull")
 	else:
 		if playback.get_current_node() != "WallTouch":
 			#playback.travel("WallTouch")
-			print("fix Later")
+			print("fix Later | WallTouch")
 	
 	pass
