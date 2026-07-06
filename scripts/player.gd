@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-class_name Player
+class_name PlayerOLD
 
 @export var MovementSpeed = 125
 @export var sprintMovementMult = 1.5

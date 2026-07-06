@@ -4,7 +4,7 @@ class_name CrouchIdle
 func enter() -> void:
 	super.enter()
 	
-	playback.travel("CrouchIdle")
+	#playback.travel("CrouchIdle")
 
 func exit() -> void:
 	super.exit()

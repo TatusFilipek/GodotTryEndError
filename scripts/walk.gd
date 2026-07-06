@@ -4,7 +4,7 @@ class_name Walk
 func enter() -> void:
 	super.enter()
 	
-	playback.travel("Walk")
+	#playback.travel("Walk")
 
 func exit() -> void:
 	super.exit()

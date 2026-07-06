@@ -11,7 +11,7 @@ func enter() -> void:
 	
 	#resizing colliders
 	if Input.is_action_pressed("crouch"):
-		core.resizeCollider(30)
+		core.resizeCollider(0.5)
 	
 	core.dashCooldownTimer = core.dashCooldown
 	core.dashUses -= 1

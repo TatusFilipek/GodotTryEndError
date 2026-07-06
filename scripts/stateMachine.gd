@@ -9,14 +9,14 @@ var parent : Player
 
 func _ready() -> void:
 	parent = get_parent()
-	var sprite = parent.get_node("AnimatedSprite2D")
 	var animationTree = parent.get_node("AnimationTree")
 	var playback = animationTree.get("parameters/playback")
 	var animationPlayer = parent.get_node("AnimationPlayer")
 	
 	for child in get_children():
 		if child is State:
-			child.Setup(parent, self, sprite, animationTree, playback, animationPlayer)
+			# Removed outdated reference to 2D flat texturing elements inside Setup
+			child.Setup(parent, self, animationTree, playback, animationPlayer)
 	
 	if initial_state:
 		change_state(initial_state.name)

@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-class_name Player3D
+class_name Player
 
 @export var MovementSpeed = 125
 @export var sprintMovementMult = 1.5
@@ -90,7 +90,7 @@ func _ready() -> void:
 	CheckFloorFront = get_node("CheckFloorFront")
 	CheckFloorBack = get_node("CheckFloorBack")
 	Collider = get_node("collider")
-	VisualsNode = get_node("Visuals")
+	VisualsNode = get_node("Armature")
 
 # physics update
 func _physics_process(delta: float) -> void:
@@ -104,7 +104,7 @@ func _physics_process(delta: float) -> void:
 	
 	if machine.current_state:
 		# Note: modified sprite.animation references to string placeholders or custom debug names if applicable.
-		label.text = "Stan: %s | XVelocity: %f | YVelocity: %f" % [machine.current_state.name, velocity.x, velocity.y]
+		label.text = "Stan: %s | XVelocity: %f | YVelocity: %f | movementDir: %f | lookDir: %f" % [machine.current_state.name, velocity.x, velocity.y, MovementDirection(), LookDirection()]
 	
 	if isOnGround() or IsLedgeDetected():
 		coyoteTimer = coyoteTime
@@ -192,19 +192,22 @@ func SetLedgeOffset(ledgePos : Vector3) -> Vector3:
 
 func isOnGround() -> bool:
 	# Godot 3D safely checks is_on_floor()
+	#return is_on_floor()
 	return is_on_floor() and (isCollidingRaycast(CheckFloorBack) or isCollidingRaycast(CheckFloorFront))
 
 func isOnGroundFully() -> bool:
+	#return is_on_floor()
 	return is_on_floor() and isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
 
 func isOnWall() -> bool:
+	#return is_on_wall()
 	return isCollidingRaycast(CheckWallTop)
 
 func resizeCollider(_size : float) -> void:
 	# Resizes 3D Capsule or Box height parameters safely
 	if Collider.shape.has_method("set_height"):
-		Collider.shape.set_height(96 - _size)
-	Collider.position.y = _size / 2
+		Collider.shape.set_height(1.8 - _size)
+	Collider.position.y = (1.8 - _size) / 2
 
 func CalcGravity() -> float:
 	var gravityMultiplier = normalGravityMult
@@ -212,7 +215,8 @@ func CalcGravity() -> float:
 		if(velocity.y <= -gravityBuffer): gravityMultiplier = normalGravityMult
 		else: if(velocity.y > -gravityBuffer): gravityMultiplier = fallingGravityMult
 		
-	return gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
+	return get_gravity().y
+	#return gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
 
 func CanJump() -> bool:
 	return jumpInputBufferTimer > 0 and coyoteTimer > 0

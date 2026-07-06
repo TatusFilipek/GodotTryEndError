@@ -6,13 +6,13 @@ class_name LedgeClimb
 #fixxed everything including animation
 #NOTE: can still tinker with the offsets, they arent perfect, they could be better
 
-var postAnimPos : Vector2
+var postAnimPos : Vector3
 
 func enter() -> void:
 	super.enter()
 	
-	playback.travel("LedgeClimb")
-	core.velocity = Vector2.ZERO
+	#playback.travel("LedgeClimb")
+	core.velocity = Vector3.ZERO
 	core.canChangeDir = false
 	
 	postAnimPos = core.ledgePosition

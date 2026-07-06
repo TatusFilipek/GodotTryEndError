@@ -5,7 +5,7 @@ func enter() -> void:
 	super.enter()
 	
 	core.velocity.x = 0
-	playback.travel("WallTouch")
+	#playback.travel("WallTouch")
 	
 	pass
 

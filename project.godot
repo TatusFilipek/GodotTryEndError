@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GodotCrashCourse"
-run/main_scene="uid://cmkl2p3yvnbk0"
+run/main_scene="uid://boqducct2smkj"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 

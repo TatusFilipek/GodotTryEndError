@@ -18,7 +18,7 @@ func physics_update(_delta: float) -> void:
 	core.velocity.y += core.CalcGravity() * _delta; # Gravity
 	
 	if core.isOnGround():
-		core.rollAnimFrame = animation.frame
+		#core.rollAnimFrame = animation.frame
 		machine.change_state("RollGround")
 		return
 

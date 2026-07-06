@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://boqducct2smkj"]
 
 [ext_resource type="PackedScene" uid="uid://b5uy0wyxkan33" path="res://scenes/player_3d.tscn" id="1_jgfyj"]
+[ext_resource type="Script" uid="uid://coga77uwdkvfj" path="res://scripts/camera.gd" id="2_7qqs3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jgfyj"]
 
@@ -17,35 +18,15 @@ size = Vector3(8, 0.47753906, 11)
 [node name="Node3D" type="Node3D" unique_id=1063125]
 
 [node name="Player3D" parent="." unique_id=1816512432 instance=ExtResource("1_jgfyj")]
-MovementSpeed = null
-sprintMovementMult = null
-crouchMovementMult = null
-slideForce = null
-slideVelocityLoss = null
-slideCancelVelocity = null
-gravityForce = null
-airDrag = null
-jumpForce = null
-jumpVelocityCut = null
-dashVelocity = null
-dashCooldown = null
-dashGroundUses = null
-dashInAirUses = null
-dashDuration = null
-rollVelocityLoss = null
-rollVelocityTreshold = null
-normalGravityMult = null
-fallingGravityMult = null
-gravityBuffer = null
-jumpApex = null
-coyoteTime = null
-jumpInputBuffer = null
-ALLMOVEMENTVARIABLE = null
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0.03530383, 0)
+input_capture_on_drag = true
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=340789366]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=340789366 node_paths=PackedStringArray("followed")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.855373, 0.99305046, 0)
 projection = 1
 size = 8.5
+script = ExtResource("2_7qqs3")
+followed = NodePath("../Player3D")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1832463607]
 environment = SubResource("Environment_nk8v3")

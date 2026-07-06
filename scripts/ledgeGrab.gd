@@ -4,8 +4,8 @@ class_name LedgeGrab
 func enter() -> void:
 	super.enter()
 	
-	playback.travel("LedgeGrab")
-	core.velocity = Vector2.ZERO
+	#playback.travel("LedgeGrab")
+	core.velocity = Vector3.ZERO
 	
 	core.position = core.onLedgePosition
 	pass
