@@ -7,15 +7,16 @@ metadata/_edit_horizontal_guides_ = [-116.0]
 
 [node name="body" type="Sprite2D" parent="." unique_id=2117245733]
 self_modulate = Color(0.39215687, 1, 0.39215687, 1)
-position = Vector2(1.1920929e-07, 0)
-scale = Vector2(0.24999999, 0.75)
+position = Vector2(0, 1.0250015)
+scale = Vector2(0.25, 0.74)
 texture = ExtResource("1_x7gb6")
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
 [node name="head" type="Sprite2D" parent="body" unique_id=90954878]
-position = Vector2(7.9999995, -89.33333)
-scale = Vector2(1.156545, 0.38551497)
+z_index = -1
+position = Vector2(8, -87.87163)
+scale = Vector2(1.1131288, 0.37605703)
 texture = ExtResource("1_x7gb6")
 
 [node name="legR" type="Sprite2D" parent="body" unique_id=1028670190]
@@ -96,29 +97,44 @@ texture = ExtResource("1_x7gb6")
 
 [node name="Skeleton2D" type="Skeleton2D" parent="." unique_id=1535537980]
 
-[node name="torso" type="Bone2D" parent="Skeleton2D" unique_id=634643202]
-position = Vector2(0, 48)
-rest = Transform2D(1, 0, 0, 1, 0, 48)
+[node name="hips" type="Bone2D" parent="Skeleton2D" unique_id=977034786]
+position = Vector2(0, 39)
+rest = Transform2D(1, 0, 0, 1, 0, 39)
 
-[node name="head" type="Bone2D" parent="Skeleton2D/torso" unique_id=1833661969]
+[node name="torso" type="Bone2D" parent="Skeleton2D/hips" unique_id=634643202]
+position = Vector2(0, 9)
+rest = Transform2D(1, 0, 0, 1, 0, 9)
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/hips/torso" unique_id=134459754]
+position = Vector2(0, -46.975)
+scale = Vector2(0.25, 0.74)
+remote_path = NodePath("../../../../body")
+
+[node name="head" type="Bone2D" parent="Skeleton2D/hips/torso" unique_id=1833661969]
 position = Vector2(0, -96)
-rotation = -1.3089969
-scale = Vector2(2.197798, 0.90250677)
-rest = Transform2D(0.5688321, -2.12291, 0.8717546, 0.23358597, 0, -96)
+rest = Transform2D(0.43, 0, 5.1259995e-08, 0.43, 0, -96)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = -74.99999
 
-[node name="shoulders" type="Bone2D" parent="Skeleton2D/torso" unique_id=1211653016]
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/hips/torso/head" unique_id=391588254]
+position = Vector2(2.000002, -16)
+scale = Vector2(0.2782822, 0.2782822)
+remote_path = NodePath("../../../../../body/head")
+
+[node name="shoulders" type="Bone2D" parent="Skeleton2D/hips/torso" unique_id=1211653016]
 position = Vector2(-4, -92)
 rest = Transform2D(1, 0, 0, 1, -4, -92)
 
-[node name="armR" type="Bone2D" parent="Skeleton2D/torso/shoulders" unique_id=384138114]
+[node name="armR" type="Bone2D" parent="Skeleton2D/hips/torso/shoulders" unique_id=384138114]
 position = Vector2(2, 7)
 rest = Transform2D(1, 0, 0, 1, 2, 7)
 
-[node name="forearmR" type="Bone2D" parent="Skeleton2D/torso/shoulders/armR" unique_id=1696280715]
+[node name="forearmR" type="Bone2D" parent="Skeleton2D/hips/torso/shoulders/armR" unique_id=1696280715]
 position = Vector2(-2, 55)
 rest = Transform2D(1, 0, 0, 1, -2, 55)
 
-[node name="handR" type="Bone2D" parent="Skeleton2D/torso/shoulders/armR/forearmR" unique_id=1981471240]
+[node name="handR" type="Bone2D" parent="Skeleton2D/hips/torso/shoulders/armR/forearmR" unique_id=1981471240]
 position = Vector2(5, 51)
 rotation = 1.5707964
 scale = Vector2(0.8701116, 0.91190493)
@@ -127,15 +143,15 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="armL" type="Bone2D" parent="Skeleton2D/torso/shoulders" unique_id=245803264]
+[node name="armL" type="Bone2D" parent="Skeleton2D/hips/torso/shoulders" unique_id=245803264]
 position = Vector2(2, 7)
 rest = Transform2D(1, 0, 0, 1, 2, 7)
 
-[node name="forearmL" type="Bone2D" parent="Skeleton2D/torso/shoulders/armL" unique_id=437021375]
+[node name="forearmL" type="Bone2D" parent="Skeleton2D/hips/torso/shoulders/armL" unique_id=437021375]
 position = Vector2(-2, 55)
 rest = Transform2D(1, 0, 0, 1, -2, 55)
 
-[node name="handL" type="Bone2D" parent="Skeleton2D/torso/shoulders/armL/forearmL" unique_id=1488501191]
+[node name="handL" type="Bone2D" parent="Skeleton2D/hips/torso/shoulders/armL/forearmL" unique_id=1488501191]
 position = Vector2(5, 51)
 rotation = 1.5707964
 scale = Vector2(0.8701116, 0.91190493)
@@ -144,19 +160,15 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="hips" type="Bone2D" parent="Skeleton2D/torso" unique_id=977034786]
-position = Vector2(0, -9)
-rest = Transform2D(1, 0, 0, 1, 0, -9)
-
-[node name="legR" type="Bone2D" parent="Skeleton2D/torso/hips" unique_id=1231658407]
+[node name="legR" type="Bone2D" parent="Skeleton2D/hips" unique_id=1231658407]
 position = Vector2(1, 5)
 rest = Transform2D(1, 0, 0, 1, 1, 5)
 
-[node name="shinR" type="Bone2D" parent="Skeleton2D/torso/hips/legR" unique_id=60386859]
+[node name="shinR" type="Bone2D" parent="Skeleton2D/hips/legR" unique_id=60386859]
 position = Vector2(0, 57)
 rest = Transform2D(1, 0, 0, 1, 0, 57)
 
-[node name="footR" type="Bone2D" parent="Skeleton2D/torso/hips/legR/shinR" unique_id=2089514037]
+[node name="footR" type="Bone2D" parent="Skeleton2D/hips/legR/shinR" unique_id=2089514037]
 position = Vector2(0, 56)
 rotation = 0.23096533
 scale = Vector2(1.829434, 3.1355257)
@@ -165,15 +177,15 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="legL" type="Bone2D" parent="Skeleton2D/torso/hips" unique_id=1065189175]
+[node name="legL" type="Bone2D" parent="Skeleton2D/hips" unique_id=1065189175]
 position = Vector2(1, 5)
 rest = Transform2D(1, 0, 0, 1, 1, 5)
 
-[node name="shinL" type="Bone2D" parent="Skeleton2D/torso/hips/legL" unique_id=1658401313]
+[node name="shinL" type="Bone2D" parent="Skeleton2D/hips/legL" unique_id=1658401313]
 position = Vector2(0, 57)
 rest = Transform2D(1, 0, 0, 1, 0, 57)
 
-[node name="footL" type="Bone2D" parent="Skeleton2D/torso/hips/legL/shinL" unique_id=1510923510]
+[node name="footL" type="Bone2D" parent="Skeleton2D/hips/legL/shinL" unique_id=1510923510]
 position = Vector2(0, 56)
 rotation = 0.2309653
 scale = Vector2(1.829434, 3.1355257)
