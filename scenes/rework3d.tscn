@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://boqducct2smkj"]
+
+[ext_resource type="PackedScene" uid="uid://b0xegy6g8kljv" path="res://resources/animations3D/UAL1_Standard.glb" id="1_jgfyj"]
+
+[node name="UAL1_Standard" unique_id=930314190 instance=ExtResource("1_jgfyj")]
