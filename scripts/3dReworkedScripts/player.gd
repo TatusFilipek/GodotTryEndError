@@ -2,21 +2,21 @@ extends CharacterBody3D
 
 class_name Player
 
-@export var MovementSpeed = 125
+@export var MovementSpeed = 1.25
 @export var sprintMovementMult = 1.5
 @export var crouchMovementMult = .75
 
-@export var slideForce = 250
-@export var slideVelocityLoss = 100
-@export var slideCancelVelocity = 40
+@export var slideForce = 2.50
+@export var slideVelocityLoss = 1.00
+@export var slideCancelVelocity = .40
 
-@export var gravityForce = 100
+@export var gravityForce = 1.00
 @export var airDrag = 5
 
-@export var jumpForce = 150
+@export var jumpForce = 10
 @export var jumpVelocityCut = 0.3
 
-@export var dashVelocity = 600
+@export var dashVelocity = 6.00
 @export var dashCooldown = 1.5
 @export var dashGroundUses = 2
 @export var dashInAirUses = 1
@@ -25,13 +25,13 @@ var dashCooldownTimer = 0
 var dashTimer = 0
 var dashUses = 0
 
-@export var rollVelocityLoss = 1200
-@export var rollVelocityTreshold = 50
+@export var rollVelocityLoss = 12.00
+@export var rollVelocityTreshold = .50
 
 @export var normalGravityMult = 10.0
 @export var fallingGravityMult = 20.2
 
-@export var gravityBuffer = 50
+@export var gravityBuffer = .50
 @export var jumpApex = 125
 
 @export var coyoteTime = .1
@@ -215,8 +215,8 @@ func CalcGravity() -> float:
 		if(velocity.y <= -gravityBuffer): gravityMultiplier = normalGravityMult
 		else: if(velocity.y > -gravityBuffer): gravityMultiplier = fallingGravityMult
 		
-	return get_gravity().y
-	#return gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
+	#return get_gravity().y
+	return -gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
 
 func CanJump() -> bool:
 	return jumpInputBufferTimer > 0 and coyoteTimer > 0
