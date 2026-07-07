@@ -4,7 +4,7 @@ class_name CrouchWalk
 func enter() -> void:
 	super.enter()
 	
-	#playback.travel("CrouchWalk")
+	playback.travel("CrouchWalk")
 
 func exit() -> void:
 	super.exit()

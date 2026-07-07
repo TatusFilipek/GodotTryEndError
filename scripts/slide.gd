@@ -4,7 +4,7 @@ class_name Slide
 func enter() -> void:
 	super.enter()
 	
-	#playback.travel("Slide")
+	playback.travel("Slide")
 	
 	core.velocity.x = core.facingDirection * core.slideForce
 	
@@ -44,5 +44,7 @@ func physics_update(_delta: float) -> void:
 func ExitSlide():
 	if core.isCollidingShapecast(core.CheckSpaceCrouch):
 		machine.ChangeStateMoveOrIdle("CrouchIdle", "CrouchWalk")
+	elif Input.is_action_pressed("crouch"):
+		machine.ChangeStateMoveOrIdle("CrouchIdle", "CrouchWalk")
 	else:
-		changeState("Idle")
+		machine.ChangeStateMoveOrIdle("Idle", "Walk")
