@@ -4,7 +4,7 @@ class_name Crouch
 func enter() -> void:
 	super.enter()
 	#resize collider
-	core.resizeCollider(0.5)
+	core.resizeCollider(0.7)
 	core.isCrouching = true
 	pass
 

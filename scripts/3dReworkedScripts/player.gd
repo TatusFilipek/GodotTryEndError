@@ -2,11 +2,11 @@ extends CharacterBody3D
 
 class_name Player
 
-@export var MovementSpeed = 1.75
-@export var sprintMovementMult = 1.5
+@export var MovementSpeed = 1.00
+@export var sprintMovementMult = 3.5
 @export var crouchMovementMult = .75
 
-@export var slideForce = 2.65
+@export var slideForce = 3.5
 @export var slideVelocityLoss = 1.00
 @export var slideCancelVelocity = .40
 
@@ -16,11 +16,11 @@ class_name Player
 @export var jumpForce = 10
 @export var jumpVelocityCut = 0.3
 
-@export var dashVelocity = 6.00
+@export var dashVelocity = 7.00
 @export var dashCooldown = 1.5
 @export var dashGroundUses = 2
 @export var dashInAirUses = 1
-@export var dashDuration = .3
+@export var dashDuration = .2
 var dashCooldownTimer = 0
 var dashTimer = 0
 var dashUses = 0
@@ -32,7 +32,7 @@ var dashUses = 0
 @export var fallingGravityMult = 20.2
 
 @export var gravityBuffer = .50
-@export var jumpApex = 2
+@export var jumpApex = 5
 
 @export var coyoteTime = .1
 var coyoteTimer = 0
@@ -77,6 +77,7 @@ var spriteRotation : float
 # Position values handle 3D coordinates
 var ledgePosition : Vector3
 var onLedgePosition : Vector3
+var visualNodeStartRotation : Vector3
 
 var rollAnimFrame : float = 0
 
@@ -91,6 +92,7 @@ func _ready() -> void:
 	CheckFloorBack = get_node("CheckFloorBack")
 	Collider = get_node("collider")
 	VisualsNode = get_node("Armature")
+	visualNodeStartRotation = VisualsNode.rotation_degrees
 
 # physics update
 func _physics_process(delta: float) -> void:
@@ -146,11 +148,10 @@ func GetSpriteOrientation() -> void:
 			lastSpriteOrientation = (MovementDirection() < 0)
 			facingDirection = ceil(MovementDirection())
 		
-		# In 3D, turning means rotating 180 degrees around the Y (Up) axis instead of flipping texture flags
 		if lastSpriteOrientation:
-			VisualsNode.rotation_degrees.y = 180.0
+			VisualsNode.rotation_degrees.y = 180.0 + visualNodeStartRotation.y
 		else:
-			VisualsNode.rotation_degrees.y = 0.0
+			VisualsNode.rotation_degrees.y = 0.0 + visualNodeStartRotation.y
 		
 		if sign(CheckWallTop.target_position.x) != sign(facingDirection):
 			CheckLedge.target_position.x *= -1
@@ -222,11 +223,11 @@ func CanJump() -> bool:
 	return jumpInputBufferTimer > 0 and coyoteTimer > 0
 
 func isCollidingRaycast(raycast : RayCast3D) -> bool:
-	raycast.force_raycast_update()
-	raycast.force_update_transform()
+	#raycast.force_raycast_update()
+	#raycast.force_update_transform()
 	return raycast.is_colliding()
 
 func isCollidingShapecast(shapecast : ShapeCast3D) -> bool:
-	shapecast.force_shapecast_update()
-	shapecast.force_update_transform()
+	#shapecast.force_shapecast_update()
+	#shapecast.force_update_transform()
 	return shapecast.is_colliding()

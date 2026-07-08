@@ -43,15 +43,11 @@ func VariableJumpHeight():
 func SuperDuperAirStateAnims():
 	if playback:
 		if core.velocity.y > core.jumpApex:
-			#print("fix Later | InAirUp")
 			playback.travel("InAirUp")
 		elif core.velocity.y < -core.jumpApex:
-			#print("fix Later | InAirDown")
 			playback.travel("InAirDown")
 		else:
 			if core.velocity.y <= 0:
-				#print("fix Later | InAirDownApex")
 				playback.travel("InAirDownApex")
 			else:
-				#print("fix Later | InAirUpApex")
 				playback.travel("InAirUpApex")

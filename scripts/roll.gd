@@ -8,7 +8,7 @@ class_name Roll
 func enter() -> void:
 	super.enter()
 	
-	core.resizeCollider(0.5)
+	core.resizeCollider(0.7)
 	
 	core.canChangeDir = false
 	core.rolling = true
