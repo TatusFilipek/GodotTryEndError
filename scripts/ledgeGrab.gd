@@ -4,14 +4,21 @@ class_name LedgeGrab
 func enter() -> void:
 	super.enter()
 	
-	#playback.travel("LedgeGrab")
+	playback.travel("LedgeGrab")
 	core.velocity = Vector3.ZERO
 	
 	core.position = core.onLedgePosition
+	
+	#NOTE: temporary animation offset
+	core.VisualsNode.position.x = -.25
+	core.VisualsNode.position.y = -.4
 	pass
 
 func exit() -> void:
 	super.exit()
+	#NOTE: temporary animation offset
+	core.VisualsNode.position.x = 0
+	core.VisualsNode.position.y = 0
 	pass
 
 func physics_update(_delta: float) -> void:

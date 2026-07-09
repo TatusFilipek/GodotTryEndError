@@ -11,14 +11,19 @@ var postAnimPos : Vector3
 func enter() -> void:
 	super.enter()
 	
-	#playback.travel("LedgeClimb")
+	playback.travel("LedgeClimb")
 	core.velocity = Vector3.ZERO
 	core.canChangeDir = false
 	
+	#NOTE: tmp animation offset
+	core.VisualsNode.position.x = -.25
+	core.VisualsNode.position.y = .035
+	
 	postAnimPos = core.ledgePosition
 	
-	postAnimPos.x += core.CheckWallTop.position.x + 17 * core.facingDirection
-	postAnimPos.y += core.CheckLedge.position.y
+	postAnimPos.x += core.CheckWallTop.position.x + .175 * core.facingDirection
+	#postAnimPos.y += core.CheckLedge.position.y
+	postAnimPos.y += .01
 	pass
 
 func exit() -> void:
@@ -33,4 +38,7 @@ func physics_update(_delta: float) -> void:
 
 func AnimationFinished() -> void:
 	core.position = postAnimPos
+	#NOTE: tmp animation offset
+	core.VisualsNode.position.x = 0
+	core.VisualsNode.position.y = 0
 	machine.actionExit()
