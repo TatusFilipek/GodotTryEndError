@@ -10,7 +10,7 @@ func enter() -> void:
 	core.position = core.onLedgePosition
 	
 	#NOTE: temporary animation offset
-	core.VisualsNode.position.x = -.25
+	core.VisualsNode.position.x = -.25 * core.facingDirection
 	core.VisualsNode.position.y = -.4
 	pass
 

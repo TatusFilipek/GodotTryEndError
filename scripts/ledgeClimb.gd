@@ -16,7 +16,7 @@ func enter() -> void:
 	core.canChangeDir = false
 	
 	#NOTE: tmp animation offset
-	core.VisualsNode.position.x = -.25
+	core.VisualsNode.position.x = -.25 * core.facingDirection
 	core.VisualsNode.position.y = .035
 	
 	postAnimPos = core.ledgePosition
@@ -37,8 +37,9 @@ func physics_update(_delta: float) -> void:
 	pass
 
 func AnimationFinished() -> void:
-	core.position = postAnimPos
 	#NOTE: tmp animation offset
 	core.VisualsNode.position.x = 0
 	core.VisualsNode.position.y = 0
+	
+	core.position = postAnimPos
 	machine.actionExit()
