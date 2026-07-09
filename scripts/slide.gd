@@ -22,7 +22,7 @@ func physics_update(_delta: float) -> void:
 	
 	#NOTE: this will need some fixxing or mayve it is all right
 	
-	if (1 + core.spriteRotation) >= 1:
+	if (1 - core.spriteRotation) >= 1:
 		core.velocity.x = core.facingDirection * (abs(core.velocity.x) - core.slideVelocityLoss * (1 - core.spriteRotation) * _delta)
 	else:
 		core.velocity.x += core.facingDirection * (core.slideForce * (1 - -1 * core.spriteRotation) - abs(core.velocity.x)) * _delta

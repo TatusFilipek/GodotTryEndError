@@ -96,7 +96,7 @@ func _ready() -> void:
 
 # physics update
 func _physics_process(delta: float) -> void:
-	GetSpriteOrientation()
+	GetSpriteOrientation(delta)
 	
 	# CRITICAL 2.5D MECHANIC: Lock Z positioning completely to avoid drifting down or up depth paths
 	velocity.z = 0.0
@@ -135,13 +135,14 @@ func LookDirection() -> float:
 	var lookDirection = Input.get_axis("moveDown", "moveUp")
 	return lookDirection
 
-func GetSpriteOrientation() -> void:
+func GetSpriteOrientation(delta: float) -> void:
 	if isOnGroundFully():
 		# Using Y positions of 3D floor contact raycasts to calculate slope inclination angles
-		spriteRotation = (CheckFloorFront.get_collision_point().y - CheckFloorBack.get_collision_point().y) * .03
-		VisualsNode.rotation.z = spriteRotation * facingDirection
+		spriteRotation = (CheckFloorFront.get_collision_point().y - CheckFloorBack.get_collision_point().y) * -3
+		VisualsNode.rotation.x = spriteRotation
 	else:
-		VisualsNode.rotation.z = 0
+		VisualsNode.rotation.x = 0
+		#in future use tween for smother transition
 		
 	if canChangeDir:
 		if MovementDirection() != 0:
