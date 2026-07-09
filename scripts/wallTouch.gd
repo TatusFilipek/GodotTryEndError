@@ -5,12 +5,15 @@ func enter() -> void:
 	super.enter()
 	
 	core.velocity.x = 0
-	#playback.travel("WallTouch")
-	
+	playback.travel("WallTouch")
+	#NOTE: temporary animation offset
+	core.VisualsNode.position.x = -.4 * core.facingDirection
 	pass
 
 func exit() -> void:
 	super.exit()
+	#NOTE: temporary animation offset
+	core.VisualsNode.position.x = 0
 	pass
 
 func physics_update(_delta: float) -> void:

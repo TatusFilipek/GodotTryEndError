@@ -142,7 +142,7 @@ func GetSpriteOrientation(delta: float) -> void:
 		VisualsNode.rotation.x = spriteRotation
 	else:
 		VisualsNode.rotation.x = 0
-		#in future use tween for smother transition
+		#NOTE: in future use tween for smother transition
 		
 	if canChangeDir:
 		if MovementDirection() != 0:

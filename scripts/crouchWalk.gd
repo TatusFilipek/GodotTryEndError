@@ -19,5 +19,5 @@ func physics_update(_delta: float) -> void:
 		machine.change_state("CrouchIdle")	
 	elif not Input.is_action_pressed("crouch"):
 		changeState("Walk")
-	elif Input.is_action_pressed("sprint") and not core.isCollidingShapecast(core.CheckSpaceCrouch):
+	elif Input.is_action_pressed("sprint") and not core.isCollidingShapecast(core.CheckSpaceCrouch) and not core.isCollidingRaycast(core.CheckWallBottom):
 		machine.change_state("Slide")

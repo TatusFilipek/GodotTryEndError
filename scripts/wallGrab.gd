@@ -5,14 +5,16 @@ func enter() -> void:
 	super.enter()
 	
 	core.canChangeDir = false
-	
+	#NOTE: temporary animation offset
+	core.VisualsNode.position.x = -.4 * core.facingDirection
 	pass
 
 func exit() -> void:
 	super.exit()
 	
 	core.canChangeDir = true
-	
+	#NOTE: temporary animation offset
+	core.VisualsNode.position.x = 0
 	pass
 
 func physics_update(_delta: float) -> void:
@@ -24,16 +26,16 @@ func physics_update(_delta: float) -> void:
 	
 	if core.MovementDirection() * core.facingDirection > 0:
 		if playback.get_current_node() != "WallPush":
-			#playback.travel("WallPush")
-			print("fix Later | WallPush")
+			playback.travel("WallPush")
+			#print("fix Later | WallPush")
 
 	elif core.MovementDirection() * core.facingDirection < 0:
 		if playback.get_current_node() != "WallPull":
-			#playback.travel("WallPull")
-			print("fix Later | WallPull")
+			playback.travel("WallPull")
+			#print("fix Later | WallPull")
 	else:
 		if playback.get_current_node() != "WallTouch":
-			#playback.travel("WallTouch")
-			print("fix Later | WallTouch")
+			playback.travel("WallTouch")
+			#print("fix Later | WallTouch")
 	
 	pass

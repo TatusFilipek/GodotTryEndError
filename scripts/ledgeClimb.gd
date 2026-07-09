@@ -23,7 +23,7 @@ func enter() -> void:
 	
 	postAnimPos.x += core.CheckWallTop.position.x + .175 * core.facingDirection
 	#postAnimPos.y += core.CheckLedge.position.y
-	postAnimPos.y += .01
+	#postAnimPos.y += .01
 	pass
 
 func exit() -> void:

@@ -26,6 +26,6 @@ func physics_update(_delta: float) -> void:
 		machine.change_state("Dash")	
 	elif core.is_on_wall():
 		#check for wall on bottom
-		if core.isCollidingRaycast(core.CheckWallTop) and machine.current_state.name != "WallTouch" and machine.current_state.name != "WallGrab":
+		if core.isCollidingRaycast(core.CheckWallTop) and not core.isCrouching and machine.current_state.name != "WallTouch" and machine.current_state.name != "WallGrab":
 			machine.change_state("WallTouch")
 	pass
