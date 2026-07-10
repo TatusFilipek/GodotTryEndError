@@ -17,4 +17,6 @@ func physics_update(_delta: float) -> void:
 		machine.change_state("Walk")
 	elif Input.is_action_pressed("crouch"):
 		machine.change_state("CrouchIdle")
+	elif Input.is_action_just_pressed("grab"):
+		machine.change_state("Action")
 	else: core.velocity.x = 0

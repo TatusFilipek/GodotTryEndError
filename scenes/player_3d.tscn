@@ -21,7 +21,7 @@
 [ext_resource type="Animation" uid="uid://cfa046pfctk44" path="res://resources/animations3D/animations/Jump_Start.res" id="17_8fvld"]
 [ext_resource type="Animation" uid="uid://dgj6knsqrsug0" path="res://resources/animations3D/animations/PickUp_Table.res" id="18_acvn0"]
 [ext_resource type="Animation" uid="uid://bq0dgnwvlf3on" path="res://resources/animations3D/animations/Pistol_Aim_Down.res" id="19_ebtvl"]
-[ext_resource type="Animation" uid="uid://buxeory24w6mg" path="res://resources/animations3D/animations/tmp/LedgeGrab.res" id="19_hkj2h"]
+[ext_resource type="Animation" uid="uid://dqs1vcs7ts5ih" path="res://resources/animations3D/animations/tmp/LedgeGrab.res" id="19_hkj2h"]
 [ext_resource type="Animation" uid="uid://ber0s61gjcapi" path="res://resources/animations3D/animations/Pistol_Aim_Neutral.res" id="20_1hh3j"]
 [ext_resource type="Animation" uid="uid://r3gvvrbyse5b" path="res://resources/animations3D/animations/Pistol_Aim_Up.res" id="21_ycqcu"]
 [ext_resource type="Animation" uid="uid://bcr5mypb8abp4" path="res://resources/animations3D/animations/Pistol_Idle.res" id="22_1qiot"]
@@ -30,7 +30,7 @@
 [ext_resource type="Animation" uid="uid://c4i5s03nm88l" path="res://resources/animations3D/animations/Punch_Cross.res" id="25_3hgil"]
 [ext_resource type="Animation" uid="uid://btaaeniuyud7e" path="res://resources/animations3D/animations/Punch_Jab.res" id="26_o0srm"]
 [ext_resource type="Animation" uid="uid://br4bl1cjd24mh" path="res://resources/animations3D/animations/Push.res" id="27_20d6p"]
-[ext_resource type="Animation" uid="uid://dhaxfeyf023rp" path="res://resources/animations3D/animations/tmp/Pull.res" id="27_ogxgr"]
+[ext_resource type="Animation" uid="uid://bfliw8m8l62dg" path="res://resources/animations3D/animations/tmp/Pull.res" id="27_ogxgr"]
 [ext_resource type="Animation" uid="uid://c8ifxl45a1u1f" path="res://resources/animations3D/animations/Roll.res" id="28_dacrs"]
 [ext_resource type="Animation" uid="uid://b51li2f6adsll" path="res://resources/animations3D/animations/Sitting_Enter.res" id="29_kelcc"]
 [ext_resource type="Animation" uid="uid://cqpxli4mogfq6" path="res://resources/animations3D/animations/Sitting_Exit.res" id="30_jbhfx"]
@@ -107,6 +107,7 @@
 [ext_resource type="Script" uid="uid://bpx3ue6tq56la" path="res://scripts/dash.gd" id="101_558ft"]
 [ext_resource type="Script" uid="uid://cfsed1jj5fm0s" path="res://scripts/rollGround.gd" id="102_23cvb"]
 [ext_resource type="Script" uid="uid://cfk68igjrqgiw" path="res://scripts/rollInAir.gd" id="103_14if0"]
+[ext_resource type="Script" uid="uid://peuprm1kjfyj" path="res://scripts/action.gd" id="108_ogxgr"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1hh3j"]
 radius = 0.15
@@ -2808,3 +2809,9 @@ metadata/_custom_type_script = "uid://cfsed1jj5fm0s"
 [node name="RollInAir" type="Node" parent="StateMachine" unique_id=1731902259]
 script = ExtResource("103_14if0")
 metadata/_custom_type_script = "uid://cfk68igjrqgiw"
+
+[node name="Action" type="Node" parent="StateMachine" unique_id=1716546217]
+script = ExtResource("108_ogxgr")
+walkSpeedMultiplier = 0.5
+canJump = true
+animationName = "Run"
