@@ -2814,4 +2814,5 @@ metadata/_custom_type_script = "uid://cfk68igjrqgiw"
 script = ExtResource("108_ogxgr")
 walkSpeedMultiplier = 0.5
 canJump = true
+canFeint = true
 animationName = "Run"

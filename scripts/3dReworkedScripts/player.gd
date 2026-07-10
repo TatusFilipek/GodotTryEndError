@@ -232,3 +232,5 @@ func isCollidingShapecast(shapecast : ShapeCast3D) -> bool:
 	#shapecast.force_shapecast_update()
 	#shapecast.force_update_transform()
 	return shapecast.is_colliding()
+
+#NOTE: im thinking of adding a second state machine that will check for semi states like parry, block, emotes, attacks, stuns, dazes, guardbreaks, knockdowns. Rethinking that it would be kinda pointless. from parry to attacks i could make them an actions but the rest idk, i will cross that bridge when i get there.

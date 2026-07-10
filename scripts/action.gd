@@ -2,6 +2,7 @@ extends State
 class_name Action
 
 @export var walkSpeedMultiplier: float
+@export var endLag: float
 @export var endLagFeint: float
 
 @export var canJump: bool
@@ -29,6 +30,13 @@ func exit():
 func physics_update(_delta: float):
 	super.physics_update(_delta)
 	
+	#feint
+	if canFeint and Input.is_action_pressed("feint"):
+		feint()
+		return
+	
+	#if hit, stunned, dazed return
+	
 	#proper collider sizing
 	if not core.isCollidingShapecast(core.CheckSpaceCrouch) and not Input.is_action_pressed("crouch"):
 		core.resizeCollider(0)
@@ -46,8 +54,9 @@ func physics_update(_delta: float):
 		core.velocity.y -= core.CalcGravity() * _delta; # Gravity
 		
 		if core.MovementDirection() != 0:
-			if abs(core.velocity.x) < maxMovementSpeed:
-				core.velocity.x += (maxMovementSpeed * core.facingDirection * core.airDrag * 1) * _delta
+			if abs(core.velocity.x) <= maxMovementSpeed:
+				core.velocity.x += (maxMovementSpeed * core.MovementDirection() * core.airDrag * 1) * _delta
+				core.velocity.x = clamp(core.velocity.x, -maxMovementSpeed, maxMovementSpeed)
 			else:
 				core.velocity.x -= core.velocity.x * core.airDrag * .5 * _delta
 		
@@ -61,8 +70,12 @@ func physics_update(_delta: float):
 
 func feint():
 	if not canFeint: return
-	#apply endlag, then exit
+	#playsound, add visuals, apply endlag, then exit
 	machine.actionExit()
+	pass
+
+func EndAction():
+	exit()
 	pass
 
 func VariableJumpHeight():
