@@ -40,6 +40,9 @@ var coyoteTimer = 0
 @export var jumpInputBuffer = .1
 var jumpInputBufferTimer = 0
 
+@export var parryCooldown = 2
+var parryTimer = 0
+
 @export var ALLMOVEMENTVARIABLE = 100
 
 # RayCast2D and ShapeCast2D nodes are upgraded to RayCast3D and ShapeCast3D
@@ -71,6 +74,8 @@ var dashing : bool = false
 var rolling : bool = false
 var isCrouching : bool = false
 var canChangeDir : bool = true
+var blocking : bool = false
+var parrying : bool = false
 
 var spriteRotation : float
 
@@ -107,6 +112,12 @@ func _physics_process(delta: float) -> void:
 	if machine.current_state:
 		# Note: modified sprite.animation references to string placeholders or custom debug names if applicable.
 		label.text = "Stan: %s | XVelocity: %f | YVelocity: %f | movementDir: %f | lookDir: %f" % [machine.current_state.name, velocity.x, velocity.y, MovementDirection(), LookDirection()]
+		if CanParry():
+			label.label_settings.font_color = Color.GREEN
+		else:
+			label.label_settings.font_color = Color.WHITE
+	
+	parryTimer -= delta
 	
 	if isOnGround() or IsLedgeDetected():
 		coyoteTimer = coyoteTime
@@ -223,6 +234,9 @@ func CalcGravity() -> float:
 func CanJump() -> bool:
 	return jumpInputBufferTimer > 0 and coyoteTimer > 0
 
+func CanParry() -> bool:
+	return parryTimer < 0
+
 func isCollidingRaycast(raycast : RayCast3D) -> bool:
 	#raycast.force_raycast_update()
 	#raycast.force_update_transform()
@@ -234,3 +248,5 @@ func isCollidingShapecast(shapecast : ShapeCast3D) -> bool:
 	return shapecast.is_colliding()
 
 #NOTE: im thinking of adding a second state machine that will check for semi states like parry, block, emotes, attacks, stuns, dazes, guardbreaks, knockdowns. Rethinking that it would be kinda pointless. from parry to attacks i could make them an actions but the rest idk, i will cross that bridge when i get there.
+#i will have to remake the animation tree so i can blend animations together, and have overlapping anims
+#i can have it so the player class sends an action event certain state will get the event and change to the desired state

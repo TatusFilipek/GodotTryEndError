@@ -16,6 +16,14 @@ func physics_update(_delta: float) -> void:
 			core.resizeCollider(0)
 			core.isCrouching = false
 	
+	#before all those state changing ifs add ifs checking for action inputs and change state to said action
+	if Input.is_action_pressed("block"):
+		if core.CanParry():
+			machine.change_state("Parry")
+		else:
+			machine.change_state("Block")
+		return
+	
 	if core.isOnGround():
 		machine.ChangeStateMoveOrIdle("Idle", "Walk")
 	elif Input.is_action_just_pressed("jump") and core.coyoteTimer > 0:

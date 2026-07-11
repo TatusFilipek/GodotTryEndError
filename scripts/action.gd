@@ -63,7 +63,7 @@ func physics_update(_delta: float):
 		VariableJumpHeight()
 	#ground physics
 	else:
-		core.velocity.x = core.MovementDirection() * core.MovementSpeed
+		core.velocity.x = core.MovementDirection() * maxMovementSpeed
 	
 	#check for hits, if hit then disable current attack collisions for said object, player whatever
 	pass
@@ -75,7 +75,7 @@ func feint():
 	pass
 
 func EndAction():
-	exit()
+	machine.actionExit()
 	pass
 
 func VariableJumpHeight():

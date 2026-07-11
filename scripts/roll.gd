@@ -37,3 +37,8 @@ func StartAnim(_time : float, _animName : String) -> void:
 	
 	animationPlayer.play(_animName)
 	animationPlayer.seek(_time, true)
+
+func AnimationFinished() -> void:
+	core.rollAnimFrame = 0
+	animationPlayer.pause()
+	machine.actionExit()

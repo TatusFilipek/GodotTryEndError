@@ -21,8 +21,3 @@ func physics_update(_delta: float) -> void:
 		core.rollAnimFrame = animationPlayer.current_animation_position
 		machine.change_state("RollGround")
 		return
-
-func AnimationFinished() -> void:
-	core.rollAnimFrame = 0
-	animationPlayer.pause()
-	machine.actionExit()
