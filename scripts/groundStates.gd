@@ -24,6 +24,11 @@ func physics_update(_delta: float) -> void:
 			machine.change_state("Block")
 		return
 	
+	#hotbar abilities
+	for action in core.Hotbar:
+		if Input.is_action_just_pressed(action): 
+			machine.change_state(core.Hotbar[action].name)
+	
 	if not core.isOnGround():
 		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")		
 	elif core.CanJump() and not core.isCollidingShapecast(core.CheckSpaceCrouch):

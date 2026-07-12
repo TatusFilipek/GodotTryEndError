@@ -56,6 +56,8 @@ var parryTimer = 0
 @export var CheckSpaceCrouch : ShapeCast3D
 @export var Collider : CollisionShape3D
 
+#@export var LookAtTarget : Node3D
+
 # Instead of managing a single flat AnimatedSprite2D, we will rotate a parent 3D Visuals node.
 # Put your 3D Mesh and your AnimationPlayer/AnimationTree inside a Node3D wrapper called "Visuals"
 @export var VisualsNode : Node3D
@@ -86,6 +88,9 @@ var visualNodeStartRotation : Vector3
 
 var rollAnimFrame : float = 0
 
+@export var Hotbar : Dictionary[String, State]
+var hotbarItems : int = 0
+
 func _ready() -> void:
 	CheckLedge = get_node("CheckLedge")
 	CheckWallTop = get_node("CheckWallTop")
@@ -98,6 +103,9 @@ func _ready() -> void:
 	Collider = get_node("collider")
 	VisualsNode = get_node("Armature")
 	visualNodeStartRotation = VisualsNode.rotation_degrees
+	
+	AddToHotbar("Action")
+	AddToHotbar("Action2")
 
 # physics update
 func _physics_process(delta: float) -> void:
@@ -138,6 +146,15 @@ func _physics_process(delta: float) -> void:
 		else:
 			dashUses = dashInAirUses
 
+func AddToHotbar(stateName: String) -> void:
+	var desiredState = machine.GetState(stateName)
+	
+	hotbarItems += 1
+	
+	if desiredState is Action:
+		Hotbar["hb" + str(hotbarItems)] = desiredState
+	pass
+
 func MovementDirection() -> float:
 	var movementDirection = Input.get_axis("moveLeft", "moveRight")
 	return movementDirection
@@ -154,7 +171,7 @@ func GetSpriteOrientation(delta: float) -> void:
 	else:
 		VisualsNode.rotation.x = 0
 		#NOTE: in future use tween for smother transition
-		
+	
 	if canChangeDir:
 		if MovementDirection() != 0:
 			lastSpriteOrientation = (MovementDirection() < 0)
@@ -246,7 +263,8 @@ func isCollidingShapecast(shapecast : ShapeCast3D) -> bool:
 	#shapecast.force_shapecast_update()
 	#shapecast.force_update_transform()
 	return shapecast.is_colliding()
-
+	
 #NOTE: im thinking of adding a second state machine that will check for semi states like parry, block, emotes, attacks, stuns, dazes, guardbreaks, knockdowns. Rethinking that it would be kinda pointless. from parry to attacks i could make them an actions but the rest idk, i will cross that bridge when i get there.
 #i will have to remake the animation tree so i can blend animations together, and have overlapping anims
 #i can have it so the player class sends an action event certain state will get the event and change to the desired state
+#i can add a semiparry that will be used during ledge climb/grab but i dont think it is necessary

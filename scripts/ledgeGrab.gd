@@ -25,6 +25,13 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: return
 	
+	if Input.is_action_pressed("block"):
+		if core.CanParry():
+			machine.change_state("Parry")
+		else:
+			machine.change_state("Block")
+		return
+	
 	if Input.is_action_pressed("moveDown"):
 		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
 	elif not core.IsLedgeDetected():
@@ -34,5 +41,4 @@ func physics_update(_delta: float) -> void:
 	elif core.jumpInputBufferTimer > 0:
 		core.jumpInputBufferTimer = 0
 		machine.change_state("Jump")
-	#if there is space to fit a player and up and a certain direcion is pressed then go to ledge climb, if there isnt space or only up is pressed preform jump
 	pass

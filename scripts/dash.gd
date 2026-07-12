@@ -51,6 +51,13 @@ func physics_update(_delta: float) -> void:
 	
 	core.dashTimer -= _delta
 	
+	if Input.is_action_pressed("block"):
+		if core.CanParry():
+			machine.change_state("Parry")
+		else:
+			machine.change_state("Block")
+		return
+	
 	if Input.is_action_pressed("feint"):
 		if core.isOnGround():
 			machine.change_state("RollGround")

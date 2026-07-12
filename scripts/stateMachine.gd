@@ -7,6 +7,8 @@ var lastState : State
 
 var parent : Player
 
+@onready var states = self.get_children()
+
 func _ready() -> void:
 	parent = get_parent()
 	var animationTree = parent.get_node("AnimationTree")
@@ -45,6 +47,15 @@ func ChangeStateMoveOrIdle(idleStateName : String, moveStateName : String) -> vo
 		change_state(moveStateName)
 	else:
 		change_state(idleStateName)
+
+func GetState(_StateName: String) -> State:
+	var stateOut: State
+	
+	for state in states:
+		if state.name == _StateName:
+			stateOut = state
+	
+	return stateOut
 
 func _physics_process(delta: float) -> void:
 	if current_state:
