@@ -60,4 +60,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3860016, -0.98950195, 0)
 shape = SubResource("BoxShape3D_7qqs3")
 
 [node name="Player3D" parent="." unique_id=1816512432 instance=ExtResource("1_jgfyj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27333307, 0.60549974, 1.3475342)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.605, 0)
