@@ -62,7 +62,8 @@ var parryTimer = 0
 @export var VisualsNode : Node3D
 
 @onready var label : Label = $CanvasLayer/DebugHelper
-@onready var dashCooldownIcon : TextureRect = $CanvasLayer/Panel/DashIcon
+@onready var dashCooldownIcon : TextureRect = $CanvasLayer/Cooldowns/DashIcon
+@onready var parryCooldownIcon : TextureRect = $CanvasLayer/Cooldowns/ParryIcon
 @onready var animationPlayer : AnimationPlayer = $AnimationPlayer
 @onready var animationTree : AnimationTree = $AnimationTree
 @onready var playback : AnimationNodeStateMachinePlayback = animationTree.get("parameters/playback")
@@ -120,16 +121,17 @@ func _physics_process(delta: float) -> void:
 	if machine.current_state:
 		# Note: modified sprite.animation references to string placeholders or custom debug names if applicable.
 		label.text = "Stan: %s | XVelocity: %f | YVelocity: %f | movementDir: %f | lookDir: %f" % [machine.current_state.name, velocity.x, velocity.y, MovementDirection(), LookDirection()]
-		if CanParry():
-			label.label_settings.font_color = Color.GREEN
-		else:
-			label.label_settings.font_color = Color.WHITE
 	
 	#UI
 	if CanDash():
 		dashCooldownIcon.self_modulate = Color("b9b9b9")
 	else:
 		dashCooldownIcon.self_modulate = Color("4e4e4eff")
+	
+	if CanParry():
+		parryCooldownIcon.self_modulate = Color("b9b9b9")
+	else:
+		parryCooldownIcon.self_modulate = Color("4e4e4eff")
 	
 	#Timers
 	parryTimer -= delta

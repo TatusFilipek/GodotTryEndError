@@ -97,6 +97,7 @@
 [ext_resource type="Texture2D" uid="uid://drwb0pqm31yin" path="res://resources/UI/DashIcon.png" id="91_20d6p"]
 [ext_resource type="Script" uid="uid://vp0ng54ecqcr" path="res://scripts/fallMove.gd" id="91_ycqcu"]
 [ext_resource type="Script" uid="uid://7ptg1tpkbmfd" path="res://scripts/jump.gd" id="92_1qiot"]
+[ext_resource type="Texture2D" uid="uid://odklev0ahesb" path="res://resources/UI/ParryIcon.png" id="92_dacrs"]
 [ext_resource type="Script" uid="uid://dpm8a2rnxl14j" path="res://scripts/run.gd" id="93_hkj2h"]
 [ext_resource type="Script" uid="uid://dt4i2ifit1v28" path="res://scripts/crouchIdle.gd" id="94_ogxgr"]
 [ext_resource type="Script" uid="uid://smy5w2wn2om4" path="res://scripts/crouchWalk.gd" id="95_3hgil"]
@@ -113,7 +114,7 @@
 [ext_resource type="Script" uid="uid://se40vqr41wt" path="res://scripts/block.gd" id="110_o0srm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1hh3j"]
-radius = 0.15
+radius = 0.175
 height = 0.9
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1hh3j"]
@@ -2239,7 +2240,7 @@ Collider = NodePath("collider")
 VisualsNode = NodePath("Armature")
 
 [node name="CheckSpaceCrouch" type="ShapeCast3D" parent="." unique_id=313191973]
-transform = Transform3D(1.13, 0, 0, 0, 0.801, 0, 0, 0, 1.138, 0, 1.4, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0)
 shape = SubResource("CapsuleShape3D_1hh3j")
 target_position = Vector3(0, 0, 0)
 max_results = 1
@@ -2914,21 +2915,31 @@ offset_right = 40.0
 offset_bottom = 23.0
 label_settings = SubResource("LabelSettings_o0srm")
 
-[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=952039666]
+[node name="Cooldowns" type="HBoxContainer" parent="CanvasLayer" unique_id=1330037105]
+custom_minimum_size = Vector2(1, 1)
+custom_maximum_size = Vector2(-1, 25)
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -35.0
-offset_right = 250.0
+offset_top = -40.0
+offset_right = 40.0
 grow_vertical = 0
 
-[node name="DashIcon" type="TextureRect" parent="CanvasLayer/Panel" unique_id=663991002]
+[node name="DashIcon" type="TextureRect" parent="CanvasLayer/Cooldowns" unique_id=342792109]
 self_modulate = Color(0.7254902, 0.7254902, 0.7254902, 1)
-layout_mode = 0
-offset_right = 35.0
-offset_bottom = 35.0
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
 texture = ExtResource("91_20d6p")
-expand_mode = 1
+expand_mode = 3
+stretch_mode = 5
+
+[node name="ParryIcon" type="TextureRect" parent="CanvasLayer/Cooldowns" unique_id=277379281]
+self_modulate = Color(0.7254902, 0.7254902, 0.7254902, 1)
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+texture = ExtResource("92_dacrs")
+expand_mode = 3
+stretch_mode = 5
 
 [node name="StateMachine" type="Node" parent="." unique_id=511306793 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("87_yrkxk")
