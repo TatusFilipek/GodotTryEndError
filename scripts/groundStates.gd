@@ -35,7 +35,7 @@ func physics_update(_delta: float) -> void:
 		core.coyoteTimer = 0
 		core.jumpInputBufferTimer = 0
 		machine.change_state("Jump")
-	elif Input.is_action_just_pressed("dash") and not core.dashing and not core.rolling and core.dashUses > 0:
+	elif Input.is_action_just_pressed("dash") and core.CanDash():
 		machine.change_state("Dash")
 	elif core.is_on_wall():
 		#check for wall on bottom

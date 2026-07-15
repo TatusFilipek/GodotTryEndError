@@ -2,6 +2,7 @@ extends State
 class_name Dash
 
 var dashDirection : Vector2
+var dashTimer = 0
 
 func enter() -> void:
 	super.enter()
@@ -15,7 +16,7 @@ func enter() -> void:
 	
 	core.dashCooldownTimer = core.dashCooldown
 	core.dashUses -= 1
-	core.dashTimer = core.dashDuration
+	dashTimer = core.dashDuration
 	
 	#fix direction calculation
 	dashDirection.x = core.MovementDirection()
@@ -44,14 +45,15 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: return
 	
-	if core.dashTimer <= 0:
-		machine.actionExit()
+	if dashTimer <= 0:
 		core.dashUses = 0
+		machine.actionExit()
 		return
 	
-	core.dashTimer -= _delta
+	dashTimer -= _delta
 	
 	if Input.is_action_pressed("block"):
+		core.dashUses = 0
 		if core.CanParry():
 			machine.change_state("Parry")
 		else:

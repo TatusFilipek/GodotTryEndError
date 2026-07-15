@@ -94,6 +94,7 @@
 [ext_resource type="Script" uid="uid://bl1pu4bo1b8v6" path="res://scripts/idle.gd" id="88_u8lrl"]
 [ext_resource type="Script" uid="uid://cgbkl5js40oui" path="res://scripts/walk.gd" id="89_ebtvl"]
 [ext_resource type="Script" uid="uid://dhhhm4p43sjki" path="res://scripts/fallIdle.gd" id="90_1hh3j"]
+[ext_resource type="Texture2D" uid="uid://drwb0pqm31yin" path="res://resources/UI/DashIcon.png" id="91_20d6p"]
 [ext_resource type="Script" uid="uid://vp0ng54ecqcr" path="res://scripts/fallMove.gd" id="91_ycqcu"]
 [ext_resource type="Script" uid="uid://7ptg1tpkbmfd" path="res://scripts/jump.gd" id="92_1qiot"]
 [ext_resource type="Script" uid="uid://dpm8a2rnxl14j" path="res://scripts/run.gd" id="93_hkj2h"]
@@ -2912,6 +2913,22 @@ shape = SubResource("CapsuleShape3D_hv2xu")
 offset_right = 40.0
 offset_bottom = 23.0
 label_settings = SubResource("LabelSettings_o0srm")
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=952039666]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -35.0
+offset_right = 250.0
+grow_vertical = 0
+
+[node name="DashIcon" type="TextureRect" parent="CanvasLayer/Panel" unique_id=663991002]
+self_modulate = Color(0.7254902, 0.7254902, 0.7254902, 1)
+layout_mode = 0
+offset_right = 35.0
+offset_bottom = 35.0
+texture = ExtResource("91_20d6p")
+expand_mode = 1
 
 [node name="StateMachine" type="Node" parent="." unique_id=511306793 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("87_yrkxk")

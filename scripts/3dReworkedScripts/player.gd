@@ -22,7 +22,6 @@ class_name Player
 @export var dashInAirUses = 1
 @export var dashDuration = .2
 var dashCooldownTimer = 0
-var dashTimer = 0
 var dashUses = 0
 
 @export var rollVelocityLoss = 12.00
@@ -63,6 +62,7 @@ var parryTimer = 0
 @export var VisualsNode : Node3D
 
 @onready var label : Label = $CanvasLayer/DebugHelper
+@onready var dashCooldownIcon : TextureRect = $CanvasLayer/Panel/DashIcon
 @onready var animationPlayer : AnimationPlayer = $AnimationPlayer
 @onready var animationTree : AnimationTree = $AnimationTree
 @onready var playback : AnimationNodeStateMachinePlayback = animationTree.get("parameters/playback")
@@ -125,6 +125,13 @@ func _physics_process(delta: float) -> void:
 		else:
 			label.label_settings.font_color = Color.WHITE
 	
+	#UI
+	if CanDash():
+		dashCooldownIcon.self_modulate = Color("b9b9b9")
+	else:
+		dashCooldownIcon.self_modulate = Color("4e4e4eff")
+	
+	#Timers
 	parryTimer -= delta
 	
 	if isOnGround() or IsLedgeDetected():
@@ -140,6 +147,7 @@ func _physics_process(delta: float) -> void:
 	if not dashing and not rolling:
 		dashCooldownTimer -= delta
 	
+	#dash uses
 	if dashCooldownTimer <= 0 and dashUses <= dashGroundUses:
 		if isOnGround():
 			dashUses = dashGroundUses
@@ -253,6 +261,9 @@ func CanJump() -> bool:
 
 func CanParry() -> bool:
 	return parryTimer < 0
+
+func CanDash() -> bool:
+	return (dashCooldownTimer <= 0 or dashUses > 0) and not dashing and not rolling
 
 func isCollidingRaycast(raycast : RayCast3D) -> bool:
 	#raycast.force_raycast_update()
