@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://boqducct2smkj"]
+
+[ext_resource type="Texture2D" uid="uid://bqpvoj563n750" path="res://resources/UI/loganPaul.jpg" id="2_c2uro"]
+[ext_resource type="AudioStream" uid="uid://e1cgf77ooqjv" path="res://resources/SFX/Calvin Harris - Feel So Close - Radio Edit (SPOTISAVER).mp3" id="3_0j0gl"]
+[ext_resource type="Texture2D" uid="uid://btfc11uscinwy" path="res://resources/RandomTextures/Light/texture_08.png" id="4_ac60j"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jgfyj"]
+
+[sub_resource type="Sky" id="Sky_7qqs3"]
+sky_material = SubResource("ProceduralSkyMaterial_jgfyj")
+
+[sub_resource type="Environment" id="Environment_nk8v3"]
+background_mode = 2
+sky = SubResource("Sky_7qqs3")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c2uro"]
+size = Vector3(50, 0.5, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j0a3d"]
+albedo_texture = ExtResource("2_c2uro")
+rim = 0.0
+rim_tint = 1.0
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_64yvt"]
+lightmap_size_hint = Vector2i(504, 261)
+material = SubResource("StandardMaterial3D_j0a3d")
+size = Vector3(50, 0.5, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_64yvt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6wmxf"]
+albedo_texture = ExtResource("4_ac60j")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_jwd6v"]
+material = SubResource("StandardMaterial3D_6wmxf")
+
+[node name="World" type="Node3D" unique_id=1063125]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=340789366]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6124966, 3.2372742, 7.3418016)
+fov = 90.0
+size = 8.5
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1832463607]
+environment = SubResource("Environment_nk8v3")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1125084043]
+transform = Transform3D(0.7182279, -0.49201044, 0.4920104, 3.2127048e-09, 0.7071069, 0.70710677, -0.695808, -0.5078639, 0.5078639, -10.651276, 6.0948343, 0.7045078)
+light_energy = 0.25
+shadow_enabled = true
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=1794151293]
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=46509537]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+shape = SubResource("BoxShape3D_c2uro")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=1745061966]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+mesh = SubResource("BoxMesh_64yvt")
+
+[node name="Obstacle" type="StaticBody3D" parent="." unique_id=1773004622]
+transform = Transform3D(4.3456936, 0, 0, 0, 2.4767194, 0, 0, 0, 1, 5.44692, 0.80726874, 0)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacle" unique_id=1957560780]
+shape = SubResource("BoxShape3D_64yvt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacle" unique_id=2076318758]
+mesh = SubResource("BoxMesh_jwd6v")
+
+[node name="Obstacle2" type="StaticBody3D" parent="." unique_id=1853502357]
+transform = Transform3D(12.048218, 0.3681857, 0, -3.4085162, 1.3014404, 0, 0, 0, 1.0000007, -10.086097, 1.0139686, 0)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacle2" unique_id=170060764]
+shape = SubResource("BoxShape3D_64yvt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacle2" unique_id=326052642]
+mesh = SubResource("BoxMesh_jwd6v")
+
+[node name="Obstacle3" type="StaticBody3D" parent="." unique_id=1187513420]
+transform = Transform3D(13.204679, -0.11025217, 0, 1.8999783, 0.76624286, 0, 0, 0, 1.0000006, -2.9758441, 4.731056, 0)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacle3" unique_id=1618766418]
+shape = SubResource("BoxShape3D_64yvt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacle3" unique_id=1224680779]
+mesh = SubResource("BoxMesh_jwd6v")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=681248385]
+stream = ExtResource("3_0j0gl")
+volume_db = -19.81
+autoplay = true

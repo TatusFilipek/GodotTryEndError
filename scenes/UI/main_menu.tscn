@@ -1,12 +1,12 @@
-[gd_scene format=3 uid="uid://cogmuv7mb0w3t"]
+[gd_scene format=3 uid="uid://bpde5qq3jfeub"]
 
-[ext_resource type="FontFile" uid="uid://d0jlbpjer2sgs" path="res://resources/UI/Peralta-Regular.ttf" id="1_fyqef"]
-[ext_resource type="StyleBox" uid="uid://cou1x01qnr622" path="res://scenes/Presets/button.tres" id="2_m6e0p"]
-[ext_resource type="Script" uid="uid://b63v5krgo217p" path="res://scripts/ui/mainMenu.gd" id="2_nltto"]
-[ext_resource type="StyleBox" uid="uid://cqycynxd8sq8u" path="res://scenes/Presets/buttonPressed.tres" id="3_27fn8"]
+[ext_resource type="Script" uid="uid://b63v5krgo217p" path="res://scripts/ui/mainMenu.gd" id="1_tfcbk"]
+[ext_resource type="FontFile" uid="uid://d0jlbpjer2sgs" path="res://resources/UI/Peralta-Regular.ttf" id="2_e2p27"]
+[ext_resource type="StyleBox" uid="uid://cou1x01qnr622" path="res://scenes/Presets/button.tres" id="3_ngj32"]
+[ext_resource type="StyleBox" uid="uid://cqycynxd8sq8u" path="res://scenes/Presets/buttonPressed.tres" id="4_bm8t2"]
 
 [sub_resource type="Theme" id="Theme_jaujo"]
-default_font = ExtResource("1_fyqef")
+default_font = ExtResource("2_e2p27")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_64yvt"]
 bg_color = Color(0.446777, 0.44677705, 0.44677693, 1)
@@ -36,7 +36,10 @@ anti_aliasing = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nltto"]
 
-[node name="Control" type="Control" unique_id=1143622922]
+[node name="MainMenu" type="CanvasLayer" unique_id=496953019]
+script = ExtResource("1_tfcbk")
+
+[node name="Control" type="Control" parent="." unique_id=1143622922]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,9 +47,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_jaujo")
-script = ExtResource("2_nltto")
 
-[node name="Panel" type="Panel" parent="." unique_id=157259048]
+[node name="Panel" type="Panel" parent="Control" unique_id=157259048]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -56,7 +58,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_64yvt")
 metadata/_edit_use_anchors_ = true
 
-[node name="Buttons" type="VBoxContainer" parent="." unique_id=287164368]
+[node name="Buttons" type="VBoxContainer" parent="Control" unique_id=287164368]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -72,63 +74,67 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Start" type="Button" parent="Buttons" unique_id=1581034806]
+[node name="Start" type="Button" parent="Control/Buttons" unique_id=1581034806]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 theme_override_colors/font_color = Color(0.44231883, 0.33135808, 0.115395404, 1)
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = ExtResource("2_m6e0p")
-theme_override_styles/pressed = ExtResource("3_27fn8")
+theme_override_styles/normal = ExtResource("3_ngj32")
+theme_override_styles/pressed = ExtResource("4_bm8t2")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nltto")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_n5ude")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ibotj")
 text = "Start Game"
 
-[node name="Options" type="Button" parent="Buttons" unique_id=796030670]
+[node name="Options" type="Button" parent="Control/Buttons" unique_id=796030670]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 theme_override_colors/font_color = Color(0.44231883, 0.33135808, 0.115395404, 1)
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = ExtResource("2_m6e0p")
-theme_override_styles/pressed = ExtResource("3_27fn8")
+theme_override_styles/normal = ExtResource("3_ngj32")
+theme_override_styles/pressed = ExtResource("4_bm8t2")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nltto")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_n5ude")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ibotj")
 text = "Options"
 
-[node name="Credits" type="Button" parent="Buttons" unique_id=174144445]
+[node name="Credits" type="Button" parent="Control/Buttons" unique_id=174144445]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 theme_override_colors/font_color = Color(0.44231883, 0.33135808, 0.115395404, 1)
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = ExtResource("2_m6e0p")
-theme_override_styles/pressed = ExtResource("3_27fn8")
+theme_override_styles/normal = ExtResource("3_ngj32")
+theme_override_styles/pressed = ExtResource("4_bm8t2")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nltto")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_n5ude")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ibotj")
 text = "Credits"
 
-[node name="Exit" type="Button" parent="Buttons" unique_id=1985649559]
+[node name="Exit" type="Button" parent="Control/Buttons" unique_id=1985649559]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 theme_override_colors/font_color = Color(0.44231883, 0.33135808, 0.115395404, 1)
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = ExtResource("2_m6e0p")
-theme_override_styles/pressed = ExtResource("3_27fn8")
+theme_override_styles/normal = ExtResource("3_ngj32")
+theme_override_styles/pressed = ExtResource("4_bm8t2")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nltto")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_n5ude")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ibotj")
 text = "Exit"
 
-[node name="GameName" type="Label" parent="." unique_id=635973707]
+[node name="GameName" type="Label" parent="Control" unique_id=635973707]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -142,11 +148,11 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("1_fyqef")
+theme_override_fonts/font = ExtResource("2_e2p27")
 theme_override_font_sizes/font_size = 55
 text = "Unnamed Game"
 
-[node name="Margins" type="MarginContainer" parent="." unique_id=1675023709]
+[node name="Margins" type="MarginContainer" parent="Control" unique_id=1675023709]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -158,15 +164,15 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Credits" type="HBoxContainer" parent="Margins" unique_id=123376265]
+[node name="Credits" type="HBoxContainer" parent="Control/Margins" unique_id=123376265]
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Margins/Credits" unique_id=1075374660]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Margins/Credits" unique_id=1075374660]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Title" type="Label" parent="Margins/Credits/VBoxContainer" unique_id=1125759733]
+[node name="Title" type="Label" parent="Control/Margins/Credits/VBoxContainer" unique_id=1125759733]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
@@ -177,7 +183,7 @@ theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 35
 text = "Credits"
 
-[node name="credit" type="Label" parent="Margins/Credits/VBoxContainer" unique_id=1998901447]
+[node name="credit" type="Label" parent="Control/Margins/Credits/VBoxContainer" unique_id=1998901447]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.7539839, 0.75398386, 0.75398386, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
@@ -188,25 +194,25 @@ theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 25
 text = "-Me"
 
-[node name="PanelContainer" type="PanelContainer" parent="Margins/Credits" unique_id=579156137]
+[node name="PanelContainer" type="PanelContainer" parent="Control/Margins/Credits" unique_id=579156137]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_nltto")
 
-[node name="Back" type="Button" parent="Margins/Credits/PanelContainer" unique_id=1493343113]
+[node name="Back" type="Button" parent="Control/Margins/Credits/PanelContainer" unique_id=1493343113]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/outline_size = 5
 text = "Back"
 
-[node name="Options" type="HBoxContainer" parent="Margins" unique_id=1728444588]
+[node name="Options" type="HBoxContainer" parent="Control/Margins" unique_id=1728444588]
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Margins/Options" unique_id=616513100]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Margins/Options" unique_id=616513100]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Title" type="Label" parent="Margins/Options/VBoxContainer" unique_id=2024698044]
+[node name="Title" type="Label" parent="Control/Margins/Options/VBoxContainer" unique_id=2024698044]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
@@ -217,7 +223,7 @@ theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 35
 text = "Options"
 
-[node name="option" type="Label" parent="Margins/Options/VBoxContainer" unique_id=1110309382]
+[node name="option" type="Label" parent="Control/Margins/Options/VBoxContainer" unique_id=1110309382]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.7539839, 0.75398386, 0.75398386, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
@@ -228,19 +234,15 @@ theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 25
 text = "sound volume"
 
-[node name="PanelContainer" type="PanelContainer" parent="Margins/Options" unique_id=1454573663]
+[node name="PanelContainer" type="PanelContainer" parent="Control/Margins/Options" unique_id=1454573663]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_nltto")
 
-[node name="Back" type="Button" parent="Margins/Options/PanelContainer" unique_id=878574530]
+[node name="Back" type="Button" parent="Control/Margins/Options/PanelContainer" unique_id=878574530]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/outline_size = 5
 text = "Back"
 
-[connection signal="pressed" from="Buttons/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="Buttons/Options" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="Buttons/Credits" to="." method="_on_credits_pressed"]
-[connection signal="pressed" from="Buttons/Exit" to="." method="_on_exit_pressed"]
-[connection signal="pressed" from="Margins/Credits/PanelContainer/Back" to="." method="_on_back_pressed"]
-[connection signal="pressed" from="Margins/Options/PanelContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Control/Margins/Credits/PanelContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Control/Margins/Options/PanelContainer/Back" to="." method="_on_back_pressed"]

@@ -92,7 +92,13 @@ var rollAnimFrame : float = 0
 @export var Hotbar : Dictionary[String, State]
 var hotbarItems : int = 0
 
+@onready var camera: Camera3D = %Camera
+
+func _enter_tree() -> void:
+	set_multiplayer_authority(int(name))
+
 func _ready() -> void:
+	add_to_group('Players')
 	CheckLedge = get_node("CheckLedge")
 	CheckWallTop = get_node("CheckWallTop")
 	CheckWallBottom = get_node("CheckWallBottom")
@@ -107,6 +113,10 @@ func _ready() -> void:
 	
 	AddToHotbar("Action")
 	AddToHotbar("Action2")
+	
+	if is_multiplayer_authority():
+		camera.current = true
+		#TODO: add this if statement in state machine
 
 # physics update
 func _physics_process(delta: float) -> void:

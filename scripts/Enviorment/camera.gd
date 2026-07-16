@@ -6,7 +6,7 @@ extends Camera3D
 
 func _ready() -> void:
 	# Make sure your character instance node name inside the main scene matches
-	followed = get_parent().get_node("Player3D")
+	followed = get_parent().get_node("Player")
 
 func _physics_process(delta: float) -> void:
 	if not followed: return

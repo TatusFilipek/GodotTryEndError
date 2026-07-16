@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqpvoj563n750"
-path.s3tc="res://.godot/imported/loganPaul.jpg-445b0749cea19c000620d3e32ee234d5.s3tc.ctex"
+uid="uid://btfc11uscinwy"
+path.s3tc="res://.godot/imported/texture_08.png-d34c8cf52e5f92507ca1d35834488568.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://resources/UI/loganPaul.jpg"
-dest_files=["res://.godot/imported/loganPaul.jpg-445b0749cea19c000620d3e32ee234d5.s3tc.ctex"]
+source_file="res://resources/RandomTextures/Light/texture_08.png"
+dest_files=["res://.godot/imported/texture_08.png-d34c8cf52e5f92507ca1d35834488568.s3tc.ctex"]
 
 [params]
 
