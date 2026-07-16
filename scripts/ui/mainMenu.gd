@@ -14,7 +14,7 @@ func _ready() -> void:
 	game_name.visible = true
 
 func _on_start_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/rework3d.tscn")
+	get_tree().change_scene_to_file("res://scenes/Enviorment/rework3d.tscn")
 
 func _on_options_pressed() -> void:
 	margins.visible = true
