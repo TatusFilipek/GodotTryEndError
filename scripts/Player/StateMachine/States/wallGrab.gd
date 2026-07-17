@@ -24,12 +24,12 @@ func physics_update(_delta: float) -> void:
 	if not Input.is_action_pressed("grab"):
 		machine.change_state("WallTouch")
 	
-	if core.MovementDirection() * core.facingDirection > 0:
+	if inputHandler.movementDirection * core.facingDirection > 0:
 		if playback.get_current_node() != "WallPush":
 			playback.travel("WallPush")
 			#print("fix Later | WallPush")
 
-	elif core.MovementDirection() * core.facingDirection < 0:
+	elif inputHandler.movementDirection * core.facingDirection < 0:
 		if playback.get_current_node() != "WallPull":
 			playback.travel("WallPull")
 			#print("fix Later | WallPull")

@@ -11,7 +11,7 @@ func enter() -> void:
 	core.dashing = true
 	
 	#resizing colliders
-	if Input.is_action_pressed("crouch"):
+	if inputHandler.crouchInput:
 		core.resizeCollider(0.7)
 	
 	core.dashCooldownTimer = core.dashCooldown
@@ -19,8 +19,8 @@ func enter() -> void:
 	dashTimer = core.dashDuration
 	
 	#fix direction calculation
-	dashDirection.x = core.MovementDirection()
-	if core.MovementDirection() == 0 and core.LookDirection() == 0:
+	dashDirection.x = inputHandler.movementDirection
+	if inputHandler.movementDirection == 0 and core.LookDirection() == 0:
 		dashDirection.x = core.facingDirection
 	dashDirection.y = core.LookDirection()
 	
@@ -52,7 +52,7 @@ func physics_update(_delta: float) -> void:
 	
 	dashTimer -= _delta
 	
-	if Input.is_action_pressed("block"):
+	if inputHandler.blockInput:
 		core.dashUses = 0
 		if core.CanParry():
 			machine.change_state("Parry")

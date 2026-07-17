@@ -7,6 +7,8 @@ var animationTree : AnimationTree
 var playback : AnimationNodeStateMachinePlayback
 var animationPlayer : AnimationPlayer
 
+@onready var inputHandler: InputHandler = %InputHandler
+
 var isActive
 
 func Setup(_core : Player, _machine : StateMachine, _animationTree: AnimationTree, _playback : AnimationNodeStateMachinePlayback, _animationPlayer : AnimationPlayer) -> void:

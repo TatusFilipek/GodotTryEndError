@@ -8,6 +8,7 @@ var lastState : State
 var parent : Player
 
 @onready var states = self.get_children()
+@onready var inputHandler: InputHandler = %InputHandler
 
 func _ready() -> void:
 	parent = get_parent()
@@ -35,7 +36,7 @@ func change_state(new_state_name: String) -> void:
 
 func actionExit() -> void:
 	if parent.isOnGround():
-		if parent.isCollidingShapecast(parent.CheckSpaceCrouch) or Input.is_action_pressed("crouch"):
+		if parent.isCollidingShapecast(parent.CheckSpaceCrouch) or inputHandler.crouchInput:
 			ChangeStateMoveOrIdle("CrouchIdle", "CrouchWalk")
 		else:
 			ChangeStateMoveOrIdle("Idle", "Walk")
@@ -43,7 +44,7 @@ func actionExit() -> void:
 		ChangeStateMoveOrIdle("FallIdle", "FallMove")
 
 func ChangeStateMoveOrIdle(idleStateName : String, moveStateName : String) -> void:
-	if parent.MovementDirection() != 0:
+	if inputHandler.movementDirection != 0:
 		change_state(moveStateName)
 	else:
 		change_state(idleStateName)
@@ -57,6 +58,9 @@ func GetState(_StateName: String) -> State:
 	
 	return stateOut
 
-func _physics_process(delta: float) -> void:
+#NOTE: the thing is the that is a physics update, it updates if something changes, and on the server side there isnt any inputs so it doesnt update properly
+func _process(delta: float) -> void:
+	if not multiplayer.is_server(): return
+	#TODO: make all calculations server side, only input should be on the players side
 	if current_state:
 		current_state.physics_update(delta)

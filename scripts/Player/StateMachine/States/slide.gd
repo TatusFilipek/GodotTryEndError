@@ -29,7 +29,7 @@ func physics_update(_delta: float) -> void:
 	
 	if core.slideCancelVelocity > abs(core.velocity.x) and core.spriteRotation <= 0:
 		ExitSlide()
-	elif not Input.is_action_pressed("crouch"):
+	elif not inputHandler.crouchInput:
 		ExitSlide()
 	
 	#add leaping
@@ -44,7 +44,7 @@ func physics_update(_delta: float) -> void:
 func ExitSlide():
 	if core.isCollidingShapecast(core.CheckSpaceCrouch):
 		machine.ChangeStateMoveOrIdle("CrouchIdle", "CrouchWalk")
-	elif Input.is_action_pressed("crouch"):
+	elif inputHandler.crouchInput:
 		machine.ChangeStateMoveOrIdle("CrouchIdle", "CrouchWalk")
 	else:
 		machine.ChangeStateMoveOrIdle("Idle", "Walk")

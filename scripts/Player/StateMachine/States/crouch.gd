@@ -16,7 +16,7 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: 
 		#resize collider
-		if not core.isCollidingShapecast(core.CheckSpaceCrouch) and not Input.is_action_pressed("crouch"):
+		if not core.isCollidingShapecast(core.CheckSpaceCrouch) and not inputHandler.crouchInput:
 			core.resizeCollider(0)
 			core.isCrouching = false
 		return

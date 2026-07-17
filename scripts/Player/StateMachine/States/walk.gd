@@ -13,11 +13,11 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: return
 	if not core.dashing:
-		core.velocity.x = core.MovementDirection() * core.MovementSpeed
+		core.velocity.x = inputHandler.movementDirection * core.MovementSpeed
 	
-	if Input.is_action_pressed("sprint"):
+	if inputHandler.runInput:
 		machine.change_state("Run")
-	elif core.MovementDirection() == 0:
+	elif inputHandler.movementDirection == 0:
 		machine.change_state("Idle")
-	elif Input.is_action_pressed("crouch"):
+	elif inputHandler.crouchInput:
 		machine.change_state("CrouchWalk")

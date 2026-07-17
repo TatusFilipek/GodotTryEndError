@@ -17,7 +17,7 @@ func physics_update(_delta: float) -> void:
 			core.isCrouching = false
 	
 	#before all those state changing ifs add ifs checking for action inputs and change state to said action
-	if Input.is_action_pressed("block"):
+	if inputHandler.blockInput:
 		if core.CanParry():
 			machine.change_state("Parry")
 		else:
@@ -30,9 +30,10 @@ func physics_update(_delta: float) -> void:
 		core.coyoteTimer = 0
 		machine.change_state("Jump")
 		#check for ledge and if ledge detected grab on it
-	elif core.IsLedgeDetected() and core.MovementDirection() != 0 and core.velocity.y < 0:
+	elif core.IsLedgeDetected() and inputHandler.movementDirection != 0 and core.velocity.y < 0:
 		machine.change_state("LedgeGrab")
-	elif Input.is_action_just_pressed("dash") and core.CanDash():
+	elif inputHandler.dashInput and core.CanDash():
+		#inputHandler.dash = false
 		machine.change_state("Dash")
 	else:
 		core.velocity.y -= core.CalcGravity() * _delta; # Gravity

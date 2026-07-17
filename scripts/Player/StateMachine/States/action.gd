@@ -38,7 +38,7 @@ func physics_update(_delta: float):
 	#if hit, stunned, dazed return
 	
 	#proper collider sizing
-	if not core.isCollidingShapecast(core.CheckSpaceCrouch) and not Input.is_action_pressed("crouch"):
+	if not core.isCollidingShapecast(core.CheckSpaceCrouch) and not inputHandler.crouchInput:
 		core.resizeCollider(0)
 		core.isCrouching = false
 	
@@ -53,9 +53,9 @@ func physics_update(_delta: float):
 	if not core.isOnGround():
 		core.velocity.y -= core.CalcGravity() * _delta; # Gravity
 		
-		if core.MovementDirection() != 0:
+		if inputHandler.movementDirection != 0:
 			if abs(core.velocity.x) <= maxMovementSpeed:
-				core.velocity.x += (maxMovementSpeed * core.MovementDirection() * core.airDrag * 1) * _delta
+				core.velocity.x += (maxMovementSpeed * inputHandler.movementDirection * core.airDrag * 1) * _delta
 				core.velocity.x = clamp(core.velocity.x, -maxMovementSpeed, maxMovementSpeed)
 			else:
 				core.velocity.x -= core.velocity.x * core.airDrag * .5 * _delta
@@ -63,7 +63,7 @@ func physics_update(_delta: float):
 		VariableJumpHeight()
 	#ground physics
 	else:
-		core.velocity.x = core.MovementDirection() * maxMovementSpeed
+		core.velocity.x = inputHandler.movementDirection * maxMovementSpeed
 	
 	#check for hits, if hit then disable current attack collisions for said object, player whatever
 	pass

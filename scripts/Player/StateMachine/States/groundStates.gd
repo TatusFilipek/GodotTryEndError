@@ -12,12 +12,12 @@ func exit() -> void:
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
-	if not core.isCollidingShapecast(core.CheckSpaceCrouch) and not Input.is_action_pressed("crouch"):
+	if not core.isCollidingShapecast(core.CheckSpaceCrouch) and not inputHandler.crouchInput:
 			core.resizeCollider(0)
 			core.isCrouching = false
 	
 	#before all those state changing ifs add ifs checking for action inputs and change state to said action
-	if Input.is_action_pressed("block"):
+	if inputHandler.blockInput:
 		if core.CanParry():
 			machine.change_state("Parry")
 		else:
@@ -35,7 +35,8 @@ func physics_update(_delta: float) -> void:
 		core.coyoteTimer = 0
 		core.jumpInputBufferTimer = 0
 		machine.change_state("Jump")
-	elif Input.is_action_just_pressed("dash") and core.CanDash():
+	elif inputHandler.dashInput and core.CanDash():
+		#inputHandler.dash = false
 		machine.change_state("Dash")
 	elif core.is_on_wall():
 		#check for wall on bottom

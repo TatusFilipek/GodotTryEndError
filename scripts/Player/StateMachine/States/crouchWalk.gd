@@ -13,11 +13,11 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: return
 	if not core.dashing:
-		core.velocity.x = core.MovementDirection() * core.MovementSpeed * core.crouchMovementMult
+		core.velocity.x = inputHandler.movementDirection * core.MovementSpeed * core.crouchMovementMult
 	
-	if core.MovementDirection() == 0:
+	if inputHandler.movementDirection == 0:
 		machine.change_state("CrouchIdle")	
-	elif not Input.is_action_pressed("crouch"):
+	elif not inputHandler.crouchInput:
 		changeState("Walk")
-	elif Input.is_action_pressed("sprint") and not core.isCollidingShapecast(core.CheckSpaceCrouch) and not core.isCollidingRaycast(core.CheckWallBottom):
+	elif inputHandler.runInput and not core.isCollidingShapecast(core.CheckSpaceCrouch) and not core.isCollidingRaycast(core.CheckWallBottom):
 		machine.change_state("Slide")

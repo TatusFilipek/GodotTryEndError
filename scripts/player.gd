@@ -118,7 +118,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			dashUses = dashInAirUses
 
-func MovementDirection() -> float:
+func movementDirection -> float:
 	var movementDirection = Input.get_axis("moveLeft", "moveRight")
 	return movementDirection
 
@@ -137,9 +137,9 @@ func GetSpriteOrientation() -> void:
 		sprite.rotation = 0
 		
 	if canChangeDir:
-		if MovementDirection() != 0:
-			lastSpriteOrientation = (MovementDirection() < 0)
-			facingDirection = ceil(MovementDirection())
+		if movementDirection != 0:
+			lastSpriteOrientation = (movementDirection < 0)
+			facingDirection = ceil(movementDirection)
 		sprite.flip_h = lastSpriteOrientation
 		
 		if sign(CheckWallTop.target_position.x) != sign(facingDirection):

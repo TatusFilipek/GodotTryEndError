@@ -16,7 +16,7 @@ func exit():
 func physics_update(_delta: float):
 	super.physics_update(_delta)
 	
-	if not Input.is_action_pressed("block"):
+	if not inputHandler.blockInput:
 		machine.actionExit()
 	
 	pass

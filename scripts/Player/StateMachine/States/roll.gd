@@ -26,7 +26,7 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: return
 	
-	if Input.is_action_pressed("block"):
+	if inputHandler.blockInput:
 		if core.CanParry():
 			machine.change_state("Parry")
 		else:

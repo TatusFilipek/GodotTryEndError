@@ -40,7 +40,7 @@ var coyoteTimer = 0
 var jumpInputBufferTimer = 0
 
 @export var parryCooldown = 2
-var parryTimer = 0
+@export var parryTimer = 0
 
 @export var ALLMOVEMENTVARIABLE = 100
 
@@ -95,11 +95,7 @@ var rollAnimFrame : float = 0
 @export var Hotbar : Dictionary[String, State]
 var hotbarItems : int = 0
 
-#multiplayer inputs and other stuff with animations
-@export var movementDirection : float = 0
-@export var lookDirection : float = 0
-@export var crouch : bool = false
-@export var run : bool = false
+@onready var inputHandler: InputHandler = %InputHandler
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(int(name))
@@ -132,10 +128,10 @@ func _ready() -> void:
 
 # physics update
 func _physics_process(delta: float) -> void:
-	movementDirection = MovementDirection()
-	lookDirection = LookDirection()
-	if not is_multiplayer_authority(): return
+	parryTimer -= delta
 	GetSpriteOrientation(delta)
+	
+	#if not is_multiplayer_authority(): return
 	
 	# CRITICAL 2.5D MECHANIC: Lock Z positioning completely to avoid drifting down or up depth paths
 	velocity.z = 0.0
@@ -145,7 +141,7 @@ func _physics_process(delta: float) -> void:
 	
 	if machine.current_state:
 		# Note: modified sprite.animation references to string placeholders or custom debug names if applicable.
-		label.text = "Stan: %s | XVelocity: %f | YVelocity: %f | movementDir: %f | lookDir: %f" % [machine.current_state.name, velocity.x, velocity.y, MovementDirection(), LookDirection()]
+		label.text = "Stan: %s | XVelocity: %f | YVelocity: %f | movementDir: %f | lookDir: %f" % [machine.current_state.name, velocity.x, velocity.y, inputHandler.movementDirection, inputHandler.lookDirection]
 	
 	#UI
 	if CanDash():
@@ -159,7 +155,6 @@ func _physics_process(delta: float) -> void:
 		parryCooldownIcon.self_modulate = Color("4e4e4eff")
 	
 	#Timers
-	parryTimer -= delta
 	
 	if isOnGround() or IsLedgeDetected():
 		coyoteTimer = coyoteTime
@@ -208,9 +203,9 @@ func GetSpriteOrientation(delta: float) -> void:
 		#NOTE: in future use tween for smother transition
 	
 	if canChangeDir:
-		if MovementDirection() != 0:
-			lastSpriteOrientation = (MovementDirection() < 0)
-			facingDirection = ceil(MovementDirection())
+		if inputHandler.movementDirection != 0:
+			lastSpriteOrientation = (inputHandler.movementDirection < 0)
+			facingDirection = ceil(inputHandler.movementDirection)
 		
 		if lastSpriteOrientation:
 			VisualsNode.rotation_degrees.y = 180.0 + visualNodeStartRotation.y
@@ -258,11 +253,13 @@ func SetLedgeOffset(ledgePos : Vector3) -> Vector3:
 func isOnGround() -> bool:
 	# Godot 3D safely checks is_on_floor()
 	#return is_on_floor()
-	return is_on_floor() and (isCollidingRaycast(CheckFloorBack) or isCollidingRaycast(CheckFloorFront))
+	#return is_on_floor() and (isCollidingRaycast(CheckFloorBack) or isCollidingRaycast(CheckFloorFront))
+	return isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
 
 func isOnGroundFully() -> bool:
 	#return is_on_floor()
-	return is_on_floor() and isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
+	#return is_on_floor() and isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
+	return isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
 
 func isOnWall() -> bool:
 	#return is_on_wall()
@@ -293,13 +290,13 @@ func CanDash() -> bool:
 	return (dashCooldownTimer <= 0 or dashUses > 0) and not dashing and not rolling
 
 func isCollidingRaycast(raycast : RayCast3D) -> bool:
-	#raycast.force_raycast_update()
-	#raycast.force_update_transform()
+	raycast.force_raycast_update()
+	raycast.force_update_transform()
 	return raycast.is_colliding()
 
 func isCollidingShapecast(shapecast : ShapeCast3D) -> bool:
-	#shapecast.force_shapecast_update()
-	#shapecast.force_update_transform()
+	shapecast.force_shapecast_update()
+	shapecast.force_update_transform()
 	return shapecast.is_colliding()
 	
 #NOTE: im thinking of adding a second state machine that will check for semi states like parry, block, emotes, attacks, stuns, dazes, guardbreaks, knockdowns. Rethinking that it would be kinda pointless. from parry to attacks i could make them an actions but the rest idk, i will cross that bridge when i get there.

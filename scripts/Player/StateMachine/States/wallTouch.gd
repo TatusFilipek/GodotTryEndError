@@ -24,7 +24,7 @@ func physics_update(_delta: float) -> void:
 		machine.ChangeStateMoveOrIdle("Idle", "Walk")
 	elif Input.is_action_pressed("grab"):
 		machine.change_state("WallGrab")
-	elif Input.is_action_pressed("crouch"):
+	elif inputHandler.crouchInput:
 		machine.ChangeStateMoveOrIdle("CrouchIdle", "CrouchWalk")
 	#NOTE: add a raycast that checks for a body that can be moved, and if it is found change state to WallGrab
 	pass

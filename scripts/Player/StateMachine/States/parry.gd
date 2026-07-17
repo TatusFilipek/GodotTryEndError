@@ -22,7 +22,7 @@ func physics_update(_delta: float):
 	super.physics_update(_delta)
 	
 	if parryWindowTimer >= parryWindow:
-		if Input.is_action_pressed("block"):
+		if inputHandler.blockInput:
 			machine.change_state("Block")
 		else:
 			machine.actionExit()
