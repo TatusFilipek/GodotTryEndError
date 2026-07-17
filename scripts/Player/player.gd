@@ -61,14 +61,16 @@ var parryTimer = 0
 # Put your 3D Mesh and your AnimationPlayer/AnimationTree inside a Node3D wrapper called "Visuals"
 @export var VisualsNode : Node3D
 
-@onready var label : Label = $CanvasLayer/DebugHelper
-@onready var dashCooldownIcon : TextureRect = $CanvasLayer/Cooldowns/DashIcon
-@onready var parryCooldownIcon : TextureRect = $CanvasLayer/Cooldowns/ParryIcon
+@onready var label : Label = $CanvasLayer/Control/DebugHelper
+@onready var dashCooldownIcon : TextureRect = $CanvasLayer/Control/Cooldowns/DashIcon
+@onready var parryCooldownIcon : TextureRect = $CanvasLayer/Control/Cooldowns/ParryIcon
 @onready var animationPlayer : AnimationPlayer = $AnimationPlayer
 @onready var animationTree : AnimationTree = $AnimationTree
 @onready var playback : AnimationNodeStateMachinePlayback = animationTree.get("parameters/playback")
 @onready var machine : StateMachine = $StateMachine
 @onready var canvas_layer: CanvasLayer = %CanvasLayer
+@onready var name_plate: Label3D = %NamePlate
+@onready var camera: Camera3D = %Camera
 
 var lastSpriteOrientation : bool
 var facingDirection = 1
@@ -93,13 +95,19 @@ var rollAnimFrame : float = 0
 @export var Hotbar : Dictionary[String, State]
 var hotbarItems : int = 0
 
-@onready var camera: Camera3D = %Camera
+#multiplayer inputs and other stuff with animations
+@export var movementDirection : float = 0
+@export var lookDirection : float = 0
+@export var crouch : bool = false
+@export var run : bool = false
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(int(name))
 
 func _ready() -> void:
 	add_to_group('Players')
+	name_plate.text = name
+	
 	CheckLedge = get_node("CheckLedge")
 	CheckWallTop = get_node("CheckWallTop")
 	CheckWallBottom = get_node("CheckWallBottom")
@@ -117,11 +125,15 @@ func _ready() -> void:
 	
 	if is_multiplayer_authority():
 		camera.current = true
-		canvas_layer.visible = true
 		#TODO: add this if statement in state machine
+		#NOTE: i know how to make the animations work on the server. I think the server doesnt recieve inputs so the statemachine just doesnt update, i need to pass inputs and collisions then everything will work properly
+	else:
+		canvas_layer.visible = false
 
 # physics update
 func _physics_process(delta: float) -> void:
+	movementDirection = MovementDirection()
+	lookDirection = LookDirection()
 	if not is_multiplayer_authority(): return
 	GetSpriteOrientation(delta)
 	
@@ -179,12 +191,12 @@ func AddToHotbar(stateName: String) -> void:
 	pass
 
 func MovementDirection() -> float:
-	var movementDirection = Input.get_axis("moveLeft", "moveRight")
-	return movementDirection
+	var _movementDirection = Input.get_axis("moveLeft", "moveRight")
+	return _movementDirection
 
 func LookDirection() -> float:
-	var lookDirection = Input.get_axis("moveDown", "moveUp")
-	return lookDirection
+	var _lookDirection = Input.get_axis("moveDown", "moveUp")
+	return _lookDirection
 
 func GetSpriteOrientation(delta: float) -> void:
 	if isOnGroundFully():

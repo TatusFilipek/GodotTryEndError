@@ -11,6 +11,8 @@ func start_server() -> void:
 	peer.create_server(port)
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(add_player)
+	multiplayer.peer_disconnected.connect(remove_player)
+
 
 func join_server() -> void:
 	peer.create_client(ip, port)
