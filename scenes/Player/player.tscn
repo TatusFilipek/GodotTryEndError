@@ -2217,6 +2217,7 @@ states/WallPush/node = SubResource("AnimationNodeAnimation_14if0")
 states/WallPush/position = Vector2(944, 100)
 states/WallTouch/node = SubResource("AnimationNodeAnimation_4uo2r")
 states/WallTouch/position = Vector2(944, 40)
+graph_offset = Vector2(59.93992, 0)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hv2xu"]
 radius = 0.175
@@ -2233,15 +2234,12 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath("Armature:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath("AnimationPlayer:current_animation")
+properties/2/path = NodePath("CheckSpaceCrouch:position")
 properties/2/spawn = true
 properties/2/replication_mode = 1
-properties/3/path = NodePath("CheckSpaceCrouch:position")
+properties/3/path = NodePath("CheckSpaceCrouch:rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-properties/4/path = NodePath("CheckSpaceCrouch:rotation")
-properties/4/spawn = true
-properties/4/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D" unique_id=1816512432 node_paths=PackedStringArray("CheckWallTop", "CheckWallBottom", "CheckLedge", "CheckHead", "CheckFloorFront", "CheckFloorBack", "CheckSpace", "CheckSpaceCrouch", "Collider", "VisualsNode")]
 script = ExtResource("1_pw0el")
@@ -2914,6 +2912,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.214, 0.863, 0.612)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8998861e-08, 0.112890005, 5.1886435)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=592557310]
+root_motion_track = NodePath("Armature/GeneralSkeleton:Root")
 libraries/ = SubResource("AnimationLibrary_gbgpg")
 libraries/anims2 = SubResource("AnimationLibrary_s6x3x")
 
@@ -2927,6 +2926,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_hv2xu")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=342493484]
+unique_name_in_owner = true
+visible = false
 
 [node name="DebugHelper" type="Label" parent="CanvasLayer" unique_id=1128995727]
 offset_right = 40.0

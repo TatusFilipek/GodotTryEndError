@@ -96,4 +96,3 @@ mesh = SubResource("BoxMesh_jwd6v")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=681248385]
 stream = ExtResource("3_0j0gl")
 volume_db = -19.81
-autoplay = true

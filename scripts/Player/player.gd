@@ -68,6 +68,7 @@ var parryTimer = 0
 @onready var animationTree : AnimationTree = $AnimationTree
 @onready var playback : AnimationNodeStateMachinePlayback = animationTree.get("parameters/playback")
 @onready var machine : StateMachine = $StateMachine
+@onready var canvas_layer: CanvasLayer = %CanvasLayer
 
 var lastSpriteOrientation : bool
 var facingDirection = 1
@@ -116,10 +117,12 @@ func _ready() -> void:
 	
 	if is_multiplayer_authority():
 		camera.current = true
+		canvas_layer.visible = true
 		#TODO: add this if statement in state machine
 
 # physics update
 func _physics_process(delta: float) -> void:
+	if not is_multiplayer_authority(): return
 	GetSpriteOrientation(delta)
 	
 	# CRITICAL 2.5D MECHANIC: Lock Z positioning completely to avoid drifting down or up depth paths
