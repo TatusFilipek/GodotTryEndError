@@ -115,52 +115,6 @@
 [ext_resource type="FontFile" uid="uid://d0jlbpjer2sgs" path="res://resources/UI/Peralta-Regular.ttf" id="113_mve82"]
 [ext_resource type="Script" uid="uid://bchxv2smfmviy" path="res://scenes/Player/input_handler.gd" id="114_owaif"]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_w6su8"]
-properties/0/path = NodePath("InputHandler:movementDirection")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath("InputHandler:lookDirection")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath("InputHandler:runInput")
-properties/2/spawn = true
-properties/2/replication_mode = 1
-properties/3/path = NodePath("InputHandler:crouchInput")
-properties/3/spawn = true
-properties/3/replication_mode = 1
-properties/4/path = NodePath("InputHandler:blockInput")
-properties/4/spawn = true
-properties/4/replication_mode = 1
-properties/5/path = NodePath("InputHandler:feintInput")
-properties/5/spawn = true
-properties/5/replication_mode = 1
-properties/6/path = NodePath("InputHandler:dashInput")
-properties/6/spawn = true
-properties/6/replication_mode = 1
-properties/7/path = NodePath("InputHandler:dash")
-properties/7/spawn = true
-properties/7/replication_mode = 1
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dn5mr"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath("Armature:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath("CheckSpaceCrouch:position")
-properties/2/spawn = true
-properties/2/replication_mode = 1
-properties/3/path = NodePath("CheckSpaceCrouch:rotation")
-properties/3/spawn = true
-properties/3/replication_mode = 1
-properties/4/path = NodePath("collider:position")
-properties/4/spawn = true
-properties/4/replication_mode = 1
-properties/5/path = NodePath("collider:shape:height")
-properties/5/spawn = true
-properties/5/replication_mode = 1
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1hh3j"]
 radius = 0.175
 height = 0.9
@@ -2276,6 +2230,61 @@ height = 1.8
 outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_w6su8"]
+properties/0/path = NodePath("InputHandler:movementDirection")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("InputHandler:lookDirection")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("InputHandler:runInput")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("InputHandler:crouchInput")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("InputHandler:blockInput")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("InputHandler:feintInput")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("InputHandler:dashInput")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("InputHandler:jumpInput")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("InputHandler:jumpInputUp")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dn5mr"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:lastSpriteOrientation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:facingDirection")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:dashing")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:rolling")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath(".:isCrouching")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath(".:blocking")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath(".:parrying")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+
 [node name="Player" type="CharacterBody3D" unique_id=1816512432 node_paths=PackedStringArray("CheckWallTop", "CheckWallBottom", "CheckLedge", "CheckHead", "CheckFloorFront", "CheckFloorBack", "CheckSpace", "CheckSpaceCrouch", "Collider", "VisualsNode")]
 script = ExtResource("1_pw0el")
 CheckWallTop = NodePath("CheckWallTop")
@@ -2288,14 +2297,6 @@ CheckSpace = NodePath("CheckSpace")
 CheckSpaceCrouch = NodePath("CheckSpaceCrouch")
 Collider = NodePath("collider")
 VisualsNode = NodePath("Armature")
-
-[node name="InputHandler" type="MultiplayerSynchronizer" parent="." unique_id=259776153]
-unique_name_in_owner = true
-replication_config = SubResource("SceneReplicationConfig_w6su8")
-script = ExtResource("114_owaif")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1373842115]
-replication_config = SubResource("SceneReplicationConfig_dn5mr")
 
 [node name="CheckSpaceCrouch" type="ShapeCast3D" parent="." unique_id=313191973]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0)
@@ -3129,3 +3130,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 text = "Peer Id"
 font = ExtResource("113_mve82")
 font_size = 44
+
+[node name="InputHandler" type="MultiplayerSynchronizer" parent="." unique_id=259776153]
+unique_name_in_owner = true
+replication_config = SubResource("SceneReplicationConfig_w6su8")
+script = ExtResource("114_owaif")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1373842115]
+replication_config = SubResource("SceneReplicationConfig_dn5mr")

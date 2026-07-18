@@ -30,13 +30,12 @@ func physics_update(_delta: float) -> void:
 			machine.change_state(core.Hotbar[action].name)
 	
 	if not core.isOnGround():
-		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")		
+		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
 	elif core.CanJump() and not core.isCollidingShapecast(core.CheckSpaceCrouch):
 		core.coyoteTimer = 0
 		core.jumpInputBufferTimer = 0
 		machine.change_state("Jump")
 	elif inputHandler.dashInput and core.CanDash():
-		#inputHandler.dash = false
 		machine.change_state("Dash")
 	elif core.is_on_wall():
 		#check for wall on bottom

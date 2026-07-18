@@ -32,11 +32,11 @@ func physics_update(_delta: float) -> void:
 			machine.change_state("Block")
 		return
 	
-	if Input.is_action_pressed("moveDown"):
+	if inputHandler.lookDirection < 0:
 		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
 	elif not core.IsLedgeDetected():
 		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
-	elif Input.is_action_pressed("moveUp") and core.IsSpaceToClimb():
+	elif inputHandler.lookDirection > 0 and core.IsSpaceToClimb():
 		machine.change_state("LedgeClimb")
 	elif core.jumpInputBufferTimer > 0:
 		core.jumpInputBufferTimer = 0

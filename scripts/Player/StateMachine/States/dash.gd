@@ -20,9 +20,9 @@ func enter() -> void:
 	
 	#fix direction calculation
 	dashDirection.x = inputHandler.movementDirection
-	if inputHandler.movementDirection == 0 and core.LookDirection() == 0:
+	if inputHandler.movementDirection == 0 and inputHandler.lookDirection == 0:
 		dashDirection.x = core.facingDirection
-	dashDirection.y = core.LookDirection()
+	dashDirection.y = inputHandler.lookDirection
 	
 	#turn off player sticking to ground and such
 	
@@ -60,7 +60,7 @@ func physics_update(_delta: float) -> void:
 			machine.change_state("Block")
 		return
 	
-	if Input.is_action_pressed("feint"):
+	if inputHandler.feintInput:
 		if core.isOnGround():
 			machine.change_state("RollGround")
 			return

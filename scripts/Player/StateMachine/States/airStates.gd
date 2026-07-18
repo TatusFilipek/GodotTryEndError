@@ -26,14 +26,13 @@ func physics_update(_delta: float) -> void:
 	
 	if core.isOnGround():
 		machine.ChangeStateMoveOrIdle("Idle", "Walk")
-	elif Input.is_action_just_pressed("jump") and core.coyoteTimer > 0:
+	elif inputHandler.jumpInput and core.coyoteTimer > 0:
 		core.coyoteTimer = 0
 		machine.change_state("Jump")
 		#check for ledge and if ledge detected grab on it
 	elif core.IsLedgeDetected() and inputHandler.movementDirection != 0 and core.velocity.y < 0:
 		machine.change_state("LedgeGrab")
 	elif inputHandler.dashInput and core.CanDash():
-		#inputHandler.dash = false
 		machine.change_state("Dash")
 	else:
 		core.velocity.y -= core.CalcGravity() * _delta; # Gravity
@@ -46,7 +45,7 @@ func VariableJumpHeight():
 	if core.velocity.y <= 0:
 		core.jumping = false
 	
-	if core.jumping and Input.is_action_just_released("jump"):
+	if core.jumping and inputHandler.jumpInputUp:
 		core.velocity.y *= core.jumpVelocityCut
 
 func SuperDuperAirStateAnims():

@@ -10,8 +10,11 @@ class_name InputHandler
 @export var blockInput : bool = false
 @export var feintInput : bool = false
 @export var dashInput : bool = false
+@export var jumpInput : bool = false
+@export var jumpInputUp : bool = false
 
 @export var dash : bool = false
+@export var jump : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -27,5 +30,5 @@ func _process(delta: float) -> void:
 	blockInput = Input.is_action_pressed("block")
 	feintInput = Input.is_action_pressed("feint")
 	dashInput = Input.is_action_just_pressed("dash")
-	
-	if dashInput: dash = true
+	jumpInput = Input.is_action_just_pressed("jump")
+	jumpInputUp = Input.is_action_just_released("jump")

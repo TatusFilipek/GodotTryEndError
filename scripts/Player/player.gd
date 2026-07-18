@@ -72,16 +72,16 @@ var jumpInputBufferTimer = 0
 @onready var name_plate: Label3D = %NamePlate
 @onready var camera: Camera3D = %Camera
 
-var lastSpriteOrientation : bool
-var facingDirection = 1
+@export var lastSpriteOrientation : bool
+@export var facingDirection = 1
 
 var jumping : bool = false
-var dashing : bool = false
-var rolling : bool = false
-var isCrouching : bool = false
+@export var dashing : bool = false
+@export var rolling : bool = false
+@export var isCrouching : bool = false
 var canChangeDir : bool = true
-var blocking : bool = false
-var parrying : bool = false
+@export var blocking : bool = false
+@export var parrying : bool = false
 
 var spriteRotation : float
 
@@ -128,6 +128,7 @@ func _ready() -> void:
 
 # physics update
 func _physics_process(delta: float) -> void:
+	
 	parryTimer -= delta
 	GetSpriteOrientation(delta)
 	
@@ -161,7 +162,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		coyoteTimer -= delta
 		
-	if Input.is_action_just_pressed("jump"):
+	if inputHandler.jumpInput:
 		jumpInputBufferTimer = jumpInputBuffer
 	else:
 		jumpInputBufferTimer -= delta

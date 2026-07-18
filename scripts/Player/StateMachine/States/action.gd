@@ -31,7 +31,7 @@ func physics_update(_delta: float):
 	super.physics_update(_delta)
 	
 	#feint
-	if canFeint and Input.is_action_pressed("feint"):
+	if canFeint and inputHandler.feintInput:
 		feint()
 		return
 	
