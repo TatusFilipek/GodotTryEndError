@@ -25,7 +25,7 @@ func _ready() -> void:
 	if initial_state:
 		change_state(initial_state.name)
 
-@rpc("any_peer", "call_local", "reliable", 1)
+@rpc("any_peer", "call_local", "reliable", 0)
 func change_state(new_state_name: String) -> void:
 	var newState = get_node(new_state_name)
 	

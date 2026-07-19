@@ -36,6 +36,9 @@ anti_aliasing = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nltto"]
 
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_6wmxf"]
+color = Color(1, 1, 1, 1)
+
 [node name="MainMenu" type="CanvasLayer" unique_id=496953019]
 script = ExtResource("1_tfcbk")
 
@@ -59,6 +62,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_64yvt")
 metadata/_edit_use_anchors_ = true
 
 [node name="Buttons" type="VBoxContainer" parent="Control" unique_id=287164368]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -135,6 +139,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_ibotj")
 text = "Exit"
 
 [node name="GameName" type="Label" parent="Control" unique_id=635973707]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -244,5 +249,126 @@ size_flags_vertical = 0
 theme_override_constants/outline_size = 5
 text = "Back"
 
+[node name="StartMenu" type="HBoxContainer" parent="Control/Margins" unique_id=80006103]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Margins/StartMenu" unique_id=162608529]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="Control/Margins/StartMenu/VBoxContainer" unique_id=880654925]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 35
+text = "Game mode"
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Margins/StartMenu/VBoxContainer" unique_id=107379546]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Margins/StartMenu/VBoxContainer/MarginContainer" unique_id=510117769]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Margins/StartMenu/VBoxContainer/MarginContainer/VBoxContainer" unique_id=180189005]
+layout_mode = 2
+theme_override_constants/separation = 90
+
+[node name="ENet" type="Button" parent="Control/Margins/StartMenu/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=2056379656]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0.44231883, 0.33135808, 0.115395404, 1)
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = ExtResource("3_ngj32")
+theme_override_styles/pressed = ExtResource("4_bm8t2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nltto")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_n5ude")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ibotj")
+text = "ENet
+"
+
+[node name="Tube" type="Button" parent="Control/Margins/StartMenu/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=2115202943]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0.44231883, 0.33135808, 0.115395404, 1)
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = ExtResource("3_ngj32")
+theme_override_styles/pressed = ExtResource("4_bm8t2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nltto")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_n5ude")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ibotj")
+text = "Tube"
+
+[node name="HSeparator" type="HSeparator" parent="Control/Margins/StartMenu/VBoxContainer/MarginContainer/VBoxContainer" unique_id=676635049]
+layout_mode = 2
+theme_override_constants/separation = 40
+theme_override_styles/separator = SubResource("StyleBoxLine_6wmxf")
+
+[node name="NameTagLabel" type="Label" parent="Control/Margins/StartMenu/VBoxContainer/MarginContainer/VBoxContainer" unique_id=80387072]
+layout_mode = 2
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 25
+text = "Name tag:"
+
+[node name="NameTag" type="LineEdit" parent="Control/Margins/StartMenu/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1758097651]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 18
+placeholder_text = "your_name"
+max_length = 16
+expand_to_text_length = true
+emoji_menu_enabled = false
+
+[node name="SessionIdLabel" type="Label" parent="Control/Margins/StartMenu/VBoxContainer/MarginContainer/VBoxContainer" unique_id=575646948]
+layout_mode = 2
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 25
+text = "Session id:"
+
+[node name="SessionId" type="LineEdit" parent="Control/Margins/StartMenu/VBoxContainer/MarginContainer/VBoxContainer" unique_id=704483422]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 18
+placeholder_text = "abc_123"
+max_length = 16
+expand_to_text_length = true
+emoji_menu_enabled = false
+
+[node name="HSeparator2" type="HSeparator" parent="Control/Margins/StartMenu/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1998460789]
+layout_mode = 2
+theme_override_constants/separation = 40
+theme_override_styles/separator = SubResource("StyleBoxLine_6wmxf")
+
+[node name="CreateSession" type="Button" parent="Control/Margins/StartMenu/VBoxContainer/MarginContainer/VBoxContainer" unique_id=972775498]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 20
+text = "Create session"
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/Margins/StartMenu" unique_id=1128539316]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_nltto")
+
+[node name="Back" type="Button" parent="Control/Margins/StartMenu/PanelContainer" unique_id=352858740]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/outline_size = 5
+text = "Back"
+
 [connection signal="pressed" from="Control/Margins/Credits/PanelContainer/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Control/Margins/Options/PanelContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Control/Margins/StartMenu/PanelContainer/Back" to="." method="_on_back_pressed"]

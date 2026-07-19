@@ -99,6 +99,7 @@
 [ext_resource type="Script" uid="uid://7ptg1tpkbmfd" path="res://scripts/Player/StateMachine/States/jump.gd" id="92_1qiot"]
 [ext_resource type="Texture2D" uid="uid://odklev0ahesb" path="res://resources/UI/ParryIcon.png" id="92_dacrs"]
 [ext_resource type="Script" uid="uid://dpm8a2rnxl14j" path="res://scripts/Player/StateMachine/States/run.gd" id="93_hkj2h"]
+[ext_resource type="Texture2D" uid="uid://bqpvoj563n750" path="res://resources/UI/loganPaul.jpg" id="93_w6su8"]
 [ext_resource type="Script" uid="uid://dt4i2ifit1v28" path="res://scripts/Player/StateMachine/States/crouchIdle.gd" id="94_ogxgr"]
 [ext_resource type="Script" uid="uid://smy5w2wn2om4" path="res://scripts/Player/StateMachine/States/crouchWalk.gd" id="95_3hgil"]
 [ext_resource type="Script" uid="uid://dqdxma8wlxahj" path="res://scripts/Player/StateMachine/States/slide.gd" id="96_o0srm"]
@@ -2315,6 +2316,7 @@ properties/9/spawn = true
 properties/9/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D" unique_id=1816512432 node_paths=PackedStringArray("CheckWallTop", "CheckWallBottom", "CheckLedge", "CheckHead", "CheckFloorFront", "CheckFloorBack", "CheckSpace", "CheckSpaceCrouch", "Collider", "VisualsNode")]
+collision_layer = 2
 script = ExtResource("1_pw0el")
 CheckWallTop = NodePath("CheckWallTop")
 CheckWallBottom = NodePath("CheckWallBottom")
@@ -3051,7 +3053,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Exit" type="Button" parent="CanvasLayer/Control/Menu" unique_id=525705960]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Menu" unique_id=859219481]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/Menu/VBoxContainer" unique_id=772006149]
+layout_mode = 2
+
+[node name="SessionId" type="Label" parent="CanvasLayer/Control/Menu/VBoxContainer/HBoxContainer" unique_id=1829368462]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "TestTEST"
+
+[node name="CopySession" type="Button" parent="CanvasLayer/Control/Menu/VBoxContainer/HBoxContainer" unique_id=450700064]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/icon_max_width = 18
+icon = ExtResource("93_w6su8")
+
+[node name="Exit" type="Button" parent="CanvasLayer/Control/Menu/VBoxContainer" unique_id=525705960]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10

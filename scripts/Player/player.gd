@@ -73,6 +73,8 @@ class_name Player
 @onready var camera: Camera3D = %Camera
 @onready var menu: HBoxContainer = %Menu
 @onready var exit: Button = %Exit
+@onready var session_id: Label = %SessionId
+@onready var copy_session: Button = %CopySession
 
 @export var lastSpriteOrientation : bool
 @export var facingDirection = 1
@@ -101,8 +103,13 @@ var hotbarItems : int = 0
 
 @export var velocitySandbox : Vector3
 
+var authority : int
+var name_tag : String
+
 func _enter_tree() -> void:
-	set_multiplayer_authority(int(name))
+	authority = int(name)
+	#name_tag = Global.usernames[authority]
+	set_multiplayer_authority(authority)
 
 func _ready() -> void:
 	add_to_group('Players')
@@ -124,16 +131,17 @@ func _ready() -> void:
 	AddToHotbar("Action2")
 	
 	#collision exeption
-	var players: Array[Node] = get_tree().get_nodes_in_group('Players')
-	for others in players:
-		if others.name != name: add_collision_exception_with(others)
+	#var players: Array[Node] = get_tree().get_nodes_in_group('Players')
+	#for others in players:
+		#if others.name != name: add_collision_exception_with(others)
 	
 	if is_multiplayer_authority():
 		camera.current = true
 		menu.hide()
 		exit.pressed.connect(func(): Network.leave_server())
-		#TODO: add this if statement in state machine
-		#NOTE: i know how to make the animations work on the server. I think the server doesnt recieve inputs so the statemachine just doesnt update, i need to pass inputs and collisions then everything will work properly
+		copy_session.pressed.connect(func(): DisplayServer.clipboard_set(Network.tube_client.session_id))
+		session_id.text = Network.tube_client.session_id
+		DisplayServer.clipboard_set(Network.tube_client.session_id)
 	else:
 		canvas_layer.visible = false
 
@@ -158,8 +166,6 @@ func _process(delta: float) -> void:
 	elif Input.is_action_just_pressed("menu") and menu.visible:
 		menu.hide()
 	
-	#Timers
-	#if multiplayer.is_server():
 	TickTimers(delta)
 	
 	#dash uses

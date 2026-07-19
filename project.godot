@@ -18,6 +18,11 @@ config/icon="res://icon.svg"
 [autoload]
 
 Network="*uid://dlve236r873ce"
+Global="*uid://btkbpvsu08tk7"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/tube/plugin.cfg")
 
 [input]
 
