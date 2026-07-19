@@ -4,7 +4,7 @@ class_name Jump
 func enter() -> void:
 	super.enter()
 	
-	core.velocity.y = core.jumpForce
+	core.velocitySandbox.y = core.jumpForce
 	core.jumping = true
 	
 	machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")

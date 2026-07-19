@@ -2230,6 +2230,23 @@ height = 1.8
 outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_owaif"]
+properties/0/path = NodePath(".:dashCooldownTimer")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:coyoteTimer")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:jumpInputBufferTimer")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:parryTimer")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:dashUses")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_w6su8"]
 properties/0/path = NodePath("InputHandler:movementDirection")
 properties/0/spawn = true
@@ -2268,7 +2285,7 @@ properties/10/replication_mode = 1
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dn5mr"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
-properties/0/replication_mode = 0
+properties/0/replication_mode = 1
 properties/1/path = NodePath(".:lastSpriteOrientation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
@@ -2290,9 +2307,12 @@ properties/6/replication_mode = 1
 properties/7/path = NodePath(".:parrying")
 properties/7/spawn = true
 properties/7/replication_mode = 1
-properties/8/path = NodePath("Player:velocity")
+properties/8/path = NodePath(".:velocitySandbox")
 properties/8/spawn = true
 properties/8/replication_mode = 1
+properties/9/path = NodePath(".:velocity")
+properties/9/spawn = true
+properties/9/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D" unique_id=1816512432 node_paths=PackedStringArray("CheckWallTop", "CheckWallBottom", "CheckLedge", "CheckHead", "CheckFloorFront", "CheckFloorBack", "CheckSpace", "CheckSpaceCrouch", "Collider", "VisualsNode")]
 script = ExtResource("1_pw0el")
@@ -3145,6 +3165,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 text = "Peer Id"
 font = ExtResource("113_mve82")
 font_size = 44
+
+[node name="CurentState" type="Label3D" parent="." unique_id=220943021]
+unique_name_in_owner = true
+transform = Transform3D(0.57658887, 0, 0, 0, 0.57658887, 0, 0, 0, 1, 0, 2.5861912, 0)
+fixed_size = true
+text = "Idle"
+font = ExtResource("113_mve82")
+
+[node name="Timers" type="MultiplayerSynchronizer" parent="." unique_id=513016093]
+replication_config = SubResource("SceneReplicationConfig_owaif")
 
 [node name="InputHandler" type="MultiplayerSynchronizer" parent="." unique_id=259776153]
 unique_name_in_owner = true

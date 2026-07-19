@@ -96,7 +96,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	if machine.current_state:
-		label.text = "Stan: %s | Animacja: %s | Klatka: %d \nCrouching: %s \nDashing: %s \nJumping: %s \nRolling: %s \nXVelocity: %f \nYVelocity: %f" % [machine.current_state.name, sprite.animation, sprite.frame, isCrouching, dashing, jumping, rolling, velocity.x, velocity.y]
+		label.text = "Stan: %s | Animacja: %s | Klatka: %d \nCrouching: %s \nDashing: %s \nJumping: %s \nRolling: %s \nXVelocity: %f \nYVelocity: %f" % [machine.current_state.name, sprite.animation, sprite.frame, isCrouching, dashing, jumping, rolling, velocitySandbox.x, velocitySandbox.y]
 	
 	if isOnGround() or IsLedgeDetected():
 		coyoteTimer = coyoteTime
@@ -201,10 +201,10 @@ func resizeCollider(_size : float) -> void:
 func CalcGravity() -> float:
 	var gravityMultiplier = normalGravityMult
 	if not isOnGround():
-		if(velocity.y <= -gravityBuffer): gravityMultiplier = normalGravityMult
-		else: if(velocity.y > -gravityBuffer): gravityMultiplier = fallingGravityMult
+		if(velocitySandbox.y <= -gravityBuffer): gravityMultiplier = normalGravityMult
+		else: if(velocitySandbox.y > -gravityBuffer): gravityMultiplier = fallingGravityMult
 		
-	return gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
+	return gravityMultiplier * gravityForce + velocitySandbox.y * gravityMultiplier/100
 
 func CanJump() -> bool:
 	return jumpInputBufferTimer > 0 and coyoteTimer > 0
@@ -228,4 +228,4 @@ func isCollidingShapecast(shapecast : ShapeCast2D) -> bool:
 
 #NOTE:
 	#if a bug accurse that switches the animations or stops the character unnecceseraly i have to check the ifs and elifs for changing states becouse i can change state and the rest of the code still runs
-	#if there is a bug that stops me whenever im jumping just like in the other game i made that means i have to remove the line that sets velocity to zero whenever i enter any idle state
+	#if there is a bug that stops me whenever im jumping just like in the other game i made that means i have to remove the line that sets velocitySandbox to zero whenever i enter any idle state

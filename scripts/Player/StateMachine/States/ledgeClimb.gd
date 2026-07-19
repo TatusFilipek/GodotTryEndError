@@ -12,7 +12,7 @@ func enter() -> void:
 	super.enter()
 	
 	playback.travel("LedgeClimb")
-	core.velocity = Vector3.ZERO
+	core.velocitySandbox = Vector3.ZERO
 	core.canChangeDir = false
 	
 	#NOTE: tmp animation offset

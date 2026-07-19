@@ -13,10 +13,10 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: return
 	if not core.dashing:
-		core.velocity.x = inputHandler.movementDirection * core.MovementSpeed * core.sprintMovementMult
+		core.velocitySandbox.x = inputHandler.movementDirection * core.MovementSpeed * core.sprintMovementMult
 	
 	if inputHandler.movementDirection == 0:
 		machine.change_state("Idle")
-	elif inputHandler.crouchInput and abs(core.velocity.x) > core.slideCancelVelocity:
+	elif inputHandler.crouchInput and abs(core.velocitySandbox.x) > core.slideCancelVelocity:
 		machine.change_state("Slide")
 		return

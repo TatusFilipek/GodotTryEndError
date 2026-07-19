@@ -46,24 +46,24 @@ func physics_update(_delta: float):
 	if canJump and core.CanJump() and not core.isCollidingShapecast(core.CheckSpaceCrouch):
 		core.coyoteTimer = 0
 		core.jumpInputBufferTimer = 0
-		core.velocity.y = core.jumpForce
+		core.velocitySandbox.y = core.jumpForce
 		core.jumping = true
 		
 	#off ground physics
 	if not core.isOnGround():
-		core.velocity.y -= core.CalcGravity() * _delta; # Gravity
+		core.velocitySandbox.y -= core.CalcGravity() * _delta; # Gravity
 		
 		if inputHandler.movementDirection != 0:
-			if abs(core.velocity.x) <= maxMovementSpeed:
-				core.velocity.x += (maxMovementSpeed * inputHandler.movementDirection * core.airDrag * 1) * _delta
-				core.velocity.x = clamp(core.velocity.x, -maxMovementSpeed, maxMovementSpeed)
+			if abs(core.velocitySandbox.x) <= maxMovementSpeed:
+				core.velocitySandbox.x += (maxMovementSpeed * inputHandler.movementDirection * core.airDrag * 1) * _delta
+				core.velocitySandbox.x = clamp(core.velocitySandbox.x, -maxMovementSpeed, maxMovementSpeed)
 			else:
-				core.velocity.x -= core.velocity.x * core.airDrag * .5 * _delta
+				core.velocitySandbox.x -= core.velocitySandbox.x * core.airDrag * .5 * _delta
 		
 		VariableJumpHeight()
 	#ground physics
 	else:
-		core.velocity.x = inputHandler.movementDirection * maxMovementSpeed
+		core.velocitySandbox.x = inputHandler.movementDirection * maxMovementSpeed
 	
 	#check for hits, if hit then disable current attack collisions for said object, player whatever
 	pass
@@ -79,8 +79,8 @@ func EndAction():
 	pass
 
 func VariableJumpHeight():
-	if core.velocity.y <= 0:
+	if core.velocitySandbox.y <= 0:
 		core.jumping = false
 	
 	if core.jumping and Input.is_action_just_released("jump"):
-		core.velocity.y *= core.jumpVelocityCut
+		core.velocitySandbox.y *= core.jumpVelocityCut

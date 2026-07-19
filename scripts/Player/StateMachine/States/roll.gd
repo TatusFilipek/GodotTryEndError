@@ -33,10 +33,10 @@ func physics_update(_delta: float) -> void:
 			machine.change_state("Block")
 		return
 	
-	if abs(core.velocity.x) > core.rollVelocityTreshold: 
-		core.velocity.x -= core.rollVelocityLoss * core.facingDirection * _delta
+	if abs(core.velocitySandbox.x) > core.rollVelocityTreshold: 
+		core.velocitySandbox.x -= core.rollVelocityLoss * core.facingDirection * _delta
 	else:
-		core.velocity.x = 0
+		core.velocitySandbox.x = 0
 	pass
 
 func StartAnim(_time : float, _animName : String) -> void:

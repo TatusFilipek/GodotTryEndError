@@ -30,32 +30,32 @@ func physics_update(_delta: float) -> void:
 		core.coyoteTimer = 0
 		machine.change_state("Jump")
 		#check for ledge and if ledge detected grab on it
-	elif core.IsLedgeDetected() and inputHandler.movementDirection != 0 and core.velocity.y < 0:
+	elif core.IsLedgeDetected() and inputHandler.movementDirection != 0 and core.velocitySandbox.y < 0:
 		machine.change_state("LedgeGrab")
-	elif inputHandler.dashInput and core.CanDash():
+	elif inputHandler.dashInput and core.canDash:
 		machine.change_state("Dash")
 	else:
-		core.velocity.y -= core.CalcGravity() * _delta; # Gravity
+		core.velocitySandbox.y -= core.CalcGravity() * _delta; # Gravity
 		
 		VariableJumpHeight()
 		SuperDuperAirStateAnims()
 	pass
 
 func VariableJumpHeight():
-	if core.velocity.y <= 0:
+	if core.velocitySandbox.y <= 0:
 		core.jumping = false
 	
 	if core.jumping and inputHandler.jumpInputUp:
-		core.velocity.y *= core.jumpVelocityCut
+		core.velocitySandbox.y *= core.jumpVelocityCut
 
 func SuperDuperAirStateAnims():
 	if playback:
-		if core.velocity.y > core.jumpApex:
+		if core.velocitySandbox.y > core.jumpApex:
 			playback.travel("InAirUp")
-		elif core.velocity.y < -core.jumpApex:
+		elif core.velocitySandbox.y < -core.jumpApex:
 			playback.travel("InAirDown")
 		else:
-			if core.velocity.y <= 0:
+			if core.velocitySandbox.y <= 0:
 				playback.travel("InAirDownApex")
 			else:
 				playback.travel("InAirUpApex")

@@ -16,7 +16,7 @@ func physics_update(_delta: float) -> void:
 	if inputHandler.movementDirection != 0:
 		machine.change_state("CrouchWalk")
 	elif not inputHandler.crouchInput:
-		core.velocity.x = 0
+		core.velocitySandbox.x = 0
 		changeState("Idle")
 	else:
-		core.velocity.x = 0
+		core.velocitySandbox.x = 0

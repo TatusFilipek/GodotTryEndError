@@ -28,7 +28,7 @@ func enter() -> void:
 	
 	dashDirection = dashDirection.normalized()
 	
-	core.velocity = Vector3(dashDirection.x, dashDirection.y, 0) * core.dashVelocity
+	core.velocitySandbox = Vector3(dashDirection.x, dashDirection.y, 0) * core.dashVelocity
 	
 	pass
 
@@ -70,5 +70,5 @@ func physics_update(_delta: float) -> void:
 			return
 	
 	if not core.isOnGround() and dashDirection.y == 0:
-		core.velocity.y -= core.CalcGravity() / 1.5 * _delta
+		core.velocitySandbox.y -= core.CalcGravity() / 1.5 * _delta
 	pass

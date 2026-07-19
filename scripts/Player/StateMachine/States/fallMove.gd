@@ -12,11 +12,11 @@ func physics_update(_delta: float) -> void:
 	var maxMovementSpeed =  core.MovementSpeed * core.sprintMovementMult
 	
 	if not core.dashing and inputHandler.movementDirection != 0:
-		if abs(core.velocity.x) <= maxMovementSpeed:
-			core.velocity.x += (maxMovementSpeed * inputHandler.movementDirection * core.airDrag * 1) * _delta
-			core.velocity.x = clamp(core.velocity.x, -maxMovementSpeed, maxMovementSpeed)
+		if abs(core.velocitySandbox.x) <= maxMovementSpeed:
+			core.velocitySandbox.x += (maxMovementSpeed * inputHandler.movementDirection * core.airDrag * 1) * _delta
+			core.velocitySandbox.x = clamp(core.velocitySandbox.x, -maxMovementSpeed, maxMovementSpeed)
 		else:
-			core.velocity.x -= core.velocity.x * core.airDrag * .5 * _delta
+			core.velocitySandbox.x -= core.velocitySandbox.x * core.airDrag * .5 * _delta
 	if not isActive: return
 	
 	if inputHandler.movementDirection == 0:

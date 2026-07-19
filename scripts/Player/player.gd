@@ -22,7 +22,7 @@ class_name Player
 @export var dashInAirUses = 1
 @export var dashDuration = .2
 @export var dashCooldownTimer = 0
-var dashUses = 0
+@export var dashUses = 0
 
 @export var rollVelocityLoss = 12.00
 @export var rollVelocityTreshold = .50
@@ -101,6 +101,12 @@ var hotbarItems : int = 0
 
 @export var velocitySandbox : Vector3
 
+@export var canParry : bool
+@export var canDash : bool
+@export var canJump : bool
+
+@export var dash : bool
+
 func _enter_tree() -> void:
 	set_multiplayer_authority(int(name))
 
@@ -141,7 +147,7 @@ func _process(delta: float) -> void:
 	#UI
 	if machine.current_state:
 		# Note: modified sprite.animation references to string placeholders or custom debug names if applicable.
-		label.text = "Stan: %s | XVelocity: %f | YVelocity: %f | movementDir: %f | lookDir: %f" % [machine.current_state.name, velocity.x, velocity.y, inputHandler.movementDirection, inputHandler.lookDirection]
+		label.text = "Stan: %s | XVelocity: %f | YVelocity: %f | movementDir: %f | lookDir: %f" % [machine.current_state.name, velocitySandbox.x, velocitySandbox.y, inputHandler.movementDirection, inputHandler.lookDirection]
 	
 	if CanDash():
 		dashCooldownIcon.self_modulate = Color("b9b9b9")
@@ -161,6 +167,10 @@ func _process(delta: float) -> void:
 	#Timers
 	TickTimers(delta)
 	
+	canDash = CanDash()
+	canParry = CanParry()
+	canJump = CanJump()
+	
 	#dash uses
 	if dashCooldownTimer <= 0 and dashUses <= dashGroundUses:
 		if isOnGround():
@@ -172,13 +182,12 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	GetSpriteOrientation(delta)
 	
-	#if not is_multiplayer_authority(): return
-	
 	# CRITICAL 2.5D MECHANIC: Lock Z positioning completely to avoid drifting down or up depth paths
 	velocitySandbox.z = 0.0
 	global_transform.origin.z = 0.0
 	
 	velocity = velocitySandbox
+	#if not is_multiplayer_authority(): return
 	move_and_slide()
 
 func TickTimers(delta:float) -> void:
@@ -289,11 +298,11 @@ func resizeCollider(_size : float) -> void:
 func CalcGravity() -> float:
 	var gravityMultiplier = normalGravityMult
 	if not isOnGround():
-		if(velocity.y <= -gravityBuffer): gravityMultiplier = normalGravityMult
-		else: if(velocity.y > -gravityBuffer): gravityMultiplier = fallingGravityMult
+		if(velocitySandbox.y <= -gravityBuffer): gravityMultiplier = normalGravityMult
+		else: if(velocitySandbox.y > -gravityBuffer): gravityMultiplier = fallingGravityMult
 		
 	#return get_gravity().y
-	return gravityMultiplier * gravityForce + velocity.y * gravityMultiplier/100
+	return gravityMultiplier * gravityForce + velocitySandbox.y * gravityMultiplier/100
 
 func CanJump() -> bool:
 	return jumpInputBufferTimer > 0 and coyoteTimer > 0

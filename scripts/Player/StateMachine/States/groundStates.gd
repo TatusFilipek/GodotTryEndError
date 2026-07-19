@@ -3,6 +3,7 @@ class_name GroundState
 
 func enter() -> void:
 	super.enter()
+	core.velocitySandbox.y = 0
 	pass
 
 func exit() -> void:
@@ -36,7 +37,7 @@ func physics_update(_delta: float) -> void:
 		core.coyoteTimer = 0
 		core.jumpInputBufferTimer = 0
 		machine.change_state("Jump")
-	elif inputHandler.dashInput and core.CanDash():
+	elif inputHandler.dashInput and core.canDash:
 		machine.change_state("Dash")
 	elif core.is_on_wall():
 		#check for wall on bottom

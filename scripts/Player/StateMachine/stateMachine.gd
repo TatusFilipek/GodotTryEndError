@@ -9,6 +9,7 @@ var parent : Player
 
 @onready var states = self.get_children()
 @onready var inputHandler: InputHandler = %InputHandler
+@onready var curentState: Label3D = %CurentState
 
 func _ready() -> void:
 	parent = get_parent()
@@ -59,8 +60,9 @@ func GetState(_StateName: String) -> State:
 	return stateOut
 
 #NOTE: the thing is the that is a physics update, it updates if something changes, and on the server side there isnt any inputs so it doesnt update properly
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	#if not multiplayer.is_server(): return
 	#TODO: make all calculations server side, only input should be on the players side
 	if current_state:
 		current_state.physics_update(delta)
+		curentState.text = current_state.name
