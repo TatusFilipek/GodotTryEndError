@@ -40,7 +40,7 @@ func physics_update(_delta: float) -> void:
 		core.coyoteTimer = 0
 		core.jumpInputBufferTimer = 0
 		machine.change_state("Jump")
-	elif inputHandler.dashInput and core.canDash:
+	elif inputHandler.dashInput and core.CanDash():
 		#machine.change_state("Dash")
 		machine.rpc("change_state", "Dash")
 	elif core.is_on_wall():

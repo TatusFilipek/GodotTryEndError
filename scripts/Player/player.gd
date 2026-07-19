@@ -101,12 +101,6 @@ var hotbarItems : int = 0
 
 @export var velocitySandbox : Vector3
 
-@export var canParry : bool
-@export var canDash : bool
-@export var canJump : bool
-
-@export var dash : bool
-
 func _enter_tree() -> void:
 	set_multiplayer_authority(int(name))
 
@@ -143,7 +137,7 @@ func _ready() -> void:
 	else:
 		canvas_layer.visible = false
 
-func _process(delta: float) -> void:	
+func _process(delta: float) -> void:
 	#UI
 	if machine.current_state:
 		# Note: modified sprite.animation references to string placeholders or custom debug names if applicable.
@@ -167,10 +161,6 @@ func _process(delta: float) -> void:
 	#Timers
 	#if multiplayer.is_server():
 	TickTimers(delta)
-	
-	canDash = CanDash()
-	canParry = CanParry()
-	canJump = CanJump()
 	
 	#dash uses
 	if dashCooldownTimer <= 0 and dashUses <= dashGroundUses:

@@ -34,7 +34,7 @@ func physics_update(_delta: float) -> void:
 		#check for ledge and if ledge detected grab on it
 	elif core.IsLedgeDetected() and inputHandler.movementDirection != 0 and core.velocitySandbox.y < 0:
 		machine.change_state("LedgeGrab")
-	elif inputHandler.dashInput and core.canDash:
+	elif inputHandler.dashInput and core.CanDash():
 		#machine.change_state("Dash")
 		machine.rpc("change_state", "Dash")
 	else:

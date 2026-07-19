@@ -25,7 +25,7 @@ func _ready() -> void:
 	if initial_state:
 		change_state(initial_state.name)
 
-@rpc("any_peer", "call_local", "reliable")
+@rpc("any_peer", "call_local", "reliable", 1)
 func change_state(new_state_name: String) -> void:
 	var newState = get_node(new_state_name)
 	
@@ -60,10 +60,7 @@ func GetState(_StateName: String) -> State:
 	
 	return stateOut
 
-#NOTE: the thing is the that is a physics update, it updates if something changes, and on the server side there isnt any inputs so it doesnt update properly
 func _physics_process(delta: float) -> void:
-	#if not multiplayer.is_server(): return
-	#TODO: make all calculations server side, only input should be on the players side
 	if current_state:
 		current_state.physics_update(delta)
 		curentState.text = current_state.name
