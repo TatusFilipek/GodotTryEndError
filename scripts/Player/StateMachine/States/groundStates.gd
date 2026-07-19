@@ -20,16 +20,19 @@ func physics_update(_delta: float) -> void:
 	#before all those state changing ifs add ifs checking for action inputs and change state to said action
 	if inputHandler.blockInput:
 		if core.CanParry():
-			machine.change_state("Parry")
+			#machine.change_state("Parry")
+			machine.rpc("change_state", "Parry")
 		else:
-			machine.change_state("Block")
+			#machine.change_state("Block")
+			machine.rpc("change_state", "Block")
 		return
 	
 	#hotbar abilities
 	for action in core.Hotbar:
 		if inputHandler.hotbarInputs[action]:
 			inputHandler.hotbarInputs[action] = false
-			machine.change_state(core.Hotbar[action].name)
+			machine.rpc("change_state", core.Hotbar[action].name)
+			#machine.change_state(core.Hotbar[action].name)
 	
 	if not core.isOnGround():
 		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
@@ -38,7 +41,8 @@ func physics_update(_delta: float) -> void:
 		core.jumpInputBufferTimer = 0
 		machine.change_state("Jump")
 	elif inputHandler.dashInput and core.canDash:
-		machine.change_state("Dash")
+		#machine.change_state("Dash")
+		machine.rpc("change_state", "Dash")
 	elif core.is_on_wall():
 		#check for wall on bottom
 		if core.isCollidingRaycast(core.CheckWallTop) and not core.isCrouching and machine.current_state.name != "WallTouch" and machine.current_state.name != "WallGrab":

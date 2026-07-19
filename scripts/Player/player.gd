@@ -165,6 +165,7 @@ func _process(delta: float) -> void:
 		menu.hide()
 	
 	#Timers
+	#if multiplayer.is_server():
 	TickTimers(delta)
 	
 	canDash = CanDash()

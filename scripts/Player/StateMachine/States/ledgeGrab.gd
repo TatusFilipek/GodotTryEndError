@@ -27,9 +27,11 @@ func physics_update(_delta: float) -> void:
 	
 	if inputHandler.blockInput:
 		if core.CanParry():
-			machine.change_state("Parry")
+			#machine.change_state("Parry")
+			machine.rpc("change_state", "Parry")
 		else:
-			machine.change_state("Block")
+			#machine.change_state("Block")
+			machine.rpc("change_state", "Block")
 		return
 	
 	if inputHandler.lookDirection < 0:

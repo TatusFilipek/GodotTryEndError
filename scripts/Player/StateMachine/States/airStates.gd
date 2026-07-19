@@ -19,9 +19,11 @@ func physics_update(_delta: float) -> void:
 	#before all those state changing ifs add ifs checking for action inputs and change state to said action
 	if inputHandler.blockInput:
 		if core.CanParry():
-			machine.change_state("Parry")
+			#machine.change_state("Parry")
+			machine.rpc("change_state", "Parry")
 		else:
-			machine.change_state("Block")
+			#machine.change_state("Block")
+			machine.rpc("change_state", "Block")
 		return
 	
 	if core.isOnGround():
@@ -33,7 +35,8 @@ func physics_update(_delta: float) -> void:
 	elif core.IsLedgeDetected() and inputHandler.movementDirection != 0 and core.velocitySandbox.y < 0:
 		machine.change_state("LedgeGrab")
 	elif inputHandler.dashInput and core.canDash:
-		machine.change_state("Dash")
+		#machine.change_state("Dash")
+		machine.rpc("change_state", "Dash")
 	else:
 		core.velocitySandbox.y -= core.CalcGravity() * _delta; # Gravity
 		
