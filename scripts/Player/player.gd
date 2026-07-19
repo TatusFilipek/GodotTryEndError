@@ -21,7 +21,7 @@ class_name Player
 @export var dashGroundUses = 2
 @export var dashInAirUses = 1
 @export var dashDuration = .2
-var dashCooldownTimer = 0
+@export var dashCooldownTimer = 0
 var dashUses = 0
 
 @export var rollVelocityLoss = 12.00
@@ -34,10 +34,10 @@ var dashUses = 0
 @export var jumpApex = 5
 
 @export var coyoteTime = .1
-var coyoteTimer = 0
+@export var coyoteTimer = 0
 
 @export var jumpInputBuffer = .1
-var jumpInputBufferTimer = 0
+@export var jumpInputBufferTimer = 0
 
 @export var parryCooldown = 2
 @export var parryTimer = 0
@@ -71,6 +71,8 @@ var jumpInputBufferTimer = 0
 @onready var canvas_layer: CanvasLayer = %CanvasLayer
 @onready var name_plate: Label3D = %NamePlate
 @onready var camera: Camera3D = %Camera
+@onready var menu: HBoxContainer = %Menu
+@onready var exit: Button = %Exit
 
 @export var lastSpriteOrientation : bool
 @export var facingDirection = 1
@@ -97,6 +99,8 @@ var hotbarItems : int = 0
 
 @onready var inputHandler: InputHandler = %InputHandler
 
+@export var velocitySandbox : Vector3
+
 func _enter_tree() -> void:
 	set_multiplayer_authority(int(name))
 
@@ -119,32 +123,26 @@ func _ready() -> void:
 	AddToHotbar("Action")
 	AddToHotbar("Action2")
 	
+	#collision exeption
+	var players: Array[Node] = get_tree().get_nodes_in_group('Players')
+	for others in players:
+		if others.name != name: add_collision_exception_with(others)
+	
 	if is_multiplayer_authority():
 		camera.current = true
+		menu.hide()
+		exit.pressed.connect(func(): Network.leave_server())
 		#TODO: add this if statement in state machine
 		#NOTE: i know how to make the animations work on the server. I think the server doesnt recieve inputs so the statemachine just doesnt update, i need to pass inputs and collisions then everything will work properly
 	else:
 		canvas_layer.visible = false
 
-# physics update
-func _physics_process(delta: float) -> void:
-	
-	parryTimer -= delta
-	GetSpriteOrientation(delta)
-	
-	#if not is_multiplayer_authority(): return
-	
-	# CRITICAL 2.5D MECHANIC: Lock Z positioning completely to avoid drifting down or up depth paths
-	velocity.z = 0.0
-	global_transform.origin.z = 0.0
-	
-	move_and_slide()
-	
+func _process(delta: float) -> void:	
+	#UI
 	if machine.current_state:
 		# Note: modified sprite.animation references to string placeholders or custom debug names if applicable.
 		label.text = "Stan: %s | XVelocity: %f | YVelocity: %f | movementDir: %f | lookDir: %f" % [machine.current_state.name, velocity.x, velocity.y, inputHandler.movementDirection, inputHandler.lookDirection]
 	
-	#UI
 	if CanDash():
 		dashCooldownIcon.self_modulate = Color("b9b9b9")
 	else:
@@ -155,7 +153,37 @@ func _physics_process(delta: float) -> void:
 	else:
 		parryCooldownIcon.self_modulate = Color("4e4e4eff")
 	
+	if Input.is_action_just_pressed("menu") and menu.visible == false:
+		menu.show()
+	elif Input.is_action_just_pressed("menu") and menu.visible:
+		menu.hide()
+	
 	#Timers
+	TickTimers(delta)
+	
+	#dash uses
+	if dashCooldownTimer <= 0 and dashUses <= dashGroundUses:
+		if isOnGround():
+			dashUses = dashGroundUses
+		else:
+			dashUses = dashInAirUses
+
+# physics update
+func _physics_process(delta: float) -> void:
+	GetSpriteOrientation(delta)
+	
+	#if not is_multiplayer_authority(): return
+	
+	# CRITICAL 2.5D MECHANIC: Lock Z positioning completely to avoid drifting down or up depth paths
+	velocitySandbox.z = 0.0
+	global_transform.origin.z = 0.0
+	
+	velocity = velocitySandbox
+	move_and_slide()
+
+func TickTimers(delta:float) -> void:
+	#Timers
+	parryTimer -= delta
 	
 	if isOnGround() or IsLedgeDetected():
 		coyoteTimer = coyoteTime
@@ -169,13 +197,6 @@ func _physics_process(delta: float) -> void:
 	
 	if not dashing and not rolling:
 		dashCooldownTimer -= delta
-	
-	#dash uses
-	if dashCooldownTimer <= 0 and dashUses <= dashGroundUses:
-		if isOnGround():
-			dashUses = dashGroundUses
-		else:
-			dashUses = dashInAirUses
 
 func AddToHotbar(stateName: String) -> void:
 	var desiredState = machine.GetState(stateName)
@@ -184,15 +205,8 @@ func AddToHotbar(stateName: String) -> void:
 	
 	if desiredState is Action:
 		Hotbar["hb" + str(hotbarItems)] = desiredState
+		inputHandler.hotbarInputs["hb" + str(hotbarItems)] = false
 	pass
-
-func MovementDirection() -> float:
-	var _movementDirection = Input.get_axis("moveLeft", "moveRight")
-	return _movementDirection
-
-func LookDirection() -> float:
-	var _lookDirection = Input.get_axis("moveDown", "moveUp")
-	return _lookDirection
 
 func GetSpriteOrientation(delta: float) -> void:
 	if isOnGroundFully():
@@ -253,14 +267,14 @@ func SetLedgeOffset(ledgePos : Vector3) -> Vector3:
 
 func isOnGround() -> bool:
 	# Godot 3D safely checks is_on_floor()
-	#return is_on_floor()
+	return is_on_floor()
 	#return is_on_floor() and (isCollidingRaycast(CheckFloorBack) or isCollidingRaycast(CheckFloorFront))
-	return isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
+	#return isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
 
 func isOnGroundFully() -> bool:
 	#return is_on_floor()
-	#return is_on_floor() and isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
-	return isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
+	return is_on_floor() and isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
+	#return isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
 
 func isOnWall() -> bool:
 	#return is_on_wall()

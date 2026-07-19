@@ -21,7 +21,7 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: return
 	
-	if not Input.is_action_pressed("grab"):
+	if not inputHandler.interact:
 		machine.change_state("WallTouch")
 	
 	if inputHandler.movementDirection * core.facingDirection > 0:

@@ -4,7 +4,7 @@ class_name WallTouch
 func enter() -> void:
 	super.enter()
 	
-	core.velocity.x = 0
+	core.velocitySandbox.x = 0
 	playback.travel("WallTouch")
 	#NOTE: temporary animation offset
 	core.VisualsNode.position.x = -.4 * core.facingDirection
@@ -22,7 +22,7 @@ func physics_update(_delta: float) -> void:
 	
 	if not core.isOnWall():
 		machine.ChangeStateMoveOrIdle("Idle", "Walk")
-	elif Input.is_action_pressed("grab"):
+	elif inputHandler.interact:
 		machine.change_state("WallGrab")
 	elif inputHandler.crouchInput:
 		machine.ChangeStateMoveOrIdle("CrouchIdle", "CrouchWalk")

@@ -26,7 +26,8 @@ func physics_update(_delta: float) -> void:
 	
 	#hotbar abilities
 	for action in core.Hotbar:
-		if Input.is_action_just_pressed(action): 
+		if inputHandler.hotbarInputs[action]:
+			inputHandler.hotbarInputs[action] = false
 			machine.change_state(core.Hotbar[action].name)
 	
 	if not core.isOnGround():

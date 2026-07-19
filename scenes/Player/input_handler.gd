@@ -13,8 +13,9 @@ class_name InputHandler
 @export var jumpInput : bool = false
 @export var jumpInputUp : bool = false
 
-@export var dash : bool = false
-@export var jump : bool = false
+@export var hotbarInputs : Dictionary[String, bool]
+
+@export var interact : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -29,6 +30,12 @@ func _process(delta: float) -> void:
 	crouchInput = Input.is_action_pressed("crouch")
 	blockInput = Input.is_action_pressed("block")
 	feintInput = Input.is_action_pressed("feint")
-	dashInput = Input.is_action_just_pressed("dash")
-	jumpInput = Input.is_action_just_pressed("jump")
-	jumpInputUp = Input.is_action_just_released("jump")
+	dashInput = Input.is_action_pressed("dash")
+	jumpInput = Input.is_action_pressed("jump")
+	jumpInputUp = not Input.is_action_pressed("jump")
+	
+	interact = Input.is_action_pressed("interact")
+	
+	for action in hotbarInputs:
+		if Input.is_action_just_pressed(action):
+			hotbarInputs[action] = true
