@@ -32,7 +32,7 @@ func physics_update(_delta: float):
 	
 	#feint
 	if canFeint and inputHandler.feintInput:
-		feint()
+		rpc("feint")
 		return
 	
 	#if hit, stunned, dazed return
@@ -68,6 +68,7 @@ func physics_update(_delta: float):
 	#check for hits, if hit then disable current attack collisions for said object, player whatever
 	pass
 
+@rpc("any_peer", "call_local", "reliable", -2)
 func feint():
 	if not canFeint: return
 	#playsound, add visuals, apply endlag, then exit

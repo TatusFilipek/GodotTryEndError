@@ -104,16 +104,13 @@ var hotbarItems : int = 0
 @export var velocitySandbox : Vector3
 
 var authority : int
-var name_tag : String
 
 func _enter_tree() -> void:
 	authority = int(name)
-	#name_tag = Global.usernames[authority]
 	set_multiplayer_authority(authority)
 
 func _ready() -> void:
 	add_to_group('Players')
-	name_plate.text = name
 	
 	CheckLedge = get_node("CheckLedge")
 	CheckWallTop = get_node("CheckWallTop")
@@ -142,6 +139,12 @@ func _ready() -> void:
 		copy_session.pressed.connect(func(): DisplayServer.clipboard_set(Network.tube_client.session_id))
 		session_id.text = Network.tube_client.session_id
 		DisplayServer.clipboard_set(Network.tube_client.session_id)
+		
+		if Global.username != "":
+			name_plate.text = Global.username
+		else:
+			name_plate.text = name
+
 	else:
 		canvas_layer.visible = false
 

@@ -57,7 +57,7 @@ func update_session(new_text: String) -> void:
 	if new_text != "": tube.disabled = false
 
 func update_name_tag(new_text: String) -> void:
-	pass
+	Global.username = new_text
 
 func on_create_session_pressed() -> void:
 	Network.tube_create()

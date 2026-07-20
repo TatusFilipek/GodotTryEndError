@@ -7,8 +7,8 @@ var peer := ENetMultiplayerPeer.new()
 var tube_client := TubeClient.new()
 var tube_enabled = true
 
-var port = 42069
-var ip = "localhost"
+var port = 9999
+var ip = '127.0.0.1'
 
 func _ready() -> void:
 	if tube_enabled:
@@ -49,11 +49,13 @@ func add_player(peer_id: int) -> void:
 	
 	var new_player = PLAYER.instantiate()
 	new_player.name = str(peer_id)
+	
 	get_tree().current_scene.add_child(new_player, true)
 
 func remove_player(peer_id: int) -> void:
 	if peer_id == 1:
 		leave_server()
+		return
 	
 	var players: Array[Node] = get_tree().get_nodes_in_group('Players')
 	var player_to_remove = players.find_custom(func(item: Node): return item.name == str(peer_id))
