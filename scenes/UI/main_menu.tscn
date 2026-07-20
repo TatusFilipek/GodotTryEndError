@@ -308,7 +308,7 @@ theme_override_styles/pressed = ExtResource("4_bm8t2")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nltto")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_n5ude")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ibotj")
-text = "Tube"
+text = "Join"
 
 [node name="HSeparator" type="HSeparator" parent="Control/Margins/StartMenu/VBoxContainer/MarginContainer/VBoxContainer" unique_id=676635049]
 layout_mode = 2

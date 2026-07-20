@@ -26,12 +26,7 @@ func _ready() -> void:
 	if Network.tube_enabled: e_net.hide()
 	else: tube.hide()
 	
-	margins.visible = false
-	credits.visible = false
-	options.visible = false
-	start_menu.visible = false
-	buttons.visible = true
-	game_name.visible = true
+	UIBackToStart()
 	
 	tube.disabled = true
 	
@@ -42,9 +37,11 @@ func _ready() -> void:
 	optionsBTN.pressed.connect(on_options_pressed)
 	creditsBTN.pressed.connect(on_credits_pressed)
 	exitBTN.pressed.connect(on_exit_pressed)
+	
 	e_net.pressed.connect(on_e_net_pressed)
-	tube.pressed.connect(on_tube_pressed)
+	
 	create_session.pressed.connect(on_create_session_pressed)
+	tube.pressed.connect(on_tube_pressed)
 	
 	Network.tube_client.error_raised.connect(on_error_raised)
 	
@@ -77,38 +74,43 @@ func on_error_raised(_core, _message) -> void:
 	Network.clean_up_signals()
 
 func on_start_pressed() -> void:
+	UIHideAll()
 	margins.visible = true
-	credits.visible = false
-	options.visible = false
 	start_menu.visible = true
-	buttons.visible = false
-	game_name.visible = false
 
 func on_options_pressed() -> void:
+	UIHideAll()
 	margins.visible = true
-	credits.visible = false
 	options.visible = true
-	start_menu.visible = false
-	buttons.visible = false
-	game_name.visible = false
 
 func on_credits_pressed() -> void:
+	UIHideAll()
 	margins.visible = true
 	credits.visible = true
-	options.visible = false
-	start_menu.visible = false
-	buttons.visible = false
-	game_name.visible = false
 
 func on_exit_pressed() -> void:
 	get_tree().quit()
 
 func _on_back_pressed() -> void:
-	margins.visible = false
-	buttons.visible = true
-	game_name.visible = true
+	UIBackToStart()
 
 func add_world() -> void:
 	var new_world = WORLD.instantiate()
 	get_tree().current_scene.add_child(new_world)
 	hide()
+
+func UIHideAll() -> void:
+	margins.visible = false
+	credits.visible = false
+	options.visible = false
+	start_menu.visible = false
+	buttons.visible = false
+	game_name.visible = false
+
+func UIBackToStart() -> void:
+	margins.visible = false
+	credits.visible = false
+	options.visible = false
+	start_menu.visible = false
+	buttons.visible = true
+	game_name.visible = true
