@@ -75,6 +75,8 @@ class_name Player
 @onready var exit: Button = %Exit
 @onready var session_id: Label = %SessionId
 @onready var copy_session: Button = %CopySession
+@onready var authority_id: Label = %AuthorityId
+@onready var is_authority: Label = %IsAuthority
 
 @export var lastSpriteOrientation : bool
 @export var facingDirection = 1
@@ -105,9 +107,13 @@ var hotbarItems : int = 0
 
 var authority : int
 
+@export var isWeaponOut : bool
+@onready var weapon: Attack = %Weapon
+@onready var weapon_attachment: BoneAttachment3D = %WeaponAttachment
+
 func _enter_tree() -> void:
 	authority = int(name)
-	set_multiplayer_authority(authority)
+	set_multiplayer_authority(authority, true)
 
 func _ready() -> void:
 	add_to_group('Players')
@@ -123,6 +129,8 @@ func _ready() -> void:
 	Collider = get_node("collider")
 	VisualsNode = get_node("Armature")
 	visualNodeStartRotation = VisualsNode.rotation_degrees
+	
+	isWeaponOut = false
 	
 	AddToHotbar("Action")
 	AddToHotbar("Action2")
@@ -140,11 +148,13 @@ func _ready() -> void:
 		session_id.text = Network.tube_client.session_id
 		DisplayServer.clipboard_set(Network.tube_client.session_id)
 		
+		authority_id.text = str(get_multiplayer_authority())
+		is_authority.text = str(is_multiplayer_authority())
+		
 		if Global.username != "":
 			name_plate.text = Global.username
 		else:
 			name_plate.text = name
-
 	else:
 		canvas_layer.visible = false
 
@@ -169,6 +179,8 @@ func _process(delta: float) -> void:
 	elif Input.is_action_just_pressed("menu") and menu.visible:
 		menu.hide()
 	
+	SwitchWeaponState()
+	
 	TickTimers(delta)
 	
 	#dash uses
@@ -177,6 +189,21 @@ func _process(delta: float) -> void:
 			dashUses = dashGroundUses
 		else:
 			dashUses = dashInAirUses
+
+func SwitchWeaponState() -> void:
+	if inputHandler.weaponOutInput:
+		isWeaponOut = !isWeaponOut
+	
+	if isWeaponOut:
+		weapon_attachment.bone_name = "RightHand"
+		weapon_attachment.bone_idx = 34
+		weapon.position = weapon.weaponOutPosition
+		weapon.rotation_degrees = weapon.weaponOutRotation
+	else:
+		weapon_attachment.bone_name = "Hips"
+		weapon_attachment.bone_idx = 1
+		weapon.position = weapon.weaponPosition
+		weapon.rotation_degrees = weapon.weaponRotation
 
 # physics update
 func _physics_process(delta: float) -> void:
@@ -322,7 +349,11 @@ func isCollidingShapecast(shapecast : ShapeCast3D) -> bool:
 	shapecast.force_shapecast_update()
 	shapecast.force_update_transform()
 	return shapecast.is_colliding()
-	
+
+@rpc("any_peer", "call_local", "reliable", 0)
+func TakeDamage(source : String, amount : int) -> void:
+	print(str(get_multiplayer_authority()) + " got hit by: " + source + " for: " + str(amount) + " damage")
+
 #NOTE: im thinking of adding a second state machine that will check for semi states like parry, block, emotes, attacks, stuns, dazes, guardbreaks, knockdowns. Rethinking that it would be kinda pointless. from parry to attacks i could make them an actions but the rest idk, i will cross that bridge when i get there.
 #i will have to remake the animation tree so i can blend animations together, and have overlapping anims
 #i can have it so the player class sends an action event certain state will get the event and change to the desired state

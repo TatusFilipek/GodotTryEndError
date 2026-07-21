@@ -17,13 +17,15 @@ class_name InputHandler
 
 @export var interact : bool = false
 
+@export var weaponOutInput : bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	if not is_multiplayer_authority():
+		set_process(false)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if not is_multiplayer_authority(): return
 	movementDirection = Input.get_axis("moveLeft", "moveRight")
 	lookDirection = Input.get_axis("moveDown", "moveUp")
 	runInput = Input.is_action_pressed("sprint")
@@ -34,7 +36,9 @@ func _process(delta: float) -> void:
 	jumpInput = Input.is_action_pressed("jump")
 	jumpInputUp = not Input.is_action_pressed("jump")
 	
-	interact = Input.is_action_pressed("interact")
+	interact = Input.is_action_just_pressed("interact")
+	
+	weaponOutInput = Input.is_action_just_pressed("weapon")
 	
 	for action in hotbarInputs:
 		#if Input.is_action_just_pressed(action):

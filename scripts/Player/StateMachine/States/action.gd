@@ -76,12 +76,17 @@ func feint():
 	pass
 
 func EndAction():
-	machine.actionExit()
-	pass
+	core.weapon.attackFinished.emit()
+	#rpc("switch_state")
+	switch_state()
+
+#@rpc("authority", "call_local", "reliable", -2)
+func switch_state():
+	machine.rpc("change_state", "Idle")
 
 func VariableJumpHeight():
 	if core.velocitySandbox.y <= 0:
 		core.jumping = false
 	
-	if core.jumping and Input.is_action_just_released("jump"):
+	if core.jumping and inputHandler.jumpInputUp:
 		core.velocitySandbox.y *= core.jumpVelocityCut

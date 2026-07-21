@@ -34,6 +34,9 @@ func physics_update(_delta: float) -> void:
 			machine.rpc("change_state", core.Hotbar[action].name)
 			#machine.change_state(core.Hotbar[action].name)
 	
+	if inputHandler.interact and core.isWeaponOut:
+		machine.rpc("change_state", "Attack")
+	
 	if not core.isOnGround():
 		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
 	elif core.CanJump() and not core.isCollidingShapecast(core.CheckSpaceCrouch):
