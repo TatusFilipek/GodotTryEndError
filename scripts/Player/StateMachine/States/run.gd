@@ -16,7 +16,7 @@ func physics_update(_delta: float) -> void:
 		core.velocitySandbox.x = inputHandler.movementDirection * core.MovementSpeed * core.sprintMovementMult
 	
 	if inputHandler.movementDirection == 0:
-		machine.change_state("Idle")
+		machine.rpc("change_state", "Idle")
 	elif inputHandler.crouchInput and abs(core.velocitySandbox.x) > core.slideCancelVelocity:
-		machine.change_state("Slide")
+		machine.rpc("change_state", "Slide")
 		return

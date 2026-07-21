@@ -16,8 +16,8 @@ func physics_update(_delta: float) -> void:
 		core.velocitySandbox.x = inputHandler.movementDirection * core.MovementSpeed * core.crouchMovementMult
 	
 	if inputHandler.movementDirection == 0:
-		machine.change_state("CrouchIdle")	
+		machine.rpc("change_state", "CrouchIdle")	
 	elif not inputHandler.crouchInput:
 		changeState("Walk")
 	elif inputHandler.runInput and not core.isCollidingShapecast(core.CheckSpaceCrouch) and not core.isCollidingRaycast(core.CheckWallBottom):
-		machine.change_state("Slide")
+		machine.rpc("change_state", "Slide")

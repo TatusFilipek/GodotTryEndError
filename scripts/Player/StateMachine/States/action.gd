@@ -77,10 +77,8 @@ func feint():
 
 func EndAction():
 	core.weapon.attackFinished.emit()
-	#rpc("switch_state")
 	switch_state()
 
-#@rpc("authority", "call_local", "reliable", -2)
 func switch_state():
 	machine.rpc("change_state", "Idle")
 

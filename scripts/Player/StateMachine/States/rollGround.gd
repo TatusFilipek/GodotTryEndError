@@ -17,5 +17,5 @@ func physics_update(_delta: float) -> void:
 	#TODO: fix later
 	if not core.isOnGround():
 		core.rollAnimFrame = animationPlayer.current_animation_position
-		machine.change_state("RollInAir")
+		machine.rpc("change_state", "RollInAir")
 		return

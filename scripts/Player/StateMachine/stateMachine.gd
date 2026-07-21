@@ -24,8 +24,12 @@ func _ready() -> void:
 	
 	if initial_state:
 		change_state(initial_state.name)
+	
+	if not is_multiplayer_authority():
+		set_process(false)
+		set_physics_process(false)
 
-@rpc("any_peer", "call_local", "reliable", 0)
+@rpc("authority", "call_local", "reliable", 0)
 func change_state(new_state_name: String) -> void:
 	var newState = get_node(new_state_name)
 	
@@ -47,9 +51,9 @@ func actionExit() -> void:
 
 func ChangeStateMoveOrIdle(idleStateName : String, moveStateName : String) -> void:
 	if inputHandler.movementDirection != 0:
-		change_state(moveStateName)
+		rpc("change_state", moveStateName)
 	else:
-		change_state(idleStateName)
+		rpc("change_state", idleStateName)
 
 func GetState(_StateName: String) -> State:
 	var stateOut: State
@@ -63,4 +67,3 @@ func GetState(_StateName: String) -> State:
 func _physics_process(delta: float) -> void:
 	if current_state:
 		current_state.physics_update(delta)
-		curentState.text = current_state.name

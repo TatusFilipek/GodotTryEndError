@@ -19,10 +19,10 @@ func physics_update(_delta: float) -> void:
 	#before all those state changing ifs add ifs checking for action inputs and change state to said action
 	if inputHandler.blockInput:
 		if core.CanParry():
-			#machine.change_state("Parry")
+			#machine.rpc("change_state", "Parry")
 			machine.rpc("change_state", "Parry")
 		else:
-			#machine.change_state("Block")
+			#machine.rpc("change_state", "Block")
 			machine.rpc("change_state", "Block")
 		return
 	
@@ -30,18 +30,18 @@ func physics_update(_delta: float) -> void:
 		machine.ChangeStateMoveOrIdle("Idle", "Walk")
 	elif inputHandler.jumpInput and core.coyoteTimer > 0:
 		core.coyoteTimer = 0
-		machine.change_state("Jump")
+		machine.rpc("change_state", "Jump")
 		#check for ledge and if ledge detected grab on it
 	elif core.IsLedgeDetected() and inputHandler.movementDirection != 0 and core.velocitySandbox.y < 0:
-		machine.change_state("LedgeGrab")
+		machine.rpc("change_state", "LedgeGrab")
 	elif inputHandler.dashInput and core.CanDash():
-		#machine.change_state("Dash")
+		#machine.rpc("change_state", "Dash")
 		machine.rpc("change_state", "Dash")
 	else:
 		core.velocitySandbox.y -= core.CalcGravity() * _delta; # Gravity
 		
 		VariableJumpHeight()
-		SuperDuperAirStateAnims()
+		rpc("SuperDuperAirStateAnims")
 	pass
 
 func VariableJumpHeight():
@@ -51,6 +51,7 @@ func VariableJumpHeight():
 	if core.jumping and inputHandler.jumpInputUp:
 		core.velocitySandbox.y *= core.jumpVelocityCut
 
+@rpc("authority", "call_local", "reliable", -1)
 func SuperDuperAirStateAnims():
 	if playback:
 		if core.velocitySandbox.y > core.jumpApex:

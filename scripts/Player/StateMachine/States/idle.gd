@@ -14,7 +14,7 @@ func physics_update(_delta: float) -> void:
 	if not isActive: return
 	
 	if inputHandler.movementDirection != 0:
-		machine.change_state("Walk")
+		machine.rpc("change_state", "Walk")
 	elif inputHandler.crouchInput:
-		machine.change_state("CrouchIdle")
+		machine.rpc("change_state", "CrouchIdle")
 	else: core.velocitySandbox.x = 0

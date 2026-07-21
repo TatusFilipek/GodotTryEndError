@@ -55,20 +55,20 @@ func physics_update(_delta: float) -> void:
 	if inputHandler.blockInput:
 		core.dashUses = 0
 		if core.CanParry():
-			#machine.change_state("Parry")
+			#machine.rpc("change_state", "Parry")
 			machine.rpc("change_state", "Parry")
 		else:
-			#machine.change_state("Block")
+			#machine.rpc("change_state", "Block")
 			machine.rpc("change_state", "Block")
 		return
 	
 	if inputHandler.feintInput:
 		if core.isOnGround():
-			machine.change_state("RollGround")
+			machine.rpc("change_state", "RollGround")
 			return
 		else:
 			core.dashUses = 0
-			machine.change_state("RollInAir")
+			machine.rpc("change_state", "RollInAir")
 			return
 	
 	if not core.isOnGround() and dashDirection.y == 0:

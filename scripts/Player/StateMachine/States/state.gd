@@ -19,12 +19,12 @@ func Setup(_core : Player, _machine : StateMachine, _animationTree: AnimationTre
 	animationPlayer = _animationPlayer
 
 func enter() -> void:
-	print(name, ' Enter')
+	print(name, ' Enter ', get_multiplayer_authority())
 	isActive = true
 	pass
 
 func exit() -> void:
-	print(name, ' Exit')
+	print(name, ' Exit ', get_multiplayer_authority())
 	isActive = false
 	pass
 

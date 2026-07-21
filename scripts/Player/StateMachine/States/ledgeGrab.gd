@@ -27,10 +27,10 @@ func physics_update(_delta: float) -> void:
 	
 	if inputHandler.blockInput:
 		if core.CanParry():
-			#machine.change_state("Parry")
+			#machine.rpc("change_state", "Parry")
 			machine.rpc("change_state", "Parry")
 		else:
-			#machine.change_state("Block")
+			#machine.rpc("change_state", "Block")
 			machine.rpc("change_state", "Block")
 		return
 	
@@ -39,8 +39,8 @@ func physics_update(_delta: float) -> void:
 	elif not core.IsLedgeDetected():
 		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
 	elif inputHandler.lookDirection > 0 and core.IsSpaceToClimb():
-		machine.change_state("LedgeClimb")
+		machine.rpc("change_state", "LedgeClimb")
 	elif core.jumpInputBufferTimer > 0:
 		core.jumpInputBufferTimer = 0
-		machine.change_state("Jump")
+		machine.rpc("change_state", "Jump")
 	pass

@@ -70,6 +70,7 @@ class_name Player
 @onready var machine : StateMachine = $StateMachine
 @onready var canvas_layer: CanvasLayer = %CanvasLayer
 @onready var name_plate: Label3D = %NamePlate
+@onready var curentState: Label3D = %CurentState
 @onready var camera: Camera3D = %Camera
 @onready var menu: HBoxContainer = %Menu
 @onready var exit: Button = %Exit
@@ -161,8 +162,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	#UI
 	if machine.current_state:
-		# Note: modified sprite.animation references to string placeholders or custom debug names if applicable.
 		label.text = "Stan: %s | XVelocity: %f | YVelocity: %f | movementDir: %f | lookDir: %f" % [machine.current_state.name, velocitySandbox.x, velocitySandbox.y, inputHandler.movementDirection, inputHandler.lookDirection]
+		curentState.text = machine.current_state.name
 	
 	if CanDash():
 		dashCooldownIcon.self_modulate = Color("b9b9b9")

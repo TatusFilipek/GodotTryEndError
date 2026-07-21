@@ -36,7 +36,7 @@ func physics_update(_delta: float) -> void:
 	#if core.jumpInputBufferTimer > 0 and core.coyoteTimer > 0:
 		#core.coyoteTimer = 0
 		#core.jumpInputBufferTimer = 0
-		#machine.change_state("Jump")
+		#machine.rpc("change_state", "Jump")
 		#return
 
 	pass

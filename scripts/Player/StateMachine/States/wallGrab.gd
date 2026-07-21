@@ -22,7 +22,7 @@ func physics_update(_delta: float) -> void:
 	if not isActive: return
 	
 	if not inputHandler.interact:
-		machine.change_state("WallTouch")
+		machine.rpc("change_state", "WallTouch")
 	
 	if inputHandler.movementDirection * core.facingDirection > 0:
 		if playback.get_current_node() != "WallPush":

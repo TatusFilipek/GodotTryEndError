@@ -20,4 +20,4 @@ func physics_update(_delta: float) -> void:
 	if not isActive: return
 	
 	if inputHandler.movementDirection == 0:
-		machine.change_state("FallIdle")
+		machine.rpc("change_state", "FallIdle")

@@ -12,6 +12,6 @@ func physics_update(_delta: float) -> void:
 	if not isActive: return
 	
 	if inputHandler.movementDirection != 0:
-		machine.change_state("FallMove")
+		machine.rpc("change_state", "FallMove")
 	
 	core.velocitySandbox.x -= core.velocitySandbox.x * core.airDrag * .5 * _delta

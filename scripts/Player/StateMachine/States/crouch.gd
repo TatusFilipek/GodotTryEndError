@@ -27,4 +27,4 @@ func changeState(_name) -> void:
 	if core.isCollidingShapecast(core.CheckSpaceCrouch): return
 	core.resizeCollider(0)
 	core.isCrouching = false
-	machine.change_state(_name)
+	machine.rpc("change_state", _name)
