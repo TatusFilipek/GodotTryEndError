@@ -104,6 +104,7 @@
 [ext_resource type="Texture2D" uid="uid://bqpvoj563n750" path="res://resources/UI/loganPaul.jpg" id="93_w6su8"]
 [ext_resource type="Script" uid="uid://dt4i2ifit1v28" path="res://scripts/Player/StateMachine/States/crouchIdle.gd" id="94_ogxgr"]
 [ext_resource type="Script" uid="uid://smy5w2wn2om4" path="res://scripts/Player/StateMachine/States/crouchWalk.gd" id="95_3hgil"]
+[ext_resource type="PackedScene" uid="uid://5m6j16lcqwke" path="res://scenes/UI/InputSettings.tscn" id="96_1tx05"]
 [ext_resource type="Script" uid="uid://dqdxma8wlxahj" path="res://scripts/Player/StateMachine/States/slide.gd" id="96_o0srm"]
 [ext_resource type="Script" uid="uid://bntmo2bm6v3f4" path="res://scripts/Player/StateMachine/States/ledgeGrab.gd" id="97_20d6p"]
 [ext_resource type="Script" uid="uid://bd8y141svybmq" path="res://scripts/Player/StateMachine/States/ledgeClimb.gd" id="98_dacrs"]
@@ -2399,25 +2400,25 @@ properties/0/spawn = true
 properties/0/replication_mode = 1
 properties/1/path = NodePath(".:lastSpriteOrientation")
 properties/1/spawn = true
-properties/1/replication_mode = 2
+properties/1/replication_mode = 1
 properties/2/path = NodePath(".:facingDirection")
 properties/2/spawn = true
-properties/2/replication_mode = 2
+properties/2/replication_mode = 1
 properties/3/path = NodePath(".:dashing")
 properties/3/spawn = true
-properties/3/replication_mode = 2
+properties/3/replication_mode = 1
 properties/4/path = NodePath(".:rolling")
 properties/4/spawn = true
-properties/4/replication_mode = 2
+properties/4/replication_mode = 1
 properties/5/path = NodePath(".:isCrouching")
 properties/5/spawn = true
-properties/5/replication_mode = 2
+properties/5/replication_mode = 1
 properties/6/path = NodePath(".:blocking")
 properties/6/spawn = true
-properties/6/replication_mode = 2
+properties/6/replication_mode = 1
 properties/7/path = NodePath(".:parrying")
 properties/7/spawn = true
-properties/7/replication_mode = 2
+properties/7/replication_mode = 1
 properties/8/path = NodePath(".:velocitySandbox")
 properties/8/spawn = true
 properties/8/replication_mode = 1
@@ -2426,19 +2427,19 @@ properties/9/spawn = true
 properties/9/replication_mode = 1
 properties/10/path = NodePath("NamePlate:text")
 properties/10/spawn = true
-properties/10/replication_mode = 2
+properties/10/replication_mode = 1
 properties/11/path = NodePath(".:isWeaponOut")
 properties/11/spawn = true
-properties/11/replication_mode = 2
+properties/11/replication_mode = 1
 properties/12/path = NodePath(".:rollAnimFrame")
 properties/12/spawn = true
-properties/12/replication_mode = 2
+properties/12/replication_mode = 0
 properties/13/path = NodePath("StateMachine/Attack:current_combo")
 properties/13/spawn = true
-properties/13/replication_mode = 2
+properties/13/replication_mode = 1
 properties/14/path = NodePath("Checks/BasicAttackHurtBox:monitoring")
 properties/14/spawn = true
-properties/14/replication_mode = 2
+properties/14/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D" unique_id=1816512432 node_paths=PackedStringArray("VisualsNode")]
 collision_layer = 2
@@ -3100,7 +3101,7 @@ settings/0/additive = false
 
 [node name="WeaponAttachment" type="BoneAttachment3D" parent="Armature/GeneralSkeleton" unique_id=782236443]
 unique_name_in_owner = true
-transform = Transform3D(0.95701045, 0.063606754, -0.28299332, -0.21277906, 0.8170096, -0.5359294, 0.19711955, 0.57310504, 0.7954209, 0, 0, 0)
+transform = Transform3D(0.95701045, 0.063606754, -0.28299332, -0.21277906, 0.8170096, -0.5359294, 0.19711955, 0.57310504, 0.7954209, -0.041606963, 0.5664249, -0.02711258)
 bone_name = "Hips"
 bone_idx = 1
 
@@ -3249,6 +3250,9 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "test"
 horizontal_alignment = 2
+
+[node name="InputSettings" parent="CanvasLayer" unique_id=734454898 instance=ExtResource("96_1tx05")]
+unique_name_in_owner = true
 
 [node name="StateMachine" type="Node" parent="." unique_id=511306793 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("87_yrkxk")

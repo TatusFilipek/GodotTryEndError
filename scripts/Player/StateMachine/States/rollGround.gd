@@ -3,7 +3,8 @@ class_name RollGround
 
 func enter() -> void:
 	super.enter()
-	StartAnim(float(core.rollAnimFrame), "Roll")
+	#StartAnim(float(core.rollAnimFrame), "Roll")
+	rpc('StartAnim', float(core.rollAnimFrame), "Roll")
 	pass
 
 func exit() -> void:

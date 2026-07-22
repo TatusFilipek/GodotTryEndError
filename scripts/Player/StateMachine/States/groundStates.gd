@@ -34,7 +34,6 @@ func physics_update(_delta: float) -> void:
 			machine.rpc("change_state", core.Hotbar[action].name)
 			#machine.rpc("change_state", core.Hotbar[action].name)
 	
-	#if inputHandler.interactHold and core.isWeaponOut:
 	if inputHandler.interact and core.isWeaponOut:
 		machine.rpc("change_state", "Attack")
 	

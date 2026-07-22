@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://5m6j16lcqwke"]
+
+[ext_resource type="Script" uid="uid://vuxjr5c67jn5" path="res://scripts/ui/input_settings.gd" id="1_r5l2p"]
+[ext_resource type="PackedScene" uid="uid://d3f8h4sb7y0og" path="res://scenes/UI/input_button.tscn" id="1_wo1wn"]
+[ext_resource type="FontFile" uid="uid://d0jlbpjer2sgs" path="res://resources/UI/Peralta-Regular.ttf" id="3_83qoh"]
+
+[node name="InputSettings" type="Control" unique_id=734454898]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_r5l2p")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=336088717]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -352.0
+offset_top = -274.0
+offset_right = 352.0
+offset_bottom = 274.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=545830158]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1958762422]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=2073330339]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ActionList" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer" unique_id=1839365432]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="InputButton" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList" unique_id=255335704 instance=ExtResource("1_wo1wn")]
+layout_mode = 2
+
+[node name="ResetButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=2095191203]
+layout_mode = 2
+focus_mode = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_83qoh")
+theme_override_font_sizes/font_size = 20
+text = "Reset to default"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]

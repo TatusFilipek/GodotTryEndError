@@ -80,6 +80,7 @@ class_name Player
 @onready var copy_session: Button = %CopySession
 @onready var authority_id: Label = %AuthorityId
 @onready var is_authority: Label = %IsAuthority
+@onready var input_settings: Control = %InputSettings
 
 @export var lastSpriteOrientation : bool
 @export var facingDirection = 1
@@ -142,6 +143,7 @@ func _ready() -> void:
 	if is_multiplayer_authority():
 		camera.current = true
 		menu.hide()
+		input_settings.hide()
 		exit.pressed.connect(func(): Network.leave_server())
 		copy_session.pressed.connect(func(): DisplayServer.clipboard_set(Network.tube_client.session_id))
 		session_id.text = Network.tube_client.session_id
@@ -175,8 +177,10 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("menu") and menu.visible == false:
 		menu.show()
+		input_settings.show()
 	elif Input.is_action_just_pressed("menu") and menu.visible:
 		menu.hide()
+		input_settings.hide()
 	
 	SwitchWeaponState()
 	

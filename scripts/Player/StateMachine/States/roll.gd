@@ -41,6 +41,7 @@ func physics_update(_delta: float) -> void:
 		core.velocitySandbox.x = 0
 	pass
 
+@rpc("authority", "call_local", "reliable", -2)
 func StartAnim(_time : float, _animName : String) -> void:
 	animationTree.active = false
 	

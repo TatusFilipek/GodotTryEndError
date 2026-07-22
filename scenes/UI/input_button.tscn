@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://d3f8h4sb7y0og"]
+
+[ext_resource type="FontFile" uid="uid://d0jlbpjer2sgs" path="res://resources/UI/Peralta-Regular.ttf" id="1_35g41"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_64yvt"]
+bg_color = Color(0, 0, 0, 0.43137255)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwd6v"]
+bg_color = Color(1, 1, 1, 0.29803923)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6wmxf"]
+
+[node name="InputButton" type="Button" unique_id=255335704]
+custom_minimum_size = Vector2(0, 35)
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_64yvt")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jwd6v")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jwd6v")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6wmxf")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1472452431]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1845052514]
+layout_mode = 2
+
+[node name="ActionLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=991968580]
+layout_mode = 2
+mouse_filter = 1
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("1_35g41")
+theme_override_font_sizes/font_size = 20
+text = "Action Name"
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer" unique_id=1390402408]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="InputLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=1464340034]
+layout_mode = 2
+mouse_filter = 1
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("1_35g41")
+theme_override_font_sizes/font_size = 20
+text = "Action Input"
+vertical_alignment = 1
