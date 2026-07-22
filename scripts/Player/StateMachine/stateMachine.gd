@@ -42,7 +42,7 @@ func change_state(new_state_name: String) -> void:
 
 func actionExit() -> void:
 	if parent.isOnGround():
-		if parent.isCollidingShapecast(parent.CheckSpaceCrouch) or inputHandler.crouchInput:
+		if parent.isCollidingShapecast(parent.check_space_crouch) or inputHandler.crouchInput:
 			ChangeStateMoveOrIdle("CrouchIdle", "CrouchWalk")
 		else:
 			ChangeStateMoveOrIdle("Idle", "Walk")

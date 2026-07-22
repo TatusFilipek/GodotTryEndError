@@ -13,7 +13,7 @@ func exit() -> void:
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
-	if not core.isCollidingShapecast(core.CheckSpaceCrouch) and not inputHandler.crouchInput:
+	if not core.isCollidingShapecast(core.check_space_crouch) and not inputHandler.crouchInput:
 			core.resizeCollider(0)
 			core.isCrouching = false
 	
@@ -34,20 +34,19 @@ func physics_update(_delta: float) -> void:
 			machine.rpc("change_state", core.Hotbar[action].name)
 			#machine.rpc("change_state", core.Hotbar[action].name)
 	
+	#if inputHandler.interactHold and core.isWeaponOut:
 	if inputHandler.interact and core.isWeaponOut:
 		machine.rpc("change_state", "Attack")
 	
 	if not core.isOnGround():
 		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
-	elif core.CanJump() and not core.isCollidingShapecast(core.CheckSpaceCrouch):
-		core.coyoteTimer = 0
-		core.jumpInputBufferTimer = 0
+	elif core.CanJump() and not core.isCollidingShapecast(core.check_space_crouch):
 		machine.rpc("change_state", "Jump")
 	elif inputHandler.dashInput and core.CanDash():
 		#machine.rpc("change_state", "Dash")
 		machine.rpc("change_state", "Dash")
 	elif core.is_on_wall():
 		#check for wall on bottom
-		if core.isCollidingRaycast(core.CheckWallTop) and not core.isCrouching and machine.current_state.name != "WallTouch" and machine.current_state.name != "WallGrab":
+		if core.isCollidingRaycast(core.check_wall_top) and not core.isCrouching and machine.current_state.name != "WallTouch" and machine.current_state.name != "WallGrab":
 			machine.rpc("change_state", "WallTouch")
 	pass

@@ -5,7 +5,7 @@
 [ext_resource type="ArrayMesh" uid="uid://cpgwavsvh8owt" path="res://resources/3dcharacters/manekin.tres" id="2_1hh3j"]
 [ext_resource type="Animation" uid="uid://cnxla11ppr63k" path="res://resources/animations3D/animations/Crouch_Fwd.res" id="2_pw0el"]
 [ext_resource type="Animation" uid="uid://d077jkkh46j5d" path="res://resources/animations3D/animations/Crouch_Idle.res" id="3_j7t0u"]
-[ext_resource type="Script" uid="uid://25d0bbqo085f" path="res://scenes/Player/attack.gd" id="3_kle5l"]
+[ext_resource type="Script" uid="uid://25d0bbqo085f" path="res://scenes/Player/weapon.gd" id="3_kle5l"]
 [ext_resource type="Texture2D" uid="uid://n2ooifju82g0" path="res://resources/assets/models/Dagger_Atlas_Pirate.png" id="3_pod45"]
 [ext_resource type="Animation" uid="uid://dbxh0thj3kt6x" path="res://resources/animations3D/animations/Dance.res" id="4_yrkxk"]
 [ext_resource type="Animation" uid="uid://c5wliuw7cmj10" path="res://resources/animations3D/animations/Death01.res" id="5_u8lrl"]
@@ -117,6 +117,10 @@
 [ext_resource type="Script" uid="uid://se40vqr41wt" path="res://scripts/Player/StateMachine/States/block.gd" id="110_o0srm"]
 [ext_resource type="FontFile" uid="uid://d0jlbpjer2sgs" path="res://resources/UI/Peralta-Regular.ttf" id="113_mve82"]
 [ext_resource type="Script" uid="uid://bchxv2smfmviy" path="res://scenes/Player/input_handler.gd" id="114_owaif"]
+[ext_resource type="Script" uid="uid://cyci1q70pha65" path="res://scripts/Player/StateMachine/States/WeaponBasicAttack.gd" id="116_lqe8s"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_64yvt"]
+radius = 1.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1hh3j"]
 radius = 0.175
@@ -369,9 +373,6 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_y62q5")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_64yvt"]
-size = Vector3(0.27, 1.3, 0.27)
-
 [sub_resource type="Animation" id="Animation_hkj2h"]
 length = 0.001
 tracks/0/type = "position_3d"
@@ -384,13 +385,13 @@ tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Armature/GeneralSkeleton/WeaponAttachment/Weapon/Area3D:monitoring")
+tracks/1/path = NodePath("Checks/BasicAttackHurtBox:monitoring")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [true]
 }
 
@@ -2302,40 +2303,43 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_w6su8"]
 properties/0/path = NodePath("InputHandler:movementDirection")
 properties/0/spawn = true
-properties/0/replication_mode = 1
+properties/0/replication_mode = 2
 properties/1/path = NodePath("InputHandler:lookDirection")
 properties/1/spawn = true
-properties/1/replication_mode = 1
+properties/1/replication_mode = 2
 properties/2/path = NodePath("InputHandler:runInput")
 properties/2/spawn = true
-properties/2/replication_mode = 1
+properties/2/replication_mode = 2
 properties/3/path = NodePath("InputHandler:crouchInput")
 properties/3/spawn = true
-properties/3/replication_mode = 1
+properties/3/replication_mode = 2
 properties/4/path = NodePath("InputHandler:blockInput")
 properties/4/spawn = true
-properties/4/replication_mode = 1
+properties/4/replication_mode = 2
 properties/5/path = NodePath("InputHandler:feintInput")
 properties/5/spawn = true
-properties/5/replication_mode = 1
+properties/5/replication_mode = 2
 properties/6/path = NodePath("InputHandler:dashInput")
 properties/6/spawn = true
-properties/6/replication_mode = 1
+properties/6/replication_mode = 2
 properties/7/path = NodePath("InputHandler:jumpInput")
 properties/7/spawn = true
-properties/7/replication_mode = 1
+properties/7/replication_mode = 2
 properties/8/path = NodePath("InputHandler:jumpInputUp")
 properties/8/spawn = true
-properties/8/replication_mode = 1
+properties/8/replication_mode = 2
 properties/9/path = NodePath("InputHandler:hotbarInputs")
 properties/9/spawn = true
-properties/9/replication_mode = 1
+properties/9/replication_mode = 2
 properties/10/path = NodePath("InputHandler:interact")
 properties/10/spawn = true
-properties/10/replication_mode = 1
+properties/10/replication_mode = 2
 properties/11/path = NodePath("InputHandler:weaponOutInput")
 properties/11/spawn = true
-properties/11/replication_mode = 1
+properties/11/replication_mode = 2
+properties/12/path = NodePath("InputHandler:jumpInputDown")
+properties/12/spawn = true
+properties/12/replication_mode = 2
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dn5mr"]
 properties/0/path = NodePath(".:position")
@@ -2343,25 +2347,25 @@ properties/0/spawn = true
 properties/0/replication_mode = 1
 properties/1/path = NodePath(".:lastSpriteOrientation")
 properties/1/spawn = true
-properties/1/replication_mode = 1
+properties/1/replication_mode = 2
 properties/2/path = NodePath(".:facingDirection")
 properties/2/spawn = true
-properties/2/replication_mode = 1
+properties/2/replication_mode = 2
 properties/3/path = NodePath(".:dashing")
 properties/3/spawn = true
-properties/3/replication_mode = 1
+properties/3/replication_mode = 2
 properties/4/path = NodePath(".:rolling")
 properties/4/spawn = true
-properties/4/replication_mode = 1
+properties/4/replication_mode = 2
 properties/5/path = NodePath(".:isCrouching")
 properties/5/spawn = true
-properties/5/replication_mode = 1
+properties/5/replication_mode = 2
 properties/6/path = NodePath(".:blocking")
 properties/6/spawn = true
-properties/6/replication_mode = 1
+properties/6/replication_mode = 2
 properties/7/path = NodePath(".:parrying")
 properties/7/spawn = true
-properties/7/replication_mode = 1
+properties/7/replication_mode = 2
 properties/8/path = NodePath(".:velocitySandbox")
 properties/8/spawn = true
 properties/8/replication_mode = 1
@@ -2370,57 +2374,72 @@ properties/9/spawn = true
 properties/9/replication_mode = 1
 properties/10/path = NodePath("NamePlate:text")
 properties/10/spawn = true
-properties/10/replication_mode = 1
+properties/10/replication_mode = 2
 properties/11/path = NodePath(".:isWeaponOut")
 properties/11/spawn = true
-properties/11/replication_mode = 1
+properties/11/replication_mode = 2
+properties/12/path = NodePath(".:rollAnimFrame")
+properties/12/spawn = true
+properties/12/replication_mode = 2
 
-[node name="Player" type="CharacterBody3D" unique_id=1816512432 node_paths=PackedStringArray("CheckWallTop", "CheckWallBottom", "CheckLedge", "CheckHead", "CheckFloorFront", "CheckFloorBack", "CheckSpace", "CheckSpaceCrouch", "Collider", "VisualsNode")]
+[node name="Player" type="CharacterBody3D" unique_id=1816512432 node_paths=PackedStringArray("VisualsNode")]
 collision_layer = 2
 script = ExtResource("1_pw0el")
-CheckWallTop = NodePath("CheckWallTop")
-CheckWallBottom = NodePath("CheckWallBottom")
-CheckLedge = NodePath("CheckLedge")
-CheckHead = NodePath("CheckHead")
-CheckFloorFront = NodePath("CheckFloorFront")
-CheckFloorBack = NodePath("CheckFloorBack")
-CheckSpace = NodePath("CheckSpace")
-CheckSpaceCrouch = NodePath("CheckSpaceCrouch")
-Collider = NodePath("collider")
 VisualsNode = NodePath("Armature")
 
-[node name="CheckSpaceCrouch" type="ShapeCast3D" parent="." unique_id=313191973]
+[node name="Checks" type="Node3D" parent="." unique_id=1782051520]
+unique_name_in_owner = true
+
+[node name="BasicAttackHurtBox" type="Area3D" parent="Checks" unique_id=847224408]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checks/BasicAttackHurtBox" unique_id=749492005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+shape = SubResource("SphereShape3D_64yvt")
+
+[node name="CheckSpaceCrouch" type="ShapeCast3D" parent="Checks" unique_id=313191973]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0)
 shape = SubResource("CapsuleShape3D_1hh3j")
 target_position = Vector3(0, 0, 0)
 max_results = 1
 
-[node name="CheckSpace" type="ShapeCast3D" parent="." unique_id=1093941031]
+[node name="CheckSpace" type="ShapeCast3D" parent="Checks" unique_id=1093941031]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.028, 2.527, 0)
 shape = SubResource("BoxShape3D_1hh3j")
 target_position = Vector3(0, 0, 0)
 
-[node name="CheckLedge" type="RayCast3D" parent="." unique_id=1101548921]
+[node name="CheckLedge" type="RayCast3D" parent="Checks" unique_id=1101548921]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.688, 0)
 target_position = Vector3(0, -0.75, 0)
 
-[node name="CheckHead" type="RayCast3D" parent="." unique_id=1993976823]
+[node name="CheckHead" type="RayCast3D" parent="Checks" unique_id=1993976823]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.175, 1.826, 0)
 target_position = Vector3(0.25, 0, 0)
 
-[node name="CheckWallTop" type="RayCast3D" parent="." unique_id=983067530]
+[node name="CheckWallTop" type="RayCast3D" parent="Checks" unique_id=983067530]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.175, 1.47, 0)
 target_position = Vector3(0.25, 0, 0)
 
-[node name="CheckWallBottom" type="RayCast3D" parent="." unique_id=1777651447]
+[node name="CheckWallBottom" type="RayCast3D" parent="Checks" unique_id=1777651447]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.175, 0.368, 0)
 target_position = Vector3(0.25, 0, 0)
 
-[node name="CheckFloorBack" type="RayCast3D" parent="." unique_id=2114355622]
+[node name="CheckFloorBack" type="RayCast3D" parent="Checks" unique_id=2114355622]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, 0.15909779, 0)
 target_position = Vector3(0, -0.35, 0)
 
-[node name="CheckFloorFront" type="RayCast3D" parent="." unique_id=1233611262]
+[node name="CheckFloorFront" type="RayCast3D" parent="Checks" unique_id=1233611262]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0.15909779, 0)
 target_position = Vector3(0, -0.35, 0)
 
@@ -3029,7 +3048,6 @@ bone_idx = 1
 unique_name_in_owner = true
 transform = Transform3D(0.50000006, 0, 0, 0, 0.5000001, 0, 0, 0, 0.5000001, 0, 0, 0)
 script = ExtResource("3_kle5l")
-damage_amount = 25
 weaponOutPosition = Vector3(0, 0.066, 0.032)
 weaponPosition = Vector3(0.16, 0.1, 0.063)
 weaponOutRotation = Vector3(0, 0, -90)
@@ -3038,15 +3056,6 @@ weaponRotation = Vector3(13, -97, 150)
 [node name="Weapon_Dagger" type="MeshInstance3D" parent="Armature/GeneralSkeleton/WeaponAttachment/Weapon" unique_id=1965230884]
 transform = Transform3D(100, 0, 0, 0, 100, -4.371139e-06, 0, 4.371139e-06, 100, 0, 0, 0)
 mesh = SubResource("ArrayMesh_vqayp")
-
-[node name="Area3D" type="Area3D" parent="Armature/GeneralSkeleton/WeaponAttachment/Weapon" unique_id=1327154486]
-unique_name_in_owner = true
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/GeneralSkeleton/WeaponAttachment/Weapon/Area3D" unique_id=437107483]
-transform = Transform3D(1, 1.3038516e-08, 0, -1.7695129e-08, 0.9999998, 0, -7.003546e-07, 7.450581e-09, 1, -2.3841858e-07, 0.38780212, -1.7881393e-07)
-shape = SubResource("BoxShape3D_64yvt")
 
 [node name="HandTargetR" type="Marker3D" parent="Armature" unique_id=1109568979]
 transform = Transform3D(1, -4.205299e-08, 3.178529e-08, 4.2052985e-08, 0.27283737, -0.9620603, 3.178529e-08, 0.9620603, 0.27283737, -0.23322149, 1.5793586, 0.41126895)
@@ -3085,7 +3094,8 @@ deterministic = false
 tree_root = SubResource("AnimationNodeStateMachine_yrkxk")
 anim_player = NodePath("../AnimationPlayer")
 
-[node name="collider" type="CollisionShape3D" parent="." unique_id=344363468]
+[node name="HitBox" type="CollisionShape3D" parent="." unique_id=344363468]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_hv2xu")
 
@@ -3276,7 +3286,8 @@ canFeint = true
 animationName = "WallPush"
 
 [node name="Attack" type="Node" parent="StateMachine" unique_id=388402125]
-script = ExtResource("108_ogxgr")
+script = ExtResource("116_lqe8s")
+damage_amount = 25
 walkSpeedMultiplier = 1.0
 canFeint = true
 animationName = "BasicAttack"

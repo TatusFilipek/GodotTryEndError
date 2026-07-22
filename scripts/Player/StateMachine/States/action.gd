@@ -38,12 +38,12 @@ func physics_update(_delta: float):
 	#if hit, stunned, dazed return
 	
 	#proper collider sizing
-	if not core.isCollidingShapecast(core.CheckSpaceCrouch) and not inputHandler.crouchInput:
+	if not core.isCollidingShapecast(core.check_space_crouch) and not inputHandler.crouchInput:
 		core.resizeCollider(0)
 		core.isCrouching = false
 	
 	#jumping
-	if canJump and core.CanJump() and not core.isCollidingShapecast(core.CheckSpaceCrouch):
+	if canJump and core.CanJump() and not core.isCollidingShapecast(core.check_space_crouch):
 		core.coyoteTimer = 0
 		core.jumpInputBufferTimer = 0
 		core.velocitySandbox.y = core.jumpForce
@@ -72,15 +72,14 @@ func physics_update(_delta: float):
 func feint():
 	if not canFeint: return
 	#playsound, add visuals, apply endlag, then exit
-	machine.actionExit()
+	switch_state()
 	pass
 
 func EndAction():
-	core.weapon.attackFinished.emit()
 	switch_state()
 
 func switch_state():
-	machine.rpc("change_state", "Idle")
+	machine.actionExit()
 
 func VariableJumpHeight():
 	if core.velocitySandbox.y <= 0:

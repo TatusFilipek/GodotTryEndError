@@ -44,16 +44,18 @@ class_name Player
 
 @export var ALLMOVEMENTVARIABLE = 100
 
-# RayCast2D and ShapeCast2D nodes are upgraded to RayCast3D and ShapeCast3D
-@export var CheckWallTop : RayCast3D
-@export var CheckWallBottom : RayCast3D
-@export var CheckLedge : RayCast3D
-@export var CheckHead : RayCast3D
-@export var CheckFloorFront : RayCast3D
-@export var CheckFloorBack : RayCast3D
-@export var CheckSpace : ShapeCast3D
-@export var CheckSpaceCrouch : ShapeCast3D
-@export var Collider : CollisionShape3D
+#checks
+@onready var hit_box: CollisionShape3D = %HitBox
+@onready var basic_attack_hurt_box: Area3D = %BasicAttackHurtBox
+@onready var check_space_crouch: ShapeCast3D = %CheckSpaceCrouch
+@onready var check_space: ShapeCast3D = %CheckSpace
+@onready var check_ledge: RayCast3D = %CheckLedge
+@onready var check_head: RayCast3D = %CheckHead
+@onready var check_wall_top: RayCast3D = %CheckWallTop
+@onready var check_wall_bottom: RayCast3D = %CheckWallBottom
+@onready var check_floor_back: RayCast3D = %CheckFloorBack
+@onready var check_floor_front: RayCast3D = %CheckFloorFront
+@onready var checks: Node3D = %Checks
 
 #@export var LookAtTarget : Node3D
 
@@ -97,7 +99,7 @@ var ledgePosition : Vector3
 var onLedgePosition : Vector3
 var visualNodeStartRotation : Vector3
 
-var rollAnimFrame : float = 0
+@export var rollAnimFrame : float = 0
 
 @export var Hotbar : Dictionary[String, State]
 var hotbarItems : int = 0
@@ -109,7 +111,7 @@ var hotbarItems : int = 0
 var authority : int
 
 @export var isWeaponOut : bool
-@onready var weapon: Attack = %Weapon
+@onready var weapon: Weapon = %Weapon
 @onready var weapon_attachment: BoneAttachment3D = %WeaponAttachment
 
 func _enter_tree() -> void:
@@ -119,15 +121,6 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	add_to_group('Players')
 	
-	CheckLedge = get_node("CheckLedge")
-	CheckWallTop = get_node("CheckWallTop")
-	CheckWallBottom = get_node("CheckWallBottom")
-	CheckHead = get_node("CheckHead")
-	CheckSpace = get_node("CheckSpace")
-	CheckSpaceCrouch = get_node("CheckSpaceCrouch")
-	CheckFloorFront = get_node("CheckFloorFront")
-	CheckFloorBack = get_node("CheckFloorBack")
-	Collider = get_node("collider")
 	VisualsNode = get_node("Armature")
 	visualNodeStartRotation = VisualsNode.rotation_degrees
 	
@@ -215,8 +208,9 @@ func _physics_process(delta: float) -> void:
 	global_transform.origin.z = 0.0
 	
 	velocity = velocitySandbox
-	#if not is_multiplayer_authority(): return
-	move_and_slide()
+	
+	if is_multiplayer_authority():
+		move_and_slide()
 
 func TickTimers(delta:float) -> void:
 	#Timers
@@ -227,7 +221,7 @@ func TickTimers(delta:float) -> void:
 	else:
 		coyoteTimer -= delta
 		
-	if inputHandler.jumpInput:
+	if inputHandler.jumpInputDown:
 		jumpInputBufferTimer = jumpInputBuffer
 	else:
 		jumpInputBufferTimer -= delta
@@ -248,7 +242,7 @@ func AddToHotbar(stateName: String) -> void:
 func GetSpriteOrientation(delta: float) -> void:
 	if isOnGroundFully():
 		# Using Y positions of 3D floor contact raycasts to calculate slope inclination angles
-		spriteRotation = (CheckFloorFront.get_collision_point().y - CheckFloorBack.get_collision_point().y) * -3
+		spriteRotation = (check_floor_front.get_collision_point().y - check_floor_back.get_collision_point().y) * -3
 		VisualsNode.rotation.x = spriteRotation
 	else:
 		VisualsNode.rotation.x = 0
@@ -261,25 +255,13 @@ func GetSpriteOrientation(delta: float) -> void:
 		
 		if lastSpriteOrientation:
 			VisualsNode.rotation_degrees.y = 180.0 + visualNodeStartRotation.y
+			checks.rotation_degrees.y = 180
 		else:
 			VisualsNode.rotation_degrees.y = 0.0 + visualNodeStartRotation.y
-		
-		if sign(CheckWallTop.target_position.x) != sign(facingDirection):
-			CheckLedge.target_position.x *= -1
-			CheckLedge.position.x *= -1
-			CheckWallTop.target_position.x *= -1
-			CheckWallTop.position.x *= -1
-			CheckWallBottom.target_position.x *= -1
-			CheckWallBottom.position.x *= -1
-			CheckHead.target_position.x *= -1
-			CheckHead.position.x *= -1
-			CheckSpace.target_position.x *= -1
-			CheckSpace.position.x *= -1
-			CheckFloorFront.position.x *= -1
-			CheckFloorBack.position.x *= -1
+			checks.rotation_degrees.y = 0
 
 func IsLedgeDetected() -> bool:
-	var collision : bool = isCollidingRaycast(CheckWallTop) and not isCollidingRaycast(CheckHead)
+	var collision : bool = isCollidingRaycast(check_wall_top) and not isCollidingRaycast(check_head)
 	
 	if collision == true:
 		SetLedgePosition()
@@ -287,19 +269,19 @@ func IsLedgeDetected() -> bool:
 	return collision
 
 func IsSpaceToClimb() -> bool:
-	return not isCollidingShapecast(CheckSpace)
+	return not isCollidingShapecast(check_space)
 
 func SetLedgePosition() -> void:
-	ledgePosition.x = CheckWallTop.get_collision_point().x
-	ledgePosition.y = CheckLedge.get_collision_point().y
+	ledgePosition.x = check_wall_top.get_collision_point().x
+	ledgePosition.y = check_ledge.get_collision_point().y
 	# Ensure Z matches character baseline
 	ledgePosition.z = 0.0
 	
 	onLedgePosition = SetLedgeOffset(ledgePosition)
 
 func SetLedgeOffset(ledgePos : Vector3) -> Vector3:
-	ledgePos.x -= CheckWallTop.position.x
-	ledgePos.y -= CheckLedge.position.y
+	ledgePos.x -= check_wall_top.position.x * facingDirection
+	ledgePos.y -= check_ledge.position.y
 	return ledgePos
 
 func isOnGround() -> bool:
@@ -310,18 +292,18 @@ func isOnGround() -> bool:
 
 func isOnGroundFully() -> bool:
 	#return is_on_floor()
-	return is_on_floor() and isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
+	return is_on_floor() and isCollidingRaycast(check_floor_front) and isCollidingRaycast(check_floor_back)
 	#return isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
 
 func isOnWall() -> bool:
 	#return is_on_wall()
-	return isCollidingRaycast(CheckWallTop)
+	return isCollidingRaycast(check_wall_top)
 
 func resizeCollider(_size : float) -> void:
 	# Resizes 3D Capsule or Box height parameters safely
-	if Collider.shape.has_method("set_height"):
-		Collider.shape.set_height(1.8 - _size)
-	Collider.position.y = (1.8 - _size) / 2
+	if hit_box.shape.has_method("set_height"):
+		hit_box.shape.set_height(1.8 - _size)
+	hit_box.position.y = (1.8 - _size) / 2
 
 func CalcGravity() -> float:
 	var gravityMultiplier = normalGravityMult
@@ -333,7 +315,7 @@ func CalcGravity() -> float:
 	return gravityMultiplier * gravityForce + velocitySandbox.y * gravityMultiplier/100
 
 func CanJump() -> bool:
-	return jumpInputBufferTimer > 0 and coyoteTimer > 0
+	return (jumpInputBufferTimer > 0 or inputHandler.jumpInput) and coyoteTimer > 0
 
 func CanParry() -> bool:
 	return parryTimer < 0

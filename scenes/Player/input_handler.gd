@@ -12,10 +12,12 @@ class_name InputHandler
 @export var dashInput : bool = false
 @export var jumpInput : bool = false
 @export var jumpInputUp : bool = false
+@export var jumpInputDown : bool = false
 
 @export var hotbarInputs : Dictionary[String, bool]
 
 @export var interact : bool = false
+@export var interactHold : bool = false
 
 @export var weaponOutInput : bool = false
 
@@ -35,8 +37,10 @@ func _process(delta: float) -> void:
 	dashInput = Input.is_action_just_pressed("dash")
 	jumpInput = Input.is_action_pressed("jump")
 	jumpInputUp = not Input.is_action_pressed("jump")
+	jumpInputDown = Input.is_action_just_pressed("jump")
 	
 	interact = Input.is_action_just_pressed("interact")
+	interactHold = Input.is_action_pressed("interact")
 	
 	weaponOutInput = Input.is_action_just_pressed("weapon")
 	

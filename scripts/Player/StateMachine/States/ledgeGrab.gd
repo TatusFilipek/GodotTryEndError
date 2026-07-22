@@ -35,12 +35,12 @@ func physics_update(_delta: float) -> void:
 		return
 	
 	if inputHandler.lookDirection < 0:
+		core.position.y -= 0.15
 		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
 	elif not core.IsLedgeDetected():
 		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
 	elif inputHandler.lookDirection > 0 and core.IsSpaceToClimb():
 		machine.rpc("change_state", "LedgeClimb")
 	elif core.jumpInputBufferTimer > 0:
-		core.jumpInputBufferTimer = 0
 		machine.rpc("change_state", "Jump")
 	pass

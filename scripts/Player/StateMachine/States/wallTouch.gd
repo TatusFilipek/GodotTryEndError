@@ -22,7 +22,7 @@ func physics_update(_delta: float) -> void:
 	
 	if not core.isOnWall():
 		machine.ChangeStateMoveOrIdle("Idle", "Walk")
-	elif inputHandler.interact:
+	elif inputHandler.interactHold:
 		machine.rpc("change_state", "WallGrab")
 	elif inputHandler.crouchInput:
 		machine.ChangeStateMoveOrIdle("CrouchIdle", "CrouchWalk")

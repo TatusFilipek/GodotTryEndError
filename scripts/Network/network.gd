@@ -15,9 +15,11 @@ func _ready() -> void:
 		tube_client.context = TUBE_CONTEXT
 		get_tree().root.add_child.call_deferred(tube_client)
 
+#Tube
 func tube_create() -> void:
 	multiplayer.peer_connected.connect(add_player)
 	multiplayer.peer_disconnected.connect(remove_player)
+	multiplayer.connected_to_server.connect(on_connected_to_server)
 	tube_client.create_session()
 	add_player(1)
 
@@ -27,7 +29,7 @@ func tube_join(session_id: String) -> void:
 	multiplayer.connected_to_server.connect(on_connected_to_server)
 	tube_client.join_session(session_id)
 	
-
+#ENet
 func start_server() -> void:
 	peer.create_server(port)
 	multiplayer.multiplayer_peer = peer

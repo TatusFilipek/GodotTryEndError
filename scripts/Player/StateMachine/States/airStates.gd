@@ -12,7 +12,7 @@ func exit() -> void:
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
-	if not core.isCollidingShapecast(core.CheckSpaceCrouch):
+	if not core.isCollidingShapecast(core.check_space_crouch):
 			core.resizeCollider(0)
 			core.isCrouching = false
 	
@@ -28,8 +28,7 @@ func physics_update(_delta: float) -> void:
 	
 	if core.isOnGround():
 		machine.ChangeStateMoveOrIdle("Idle", "Walk")
-	elif inputHandler.jumpInput and core.coyoteTimer > 0:
-		core.coyoteTimer = 0
+	elif core.CanJump():
 		machine.rpc("change_state", "Jump")
 		#check for ledge and if ledge detected grab on it
 	elif core.IsLedgeDetected() and inputHandler.movementDirection != 0 and core.velocitySandbox.y < 0:

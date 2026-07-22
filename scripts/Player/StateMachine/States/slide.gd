@@ -31,18 +31,10 @@ func physics_update(_delta: float) -> void:
 		ExitSlide()
 	elif not inputHandler.crouchInput:
 		ExitSlide()
-	
-	#add leaping
-	#if core.jumpInputBufferTimer > 0 and core.coyoteTimer > 0:
-		#core.coyoteTimer = 0
-		#core.jumpInputBufferTimer = 0
-		#machine.rpc("change_state", "Jump")
-		#return
-
 	pass
 
 func ExitSlide():
-	if core.isCollidingShapecast(core.CheckSpaceCrouch):
+	if core.isCollidingShapecast(core.check_space_crouch):
 		machine.ChangeStateMoveOrIdle("CrouchIdle", "CrouchWalk")
 	elif inputHandler.crouchInput:
 		machine.ChangeStateMoveOrIdle("CrouchIdle", "CrouchWalk")
