@@ -21,6 +21,11 @@ func enter():
 	maxMovementSpeed = core.MovementSpeed * walkSpeedMultiplier
 	pass
 
+func attackEnter():
+	super.enter()
+	core.canChangeDir = canChangeDir
+	maxMovementSpeed = core.MovementSpeed * walkSpeedMultiplier
+
 func exit():
 	#apply endlag if needed before super.exit so it the state doesnt get disabled
 	super.exit()

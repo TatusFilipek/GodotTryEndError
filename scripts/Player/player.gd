@@ -114,6 +114,11 @@ var authority : int
 @onready var weapon: Weapon = %Weapon
 @onready var weapon_attachment: BoneAttachment3D = %WeaponAttachment
 
+@export var attackComboTimer : float = 0
+@export var attackComboTime : float = .5
+
+@onready var name_plate_hurt: AnimationPlayer = %NamePlateHurt
+
 func _enter_tree() -> void:
 	authority = int(name)
 	set_multiplayer_authority(authority, true)
@@ -214,6 +219,8 @@ func _physics_process(delta: float) -> void:
 
 func TickTimers(delta:float) -> void:
 	#Timers
+	attackComboTimer -= delta
+	
 	parryTimer -= delta
 	
 	if isOnGround() or IsLedgeDetected():
@@ -335,6 +342,7 @@ func isCollidingShapecast(shapecast : ShapeCast3D) -> bool:
 
 @rpc("any_peer", "call_local", "reliable", 0)
 func TakeDamage(source : String, amount : int) -> void:
+	name_plate_hurt.play("hurt")
 	print(str(get_multiplayer_authority()) + " got hit by: " + source + " for: " + str(amount) + " damage")
 
 #NOTE: im thinking of adding a second state machine that will check for semi states like parry, block, emotes, attacks, stuns, dazes, guardbreaks, knockdowns. Rethinking that it would be kinda pointless. from parry to attacks i could make them an actions but the rest idk, i will cross that bridge when i get there.
