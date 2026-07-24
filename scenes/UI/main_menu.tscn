@@ -62,6 +62,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_64yvt")
 metadata/_edit_use_anchors_ = true
 
 [node name="Buttons" type="VBoxContainer" parent="Control" unique_id=287164368]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -138,6 +139,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_ibotj")
 text = "Exit"
 
 [node name="GameName" type="Label" parent="Control" unique_id=635973707]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -248,7 +250,6 @@ theme_override_constants/outline_size = 5
 text = "Back"
 
 [node name="StartMenu" type="HBoxContainer" parent="Control/Margins" unique_id=80006103]
-visible = false
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/Margins/StartMenu" unique_id=162608529]

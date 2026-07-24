@@ -12,6 +12,7 @@ class_name Action
 @export var animationName: String
 
 var maxMovementSpeed: float
+var feintable : bool = false
 
 func enter():
 	super.enter()
@@ -19,6 +20,7 @@ func enter():
 	playback.travel(animationName)
 	core.canChangeDir = canChangeDir
 	maxMovementSpeed = core.MovementSpeed * walkSpeedMultiplier
+	feintable = canFeint
 	pass
 
 func attackEnter():
@@ -36,7 +38,7 @@ func physics_update(_delta: float):
 	super.physics_update(_delta)
 	
 	#feint
-	if canFeint and inputHandler.feintInput:
+	if canFeint and inputHandler.feintInput and feintable:
 		rpc("feint")
 		return
 	

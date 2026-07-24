@@ -132,7 +132,7 @@ func _ready() -> void:
 	
 	isWeaponOut = false
 	
-	AddToHotbar("Action")
+	AddToHotbar("BladeOfLight")
 	AddToHotbar("Action2")
 	
 	#collision exeption
