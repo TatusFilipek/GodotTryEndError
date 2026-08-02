@@ -3345,6 +3345,7 @@ animationName = "Block"
 script = ExtResource("116_l5pvy")
 moveVelocity = 25.0
 walkSpeedMultiplier = 1.0
+canJump = true
 canFeint = true
 animationName = "BladeOfLight"
 

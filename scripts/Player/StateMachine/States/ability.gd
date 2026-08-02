@@ -28,6 +28,8 @@ func exit():
 	
 	hurt_box.monitoring = false
 	applyForce = false
+	
+	core.attackComboTimer = core.attackComboTime
 	hurt_box.body_entered.disconnect(on_body_entered)
 	pass
 
