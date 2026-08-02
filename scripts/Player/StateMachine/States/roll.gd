@@ -35,10 +35,13 @@ func physics_update(_delta: float) -> void:
 			machine.rpc("change_state", "Block")
 		return
 	
+	#TODO: fix later
 	if abs(core.velocitySandbox.x) > core.rollVelocityTreshold: 
-		core.velocitySandbox.x -= core.rollVelocityLoss * core.facingDirection * _delta
+		core.velocitySandbox.x = move_toward(core.velocitySandbox.x, 0, core.rollVelocityLoss * _delta)
+		core.velocitySandbox.z = move_toward(core.velocitySandbox.z, 0, core.rollVelocityLoss * _delta)
 	else:
 		core.velocitySandbox.x = 0
+		core.velocitySandbox.z = 0
 	pass
 
 @rpc("authority", "call_local", "reliable", -2)

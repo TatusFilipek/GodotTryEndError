@@ -13,11 +13,12 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: return
 	if not core.dashing:
-		core.velocitySandbox.x = inputHandler.movementDirection * core.MovementSpeed
+		core.velocitySandbox.x = core.direction.x * core.MovementSpeed
+		core.velocitySandbox.z = core.direction.z * core.MovementSpeed
 	
 	if inputHandler.runInput:
 		machine.rpc("change_state", "Run")
-	elif inputHandler.movementDirection == 0:
+	elif not core.direction:
 		machine.rpc("change_state", "Idle")
 	elif inputHandler.crouchInput:
 		machine.rpc("change_state", "CrouchWalk")

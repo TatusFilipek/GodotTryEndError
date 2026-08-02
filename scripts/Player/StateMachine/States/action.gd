@@ -27,6 +27,7 @@ func attackEnter():
 	super.enter()
 	core.canChangeDir = canChangeDir
 	maxMovementSpeed = core.MovementSpeed * walkSpeedMultiplier
+	feintable = canFeint
 
 func exit():
 	#apply endlag if needed before super.exit so it the state doesnt get disabled
@@ -60,17 +61,19 @@ func physics_update(_delta: float):
 	if not core.isOnGround():
 		core.velocitySandbox.y -= core.CalcGravity() * _delta; # Gravity
 		
-		if inputHandler.movementDirection != 0:
+		if core.direction:
 			if abs(core.velocitySandbox.x) <= maxMovementSpeed:
-				core.velocitySandbox.x += (maxMovementSpeed * inputHandler.movementDirection * core.airDrag * 1) * _delta
-				core.velocitySandbox.x = clamp(core.velocitySandbox.x, -maxMovementSpeed, maxMovementSpeed)
+				core.velocitySandbox.x = move_toward(core.velocitySandbox.x, maxMovementSpeed * core.direction.x, core.airDrag * _delta)
+				core.velocitySandbox.z = move_toward(core.velocitySandbox.z, maxMovementSpeed * core.direction.z, core.airDrag * _delta)
 			else:
-				core.velocitySandbox.x -= core.velocitySandbox.x * core.airDrag * .5 * _delta
+				core.velocitySandbox.x = move_toward(core.velocitySandbox.x, 0, core.airDrag * _delta)
+				core.velocitySandbox.z = move_toward(core.velocitySandbox.z, 0, core.airDrag * _delta)
 		
 		VariableJumpHeight()
 	#ground physics
 	else:
-		core.velocitySandbox.x = inputHandler.movementDirection * maxMovementSpeed
+		core.velocitySandbox.x = core.direction.x * maxMovementSpeed
+		core.velocitySandbox.z = core.direction.z * maxMovementSpeed
 	
 	#check for hits, if hit then disable current attack collisions for said object, player whatever
 	pass

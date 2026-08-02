@@ -37,7 +37,9 @@ func physics_update(_delta: float):
 	super.physics_update(_delta)
 	
 	if hurt_box.monitoring:
-		core.velocitySandbox.x = moveVelocity * core.facingDirection
+		#TODO: fix later
+		core.velocitySandbox = Vector3(core.rotation.x, 0, core.rotation.z).normalized() * moveVelocity
+		#core.velocitySandbox.x = moveVelocity * core.facingDirection
 		applyForce = true
 		feintable = false
 	else:

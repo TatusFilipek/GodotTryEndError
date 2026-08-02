@@ -50,7 +50,7 @@ func actionExit() -> void:
 		ChangeStateMoveOrIdle("FallIdle", "FallMove")
 
 func ChangeStateMoveOrIdle(idleStateName : String, moveStateName : String) -> void:
-	if inputHandler.movementDirection != 0:
+	if parent.direction:
 		rpc("change_state", moveStateName)
 	else:
 		rpc("change_state", idleStateName)

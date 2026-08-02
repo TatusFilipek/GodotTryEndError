@@ -6,8 +6,8 @@ func enter() -> void:
 	
 	playback.travel("Slide")
 	
-	core.velocitySandbox.x = core.facingDirection * core.slideForce
-	
+	core.velocitySandbox.x = core.direction.x * core.slideForce
+	core.velocitySandbox.z = core.direction.z * core.slideForce
 	pass
 
 func exit() -> void:
@@ -23,10 +23,13 @@ func physics_update(_delta: float) -> void:
 	#NOTE: this will need some fixxing or mayve it is all right
 	
 	if (1 - core.spriteRotation) >= 1:
-		core.velocitySandbox.x = core.facingDirection * (abs(core.velocitySandbox.x) - core.slideVelocityLoss * (1 - core.spriteRotation) * _delta)
+		core.velocitySandbox.x = move_toward(core.velocitySandbox.x, 0, core.slideVelocityLoss * (1 - core.spriteRotation) * _delta)
+		core.velocitySandbox.z = move_toward(core.velocitySandbox.z, 0, core.slideVelocityLoss * (1 - core.spriteRotation) * _delta)
 	else:
-		core.velocitySandbox.x += core.facingDirection * (core.slideForce * (1 - -1 * core.spriteRotation) - abs(core.velocitySandbox.x)) * _delta
+		core.velocitySandbox.x += sign(core.velocitySandbox.x) * (core.slideForce * (1 - -1 * core.spriteRotation) - abs(core.velocitySandbox.x)) * _delta
+		core.velocitySandbox.z += sign(core.velocitySandbox.z) * (core.slideForce * (1 - -1 * core.spriteRotation) - abs(core.velocitySandbox.z)) * _delta
 	
+	#TODO: Fix later
 	if core.slideCancelVelocity > abs(core.velocitySandbox.x) and core.spriteRotation <= 0:
 		ExitSlide()
 	elif not inputHandler.crouchInput:

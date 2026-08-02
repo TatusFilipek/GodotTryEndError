@@ -42,7 +42,6 @@ func physics_update(_delta: float) -> void:
 	elif core.CanJump() and not core.isCollidingShapecast(core.check_space_crouch):
 		machine.rpc("change_state", "Jump")
 	elif inputHandler.dashInput and core.CanDash():
-		#machine.rpc("change_state", "Dash")
 		machine.rpc("change_state", "Dash")
 	elif core.is_on_wall():
 		#check for wall on bottom

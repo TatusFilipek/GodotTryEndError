@@ -3,7 +3,7 @@ class_name InputHandler
 
 #multiplayer inputs and other stuff with animations
 #NOTE: for future me. i only need to pass inputs nothing else, no physics stuff
-@export var movementDirection : float = 0
+@export var movementDirection : Vector2 = Vector2.ZERO
 @export var lookDirection : float = 0
 @export var runInput : bool = false
 @export var crouchInput : bool = false
@@ -28,7 +28,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	movementDirection = Input.get_axis("moveLeft", "moveRight")
+	movementDirection = Input.get_vector("moveLeft", "moveRight", "moveUp", "moveDown")
 	lookDirection = Input.get_axis("moveDown", "moveUp")
 	runInput = Input.is_action_pressed("sprint")
 	crouchInput = Input.is_action_pressed("crouch")

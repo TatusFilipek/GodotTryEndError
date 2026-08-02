@@ -74,6 +74,7 @@ class_name Player
 @onready var name_plate: Label3D = %NamePlate
 @onready var curentState: Label3D = %CurentState
 @onready var camera: Camera3D = %Camera
+@onready var camera_origin: Node3D = %CameraOrigin
 @onready var menu: HBoxContainer = %Menu
 @onready var exit: Button = %Exit
 @onready var session_id: Label = %SessionId
@@ -82,7 +83,6 @@ class_name Player
 @onready var is_authority: Label = %IsAuthority
 @onready var input_settings: Control = %InputSettings
 
-@export var lastSpriteOrientation : bool
 @export var facingDirection = 1
 
 var jumping : bool = false
@@ -120,6 +120,10 @@ var authority : int
 
 @onready var name_plate_hurt: AnimationPlayer = %NamePlateHurt
 
+@export var cameraSensitivity : float = 0.05
+
+@export var direction : Vector3
+
 func _enter_tree() -> void:
 	authority = int(name)
 	set_multiplayer_authority(authority, true)
@@ -135,12 +139,8 @@ func _ready() -> void:
 	AddToHotbar("BladeOfLight")
 	AddToHotbar("Action2")
 	
-	#collision exeption
-	#var players: Array[Node] = get_tree().get_nodes_in_group('Players')
-	#for others in players:
-		#if others.name != name: add_collision_exception_with(others)
-	
 	if is_multiplayer_authority():
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		camera.current = true
 		menu.hide()
 		input_settings.hide()
@@ -159,10 +159,17 @@ func _ready() -> void:
 	else:
 		canvas_layer.visible = false
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		rotate_y(deg_to_rad(event.relative.x * cameraSensitivity))
+		camera_origin.rotate_x(deg_to_rad(-event.relative.y * cameraSensitivity))
+		camera_origin.rotation.x = clamp(camera_origin.rotation.x, deg_to_rad(-90), deg_to_rad(45))
+
 func _process(delta: float) -> void:
 	#UI
 	if machine.current_state:
-		label.text = "Stan: %s | XVelocity: %f | YVelocity: %f | movementDir: %f | lookDir: %f" % [machine.current_state.name, velocitySandbox.x, velocitySandbox.y, inputHandler.movementDirection, inputHandler.lookDirection]
+		label.text = "Stan: %s | XVelocity: %f | YVelocity: %f | ZVelocity: %f" % [machine.current_state.name, velocitySandbox.x, velocitySandbox.y, velocitySandbox.z]
+		#label.text = "Stan: %s | XVelocity: %f | YVelocity: %f | movementDir: %f | lookDir: %f" % [machine.current_state.name, velocitySandbox.x, velocitySandbox.y, inputHandler.movementDirection, inputHandler.lookDirection]
 		curentState.text = machine.current_state.name
 	
 	if CanDash():
@@ -176,9 +183,11 @@ func _process(delta: float) -> void:
 		parryCooldownIcon.self_modulate = Color("4e4e4eff")
 	
 	if Input.is_action_just_pressed("menu") and menu.visible == false:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		menu.show()
 		input_settings.show()
 	elif Input.is_action_just_pressed("menu") and menu.visible:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		menu.hide()
 		input_settings.hide()
 	
@@ -212,9 +221,7 @@ func SwitchWeaponState() -> void:
 func _physics_process(delta: float) -> void:
 	GetSpriteOrientation(delta)
 	
-	# CRITICAL 2.5D MECHANIC: Lock Z positioning completely to avoid drifting down or up depth paths
-	velocitySandbox.z = 0.0
-	global_transform.origin.z = 0.0
+	direction = (transform.basis * Vector3(inputHandler.movementDirection.x, 0, inputHandler.movementDirection.y)).normalized()
 	
 	velocity = velocitySandbox
 	
@@ -258,18 +265,6 @@ func GetSpriteOrientation(delta: float) -> void:
 	else:
 		VisualsNode.rotation.x = 0
 		#NOTE: in future use tween for smother transition
-	
-	if canChangeDir:
-		if inputHandler.movementDirection != 0:
-			lastSpriteOrientation = (inputHandler.movementDirection < 0)
-			facingDirection = ceil(inputHandler.movementDirection)
-		
-		if lastSpriteOrientation:
-			VisualsNode.rotation_degrees.y = 180.0 + visualNodeStartRotation.y
-			checks.rotation_degrees.y = 180
-		else:
-			VisualsNode.rotation_degrees.y = 0.0 + visualNodeStartRotation.y
-			checks.rotation_degrees.y = 0
 
 func IsLedgeDetected() -> bool:
 	var collision : bool = isCollidingRaycast(check_wall_top) and not isCollidingRaycast(check_head)

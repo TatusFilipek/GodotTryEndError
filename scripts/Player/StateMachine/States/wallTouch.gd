@@ -5,6 +5,7 @@ func enter() -> void:
 	super.enter()
 	
 	core.velocitySandbox.x = 0
+	core.velocitySandbox.z = 0
 	playback.travel("WallTouch")
 	#NOTE: temporary animation offset
 	core.VisualsNode.position.x = -.4 * core.facingDirection

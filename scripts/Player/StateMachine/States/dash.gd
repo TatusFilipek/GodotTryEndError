@@ -1,7 +1,7 @@
 extends State
 class_name Dash
 
-var dashDirection : Vector2
+var dashDirection : Vector3
 var dashTimer = 0
 
 func enter() -> void:
@@ -19,16 +19,19 @@ func enter() -> void:
 	dashTimer = core.dashDuration
 	
 	#fix direction calculation
-	dashDirection.x = inputHandler.movementDirection
-	if inputHandler.movementDirection == 0 and inputHandler.lookDirection == 0:
-		dashDirection.x = core.facingDirection
-	dashDirection.y = inputHandler.lookDirection
+	#dashDirection.x = inputHandler.movementDirection
+	#if inputHandler.movementDirection == 0 and inputHandler.lookDirection == 0:
+		#dashDirection.x = core.facingDirection
+	#dashDirection.y = inputHandler.lookDirection
+	
+	#TODO: Fix later
+	dashDirection = core.direction
 	
 	#turn off player sticking to ground and such
 	
-	dashDirection = dashDirection.normalized()
+	#dashDirection = dashDirection.normalized()
 	
-	core.velocitySandbox = Vector3(dashDirection.x, dashDirection.y, 0) * core.dashVelocity
+	core.velocitySandbox = dashDirection * core.dashVelocity
 	
 	pass
 

@@ -11,13 +11,14 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	var maxMovementSpeed =  core.MovementSpeed * core.sprintMovementMult
 	
-	if not core.dashing and inputHandler.movementDirection != 0:
+	if not core.dashing and core.direction:
 		if abs(core.velocitySandbox.x) <= maxMovementSpeed:
-			core.velocitySandbox.x += (maxMovementSpeed * inputHandler.movementDirection * core.airDrag * 1) * _delta
-			core.velocitySandbox.x = clamp(core.velocitySandbox.x, -maxMovementSpeed, maxMovementSpeed)
+			core.velocitySandbox.x = move_toward(core.velocitySandbox.x, maxMovementSpeed * core.direction.x, core.airDrag * _delta)
+			core.velocitySandbox.z = move_toward(core.velocitySandbox.z, maxMovementSpeed * core.direction.z, core.airDrag * _delta)
 		else:
-			core.velocitySandbox.x -= core.velocitySandbox.x * core.airDrag * .5 * _delta
+			core.velocitySandbox.x = move_toward(core.velocitySandbox.x, 0, core.airDrag * _delta)
+			core.velocitySandbox.z = move_toward(core.velocitySandbox.z, 0, core.airDrag * _delta)
 	if not isActive: return
 	
-	if inputHandler.movementDirection == 0:
+	if not core.direction:
 		machine.rpc("change_state", "FallIdle")

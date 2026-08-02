@@ -24,16 +24,16 @@ func physics_update(_delta: float) -> void:
 	if not inputHandler.interactHold:
 		machine.rpc("change_state", "WallTouch")
 	
-	rpc("Animate")
+	#rpc("Animate")
 
-@rpc("authority", "call_local", "reliable", -2)
-func Animate():
-	if inputHandler.movementDirection * core.facingDirection > 0:
-		if playback.get_current_node() != "WallPush":
-			playback.travel("WallPush")
-	elif inputHandler.movementDirection * core.facingDirection < 0:
-		if playback.get_current_node() != "WallPull":
-			playback.travel("WallPull")
-	else:
-		if playback.get_current_node() != "WallTouch":
-			playback.travel("WallTouch")
+#@rpc("authority", "call_local", "reliable", -2)
+#func Animate():
+	#if inputHandler.movementDirection * core.facingDirection > 0:
+		#if playback.get_current_node() != "WallPush":
+			#playback.travel("WallPush")
+	#elif inputHandler.movementDirection * core.facingDirection < 0:
+		#if playback.get_current_node() != "WallPull":
+			#playback.travel("WallPull")
+	#else:
+		#if playback.get_current_node() != "WallTouch":
+			#playback.travel("WallTouch")
