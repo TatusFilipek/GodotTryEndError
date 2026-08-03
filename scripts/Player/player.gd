@@ -63,7 +63,6 @@ class_name Player
 # Put your 3D Mesh and your AnimationPlayer/AnimationTree inside a Node3D wrapper called "Visuals"
 @export var VisualsNode : Node3D
 
-@onready var label : Label = $CanvasLayer/Control/DebugHelper
 @onready var dashCooldownIcon : TextureRect = $CanvasLayer/Control/Cooldowns/DashIcon
 @onready var parryCooldownIcon : TextureRect = $CanvasLayer/Control/Cooldowns/ParryIcon
 @onready var animationPlayer : AnimationPlayer = $AnimationPlayer
@@ -123,6 +122,8 @@ var authority : int
 @export var cameraSensitivity : float = 0.05
 
 @export var direction : Vector3
+@export var lookDir : Vector3
+@export var flatDir : Vector3
 
 func _enter_tree() -> void:
 	authority = int(name)
@@ -161,15 +162,18 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		rotate_y(deg_to_rad(event.relative.x * cameraSensitivity))
+		rotate_y(deg_to_rad(-event.relative.x * cameraSensitivity))
 		camera_origin.rotate_x(deg_to_rad(-event.relative.y * cameraSensitivity))
 		camera_origin.rotation.x = clamp(camera_origin.rotation.x, deg_to_rad(-90), deg_to_rad(45))
 
 func _process(delta: float) -> void:
 	#UI
 	if machine.current_state:
-		label.text = "Stan: %s | XVelocity: %f | YVelocity: %f | ZVelocity: %f" % [machine.current_state.name, velocitySandbox.x, velocitySandbox.y, velocitySandbox.z]
-		#label.text = "Stan: %s | XVelocity: %f | YVelocity: %f | movementDir: %f | lookDir: %f" % [machine.current_state.name, velocitySandbox.x, velocitySandbox.y, inputHandler.movementDirection, inputHandler.lookDirection]
+		%Debugger1.text = "Stan: %s | XVelocity: %f | YVelocity: %f | ZVelocity: %f" % [machine.current_state.name, velocitySandbox.x, velocitySandbox.y, velocitySandbox.z]
+		%Debugger2.text = "XInputDirection: %f | YInputDirection: %f" % [inputHandler.movementDirection.x, inputHandler.movementDirection.y]
+		%Debugger3.text = "XDirection: %f | YDirection: %f | ZDirection: %f" % [direction.x, direction.y, direction.z]
+		%Debugger4.text = "XLookDirection: %f | YLookDirection: %f | ZLookDirection: %f" % [lookDir.x, lookDir.y, lookDir.z]
+		%Debugger5.text = "XFlatDirection: %f | YFlatDirection: %f | ZFlatDirection: %f" % [flatDir.x, flatDir.y, flatDir.z]
 		curentState.text = machine.current_state.name
 	
 	if CanDash():
@@ -223,6 +227,9 @@ func _physics_process(delta: float) -> void:
 	
 	direction = (transform.basis * Vector3(inputHandler.movementDirection.x, 0, inputHandler.movementDirection.y)).normalized()
 	
+	lookDir = -camera_origin.global_transform.basis.z
+	flatDir = Vector3(lookDir.x, 0, lookDir.z).normalized()
+	
 	velocity = velocitySandbox
 	
 	if is_multiplayer_authority():
@@ -264,7 +271,7 @@ func GetSpriteOrientation(delta: float) -> void:
 		VisualsNode.rotation.x = spriteRotation
 	else:
 		VisualsNode.rotation.x = 0
-		#NOTE: in future use tween for smother transition
+		#NOTE: in future use tween for smother transition or just use IK
 
 func IsLedgeDetected() -> bool:
 	var collision : bool = isCollidingRaycast(check_wall_top) and not isCollidingRaycast(check_head)

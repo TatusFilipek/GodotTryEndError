@@ -2454,7 +2454,8 @@ VisualsNode = NodePath("Armature")
 
 [node name="CameraOrigin" type="Node3D" parent="." unique_id=1428388468]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6223059, 0)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 1.6223059, 0)
+rotation_edit_mode = 1
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraOrigin" unique_id=379784921]
 spring_length = 2.0
@@ -3190,10 +3191,34 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DebugHelper" type="Label" parent="CanvasLayer/Control" unique_id=1128995727]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control" unique_id=1034140316]
 layout_mode = 0
 offset_right = 40.0
-offset_bottom = 23.0
+offset_bottom = 40.0
+
+[node name="Debugger1" type="Label" parent="CanvasLayer/Control/VBoxContainer" unique_id=1128995727]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = SubResource("LabelSettings_o0srm")
+
+[node name="Debugger2" type="Label" parent="CanvasLayer/Control/VBoxContainer" unique_id=1217406527]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = SubResource("LabelSettings_o0srm")
+
+[node name="Debugger3" type="Label" parent="CanvasLayer/Control/VBoxContainer" unique_id=1096348369]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = SubResource("LabelSettings_o0srm")
+
+[node name="Debugger4" type="Label" parent="CanvasLayer/Control/VBoxContainer" unique_id=156183204]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = SubResource("LabelSettings_o0srm")
+
+[node name="Debugger5" type="Label" parent="CanvasLayer/Control/VBoxContainer" unique_id=14101001]
+unique_name_in_owner = true
+layout_mode = 2
 label_settings = SubResource("LabelSettings_o0srm")
 
 [node name="Cooldowns" type="HBoxContainer" parent="CanvasLayer/Control" unique_id=1330037105]

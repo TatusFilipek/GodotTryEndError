@@ -28,17 +28,18 @@ func physics_update(_delta: float) -> void:
 	
 	if inputHandler.blockInput:
 		if core.CanParry():
-			#machine.rpc("change_state", "Parry")
 			machine.rpc("change_state", "Parry")
 		else:
-			#machine.rpc("change_state", "Block")
 			machine.rpc("change_state", "Block")
 		return
 	
-	#TODO: fix later
-	if abs(core.velocitySandbox.x) > core.rollVelocityTreshold: 
-		core.velocitySandbox.x = move_toward(core.velocitySandbox.x, 0, core.rollVelocityLoss * _delta)
-		core.velocitySandbox.z = move_toward(core.velocitySandbox.z, 0, core.rollVelocityLoss * _delta)
+	var currentVelocity := Vector2(core.velocitySandbox.x, core.velocitySandbox.z).length()
+	
+	if currentVelocity > core.rollVelocityTreshold:
+		var newVelocity := move_toward(currentVelocity, 0, core.rollVelocityLoss * _delta)
+		
+		core.velocitySandbox.x = core.flatDir.x * newVelocity
+		core.velocitySandbox.z = core.flatDir.z * newVelocity
 	else:
 		core.velocitySandbox.x = 0
 		core.velocitySandbox.z = 0

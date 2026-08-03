@@ -6,37 +6,54 @@ func enter() -> void:
 	
 	playback.travel("Slide")
 	
-	core.velocitySandbox.x = core.direction.x * core.slideForce
-	core.velocitySandbox.z = core.direction.z * core.slideForce
-	pass
+	var slide_dir := core.flatDir
+	
+	if core.direction:
+		slide_dir = core.direction
+		
+	core.velocitySandbox.x = slide_dir.x * core.slideForce
+	core.velocitySandbox.z = slide_dir.z * core.slideForce
 
 func exit() -> void:
 	super.exit()
-	#NOTE: REMEMBER ABOUT IT
-	#core.velocitySandbox.x = 0
-	pass
+	
+	core.VisualsNode.rotation_degrees.y = 180
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: return
 	
-	#NOTE: this will need some fixxing or mayve it is all right
+	var current_speed := Vector2(core.velocitySandbox.x, core.velocitySandbox.z).length()
 	
-	if (1 - core.spriteRotation) >= 1:
-		core.velocitySandbox.x = move_toward(core.velocitySandbox.x, 0, core.slideVelocityLoss * (1 - core.spriteRotation) * _delta)
-		core.velocitySandbox.z = move_toward(core.velocitySandbox.z, 0, core.slideVelocityLoss * (1 - core.spriteRotation) * _delta)
+	var friction_modifier := 1.0 - core.spriteRotation
+	
+	if friction_modifier >= 1.0:
+		current_speed = move_toward(current_speed, 0.0, core.slideVelocityLoss * friction_modifier * _delta)
 	else:
-		core.velocitySandbox.x += sign(core.velocitySandbox.x) * (core.slideForce * (1 - -1 * core.spriteRotation) - abs(core.velocitySandbox.x)) * _delta
-		core.velocitySandbox.z += sign(core.velocitySandbox.z) * (core.slideForce * (1 - -1 * core.spriteRotation) - abs(core.velocitySandbox.z)) * _delta
+		current_speed = move_toward(current_speed, core.slideForce, core.slideForce * abs(friction_modifier) * _delta)
 	
-	#TODO: Fix later
-	if core.slideCancelVelocity > abs(core.velocitySandbox.x) and core.spriteRotation <= 0:
+	if core.direction:
+		var target_position := core.VisualsNode.global_position - core.direction
+		
+		var target_transform := core.VisualsNode.global_transform.looking_at(target_position, Vector3.UP)
+		
+		var current_quat := core.VisualsNode.global_transform.basis.get_rotation_quaternion()
+		var target_quat := target_transform.basis.get_rotation_quaternion()
+		var interpolated_quat := current_quat.slerp(target_quat, 3.0 * _delta)
+		
+		core.VisualsNode.global_transform.basis = Basis(interpolated_quat)
+	
+	var facingDir := core.VisualsNode.global_transform.basis.z.normalized()
+	
+	core.velocitySandbox.x = facingDir.x * current_speed
+	core.velocitySandbox.z = facingDir.z * current_speed
+
+	if current_speed < core.slideCancelVelocity and core.spriteRotation <= 0:
 		ExitSlide()
 	elif not inputHandler.crouchInput:
 		ExitSlide()
-	pass
 
-func ExitSlide():
+func ExitSlide() -> void:
 	if core.isCollidingShapecast(core.check_space_crouch):
 		machine.ChangeStateMoveOrIdle("CrouchIdle", "CrouchWalk")
 	elif inputHandler.crouchInput:

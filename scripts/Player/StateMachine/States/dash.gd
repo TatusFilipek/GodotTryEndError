@@ -18,21 +18,20 @@ func enter() -> void:
 	core.dashUses -= 1
 	dashTimer = core.dashDuration
 	
-	#fix direction calculation
-	#dashDirection.x = inputHandler.movementDirection
-	#if inputHandler.movementDirection == 0 and inputHandler.lookDirection == 0:
-		#dashDirection.x = core.facingDirection
-	#dashDirection.y = inputHandler.lookDirection
+	if core.isOnGround():
+		dashDirection = core.flatDir
+	else:
+		dashDirection = core.lookDir
 	
-	#TODO: Fix later
-	dashDirection = core.direction
+	if core.direction:
+		dashDirection.x = core.direction.x
+		dashDirection.z = core.direction.z
 	
 	#turn off player sticking to ground and such
 	
-	#dashDirection = dashDirection.normalized()
+	dashDirection = dashDirection.normalized()
 	
 	core.velocitySandbox = dashDirection * core.dashVelocity
-	
 	pass
 
 func exit() -> void:
