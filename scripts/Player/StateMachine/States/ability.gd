@@ -38,12 +38,13 @@ func physics_update(_delta: float):
 	
 	if hurt_box.monitoring:
 		#TODO: fix later
-		core.velocitySandbox = Vector3(core.rotation.x, 0, core.rotation.z).normalized() * moveVelocity
-		#core.velocitySandbox.x = moveVelocity * core.facingDirection
+		core.velocitySandbox.x = core.lookDir.x * moveVelocity
+		core.velocitySandbox.z = core.lookDir.z * moveVelocity
 		applyForce = true
 		feintable = false
 	else:
 		core.velocitySandbox.x = 0
+		core.velocitySandbox.z = 0
 		applyForce = false
 	
 	if playback.get_current_play_position() >= playback.get_current_length(): EndAction()

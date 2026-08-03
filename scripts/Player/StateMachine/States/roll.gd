@@ -10,6 +10,15 @@ func enter() -> void:
 	
 	core.resizeCollider(0.7)
 	
+	if core.direction:
+		var target_position := core.VisualsNode.global_position - core.direction
+		
+		var target_transform := core.VisualsNode.global_transform.looking_at(target_position, Vector3.UP)
+		
+		var target_quat := target_transform.basis.get_rotation_quaternion()
+		
+		core.VisualsNode.global_transform.basis = Basis(target_quat)
+	
 	core.canChangeDir = false
 	core.rolling = true
 	pass
@@ -31,6 +40,8 @@ func physics_update(_delta: float) -> void:
 			machine.rpc("change_state", "Parry")
 		else:
 			machine.rpc("change_state", "Block")
+		
+		core.VisualsNode.rotation_degrees.y = 180
 		return
 	
 	var currentVelocity := Vector2(core.velocitySandbox.x, core.velocitySandbox.z).length()
@@ -38,8 +49,21 @@ func physics_update(_delta: float) -> void:
 	if currentVelocity > core.rollVelocityTreshold:
 		var newVelocity := move_toward(currentVelocity, 0, core.rollVelocityLoss * _delta)
 		
-		core.velocitySandbox.x = core.flatDir.x * newVelocity
-		core.velocitySandbox.z = core.flatDir.z * newVelocity
+		if core.direction:
+			var target_position := core.VisualsNode.global_position - core.direction
+			
+			var target_transform := core.VisualsNode.global_transform.looking_at(target_position, Vector3.UP)
+			
+			var current_quat := core.VisualsNode.global_transform.basis.get_rotation_quaternion()
+			var target_quat := target_transform.basis.get_rotation_quaternion()
+			var interpolated_quat := current_quat.slerp(target_quat, 9.0 * _delta)
+			
+			core.VisualsNode.global_transform.basis = Basis(interpolated_quat)
+		
+		var facingDir := core.VisualsNode.global_transform.basis.z.normalized()
+		
+		core.velocitySandbox.x = facingDir.x * newVelocity
+		core.velocitySandbox.z = facingDir.z * newVelocity
 	else:
 		core.velocitySandbox.x = 0
 		core.velocitySandbox.z = 0
@@ -56,3 +80,5 @@ func AnimationFinished() -> void:
 	core.rollAnimFrame = 0
 	animationPlayer.pause()
 	machine.actionExit()
+	
+	core.VisualsNode.rotation_degrees.y = 180
