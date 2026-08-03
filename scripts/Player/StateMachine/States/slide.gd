@@ -6,13 +6,19 @@ func enter() -> void:
 	
 	playback.travel("Slide")
 	
-	var slide_dir := core.flatDir
-	
 	if core.direction:
-		slide_dir = core.direction
+		var target_position := core.VisualsNode.global_position - core.direction
 		
-	core.velocitySandbox.x = slide_dir.x * core.slideForce
-	core.velocitySandbox.z = slide_dir.z * core.slideForce
+		var target_transform := core.VisualsNode.global_transform.looking_at(target_position, Vector3.UP)
+		
+		var target_quat := target_transform.basis.get_rotation_quaternion()
+		
+		core.VisualsNode.global_transform.basis = Basis(target_quat)
+	
+	var facingDir := core.VisualsNode.global_transform.basis.z.normalized()
+	
+	core.velocitySandbox.x = facingDir.x * core.slideForce
+	core.velocitySandbox.z = facingDir.z * core.slideForce
 
 func exit() -> void:
 	super.exit()
