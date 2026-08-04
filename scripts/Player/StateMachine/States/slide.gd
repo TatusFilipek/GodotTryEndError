@@ -6,6 +6,8 @@ func enter() -> void:
 	
 	playback.travel("Slide")
 	
+	core.canChangeDir = false
+	
 	if core.direction:
 		var target_position := core.VisualsNode.global_position - core.direction
 		
@@ -23,7 +25,7 @@ func enter() -> void:
 func exit() -> void:
 	super.exit()
 	
-	core.VisualsNode.rotation_degrees.y = 180
+	core.canChangeDir = true
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
@@ -48,6 +50,7 @@ func physics_update(_delta: float) -> void:
 		var interpolated_quat := current_quat.slerp(target_quat, 3.0 * _delta)
 		
 		core.VisualsNode.global_transform.basis = Basis(interpolated_quat)
+		core.checks.global_transform.basis = core.VisualsNode.global_transform.basis
 	
 	var facingDir := core.VisualsNode.global_transform.basis.z.normalized()
 	

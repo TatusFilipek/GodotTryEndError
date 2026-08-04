@@ -38,8 +38,8 @@ func physics_update(_delta: float):
 	
 	if hurt_box.monitoring:
 		#TODO: fix later
-		core.velocitySandbox.x = core.lookDir.x * moveVelocity
-		core.velocitySandbox.z = core.lookDir.z * moveVelocity
+		core.velocitySandbox.x = core.flatDir.x * moveVelocity
+		core.velocitySandbox.z = core.flatDir.z * moveVelocity
 		applyForce = true
 		feintable = false
 	else:

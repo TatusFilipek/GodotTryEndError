@@ -10,6 +10,8 @@ func enter() -> void:
 	
 	core.resizeCollider(0.7)
 	
+	core.canChangeDir = false
+	
 	if core.direction:
 		var target_position := core.VisualsNode.global_position - core.direction
 		
@@ -19,7 +21,6 @@ func enter() -> void:
 		
 		core.VisualsNode.global_transform.basis = Basis(target_quat)
 	
-	core.canChangeDir = false
 	core.rolling = true
 	pass
 
@@ -59,6 +60,7 @@ func physics_update(_delta: float) -> void:
 			var interpolated_quat := current_quat.slerp(target_quat, 9.0 * _delta)
 			
 			core.VisualsNode.global_transform.basis = Basis(interpolated_quat)
+			core.checks.global_transform.basis = core.VisualsNode.global_transform.basis
 		
 		var facingDir := core.VisualsNode.global_transform.basis.z.normalized()
 		
@@ -80,5 +82,3 @@ func AnimationFinished() -> void:
 	core.rollAnimFrame = 0
 	animationPlayer.pause()
 	machine.actionExit()
-	
-	core.VisualsNode.rotation_degrees.y = 180

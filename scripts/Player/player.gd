@@ -119,11 +119,14 @@ var authority : int
 
 @onready var name_plate_hurt: AnimationPlayer = %NamePlateHurt
 
-@export var cameraSensitivity : float = 0.05
-
 @export var direction : Vector3
 @export var lookDir : Vector3
 @export var flatDir : Vector3
+
+@export var isShiftLock : bool = false
+@export var canRotate : bool = true
+@export var shiftLockCameraOffset : Vector3 = Vector3(0.7, 0.2, 0)
+var defaultCameraPosition : Vector3
 
 func _enter_tree() -> void:
 	authority = int(name)
@@ -142,12 +145,18 @@ func _ready() -> void:
 	
 	if is_multiplayer_authority():
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		
 		camera.current = true
+		defaultCameraPosition = camera.position
+		
 		menu.hide()
 		input_settings.hide()
+		
 		exit.pressed.connect(func(): Network.leave_server())
 		copy_session.pressed.connect(func(): DisplayServer.clipboard_set(Network.tube_client.session_id))
+		
 		session_id.text = Network.tube_client.session_id
+		
 		DisplayServer.clipboard_set(Network.tube_client.session_id)
 		
 		authority_id.text = str(get_multiplayer_authority())
@@ -160,41 +169,7 @@ func _ready() -> void:
 	else:
 		canvas_layer.visible = false
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		rotate_y(deg_to_rad(-event.relative.x * cameraSensitivity))
-		camera_origin.rotate_x(deg_to_rad(-event.relative.y * cameraSensitivity))
-		camera_origin.rotation.x = clamp(camera_origin.rotation.x, deg_to_rad(-90), deg_to_rad(45))
-
 func _process(delta: float) -> void:
-	#UI
-	if machine.current_state:
-		%Debugger1.text = "Stan: %s | XVelocity: %f | YVelocity: %f | ZVelocity: %f" % [machine.current_state.name, velocitySandbox.x, velocitySandbox.y, velocitySandbox.z]
-		%Debugger2.text = "XInputDirection: %f | YInputDirection: %f" % [inputHandler.movementDirection.x, inputHandler.movementDirection.y]
-		%Debugger3.text = "XDirection: %f | YDirection: %f | ZDirection: %f" % [direction.x, direction.y, direction.z]
-		%Debugger4.text = "XLookDirection: %f | YLookDirection: %f | ZLookDirection: %f" % [lookDir.x, lookDir.y, lookDir.z]
-		%Debugger5.text = "XFlatDirection: %f | YFlatDirection: %f | ZFlatDirection: %f" % [flatDir.x, flatDir.y, flatDir.z]
-		curentState.text = machine.current_state.name
-	
-	if CanDash():
-		dashCooldownIcon.self_modulate = Color("b9b9b9")
-	else:
-		dashCooldownIcon.self_modulate = Color("4e4e4eff")
-	
-	if CanParry():
-		parryCooldownIcon.self_modulate = Color("b9b9b9")
-	else:
-		parryCooldownIcon.self_modulate = Color("4e4e4eff")
-	
-	if Input.is_action_just_pressed("menu") and menu.visible == false:
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		menu.show()
-		input_settings.show()
-	elif Input.is_action_just_pressed("menu") and menu.visible:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		menu.hide()
-		input_settings.hide()
-	
 	SwitchWeaponState()
 	
 	TickTimers(delta)
@@ -205,6 +180,16 @@ func _process(delta: float) -> void:
 			dashUses = dashGroundUses
 		else:
 			dashUses = dashInAirUses
+	
+	if is_multiplayer_authority():
+		if Input.is_action_just_pressed("shiftLock"):
+			isShiftLock = !isShiftLock
+		
+		var targetCamPos := defaultCameraPosition
+		
+		if isShiftLock: targetCamPos += shiftLockCameraOffset
+		
+		camera.position = camera.position.lerp(targetCamPos, 12 * delta)
 
 func SwitchWeaponState() -> void:
 	if inputHandler.weaponOutInput:
@@ -225,8 +210,10 @@ func SwitchWeaponState() -> void:
 func _physics_process(delta: float) -> void:
 	GetSpriteOrientation(delta)
 	
-	direction = (transform.basis * Vector3(inputHandler.movementDirection.x, 0, inputHandler.movementDirection.y)).normalized()
+	var cam_yaw_basis := Basis(Vector3.UP, camera_origin.global_rotation.y)
+	var input_vector := Vector3(inputHandler.movementDirection.x, 0, inputHandler.movementDirection.y)
 	
+	direction = (cam_yaw_basis * input_vector).normalized()
 	lookDir = -camera_origin.global_transform.basis.z
 	flatDir = Vector3(lookDir.x, 0, lookDir.z).normalized()
 	
@@ -234,6 +221,34 @@ func _physics_process(delta: float) -> void:
 	
 	if is_multiplayer_authority():
 		move_and_slide()
+		
+		#UI
+		if machine.current_state:
+			%Debugger1.text = "Stan: %s | XVelocity: %f | YVelocity: %f | ZVelocity: %f" % [machine.current_state.name, velocitySandbox.x, velocitySandbox.y, velocitySandbox.z]
+			%Debugger2.text = "XInputDirection: %f | YInputDirection: %f" % [inputHandler.movementDirection.x, inputHandler.movementDirection.y]
+			%Debugger3.text = "XDirection: %f | YDirection: %f | ZDirection: %f" % [direction.x, direction.y, direction.z]
+			%Debugger4.text = "XLookDirection: %f | YLookDirection: %f | ZLookDirection: %f" % [lookDir.x, lookDir.y, lookDir.z]
+			%Debugger5.text = "XFlatDirection: %f | YFlatDirection: %f | ZFlatDirection: %f" % [flatDir.x, flatDir.y, flatDir.z]
+			curentState.text = machine.current_state.name
+		
+		if CanDash():
+			dashCooldownIcon.self_modulate = Color("b9b9b9")
+		else:
+			dashCooldownIcon.self_modulate = Color("4e4e4eff")
+		
+		if CanParry():
+			parryCooldownIcon.self_modulate = Color("b9b9b9")
+		else:
+			parryCooldownIcon.self_modulate = Color("4e4e4eff")
+		
+		if Input.is_action_just_pressed("menu") and menu.visible == false:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			menu.show()
+			input_settings.show()
+		elif Input.is_action_just_pressed("menu") and menu.visible:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			menu.hide()
+			input_settings.hide()
 
 func TickTimers(delta:float) -> void:
 	#Timers
@@ -265,6 +280,23 @@ func AddToHotbar(stateName: String) -> void:
 	pass
 
 func GetSpriteOrientation(delta: float) -> void:
+	if canChangeDir:
+		if isShiftLock:
+			VisualsNode.rotation_degrees.y = camera_origin.rotation_degrees.y + visualNodeStartRotation.y
+			checks.global_transform.basis = VisualsNode.global_transform.basis
+		else:
+			if direction:
+				var target_position := VisualsNode.global_position - direction
+				
+				var target_transform := VisualsNode.global_transform.looking_at(target_position, Vector3.UP)
+				
+				var current_quat := VisualsNode.global_transform.basis.get_rotation_quaternion()
+				var target_quat := target_transform.basis.get_rotation_quaternion()
+				var interpolated_quat := current_quat.slerp(target_quat, 18.0 * delta)
+				
+				VisualsNode.global_transform.basis = Basis(interpolated_quat)
+				checks.global_transform.basis = VisualsNode.global_transform.basis
+	
 	if isOnGroundFully():
 		# Using Y positions of 3D floor contact raycasts to calculate slope inclination angles
 		spriteRotation = (check_floor_front.get_collision_point().y - check_floor_back.get_collision_point().y) * -3
