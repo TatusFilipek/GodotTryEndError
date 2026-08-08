@@ -4,10 +4,13 @@ class_name Run
 func enter() -> void:
 	super.enter()
 	
+	core.isRunning = true
 	playback.travel("Run")
 
 func exit() -> void:
 	super.exit()
+	
+	core.isRunning = false
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)

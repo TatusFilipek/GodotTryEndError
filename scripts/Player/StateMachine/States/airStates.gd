@@ -3,6 +3,8 @@ class_name AirState
 
 func enter() -> void:
 	super.enter()
+	
+	playback.travel("InAir")
 	pass
 
 func exit() -> void:
@@ -40,7 +42,6 @@ func physics_update(_delta: float) -> void:
 		core.velocitySandbox.y -= core.CalcGravity() * _delta; # Gravity
 		
 		VariableJumpHeight()
-		rpc("SuperDuperAirStateAnims")
 	pass
 
 func VariableJumpHeight():
@@ -49,16 +50,3 @@ func VariableJumpHeight():
 	
 	if core.jumping and inputHandler.jumpInputUp:
 		core.velocitySandbox.y *= core.jumpVelocityCut
-
-@rpc("authority", "call_local", "reliable", -1)
-func SuperDuperAirStateAnims():
-	if playback:
-		if core.velocitySandbox.y > core.jumpApex:
-			playback.travel("InAirUp")
-		elif core.velocitySandbox.y < -core.jumpApex:
-			playback.travel("InAirDown")
-		else:
-			if core.velocitySandbox.y <= 0:
-				playback.travel("InAirDownApex")
-			else:
-				playback.travel("InAirUpApex")

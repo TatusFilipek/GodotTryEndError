@@ -88,6 +88,7 @@ var jumping : bool = false
 @export var dashing : bool = false
 @export var rolling : bool = false
 @export var isCrouching : bool = false
+@export var isRunning : bool = true
 var canChangeDir : bool = true
 @export var blocking : bool = false
 @export var parrying : bool = false
@@ -167,6 +168,8 @@ func _process(delta: float) -> void:
 	SwitchWeaponState()
 	
 	TickTimers(delta)
+	
+	Animations()
 	
 	#dash uses
 	if dashCooldownTimer <= 0 and dashUses <= dashGroundUses:
@@ -262,6 +265,13 @@ func AddToHotbar(stateName: String) -> void:
 		Hotbar["hb" + str(hotbarItems)] = desiredState
 		inputHandler.hotbarInputs["hb" + str(hotbarItems)] = false
 	pass
+
+func Animations() -> void:
+	var target_ascend_blend : float = clamp(remap(velocitySandbox.y, -jumpApex, jumpApex, 0, .85), 0, 1)
+	var target_apex_blend : float = clamp(remap(abs(velocitySandbox.y), jumpApex, 0, 0, .85), 0, 1)
+	
+	animationTree.set("parameters/InAir/AscendBlend/blend_amount", target_ascend_blend)
+	animationTree.set("parameters/InAir/ApexBlend/blend_amount", target_apex_blend)
 
 func GetSpriteOrientation(delta: float) -> void:
 	if canChangeDir:
