@@ -16,12 +16,14 @@ func enter() -> void:
 	core.canChangeDir = false
 	
 	#NOTE: tmp animation offset
-	core.VisualsNode.position.x = -.25 * core.facingDirection
+	core.VisualsNode.position.x = -.25 * core.flatDir.x
+	core.VisualsNode.position.z = -.25 * core.flatDir.z
 	core.VisualsNode.position.y = .035
 	
 	postAnimPos = core.ledgePosition
 	
-	postAnimPos.x += core.check_wall_top.position.x + .175 * core.facingDirection
+	postAnimPos.x += core.check_wall_top.position.x + .175 * core.flatDir.x
+	postAnimPos.z += core.check_wall_top.position.z + .175 * core.flatDir.z
 	#postAnimPos.y += core.check_ledge.position.y
 	#postAnimPos.y += .01
 	pass
@@ -34,12 +36,15 @@ func exit() -> void:
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: return
+	
+	core.velocitySandbox = Vector3.ZERO
 	pass
 
 func AnimationFinished() -> void:
 	#NOTE: tmp animation offset
 	core.VisualsNode.position.x = 0
 	core.VisualsNode.position.y = 0
+	core.VisualsNode.position.z = 0
 	
 	core.position = postAnimPos
 	machine.actionExit()

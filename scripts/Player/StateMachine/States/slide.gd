@@ -17,11 +17,8 @@ func enter() -> void:
 		
 		core.VisualsNode.global_transform.basis = Basis(target_quat)
 	
-	var facingDir := core.VisualsNode.global_transform.basis.z.normalized()
-	
-	core.velocitySandbox.x = facingDir.x * core.slideForce
-	core.velocitySandbox.z = facingDir.z * core.slideForce
-
+	core.velocitySandbox.x = core.flatDir.x * core.slideForce
+	core.velocitySandbox.z = core.flatDir.z * core.slideForce
 func exit() -> void:
 	super.exit()
 	
@@ -52,10 +49,8 @@ func physics_update(_delta: float) -> void:
 		core.VisualsNode.global_transform.basis = Basis(interpolated_quat)
 		core.checks.global_transform.basis = core.VisualsNode.global_transform.basis
 	
-	var facingDir := core.VisualsNode.global_transform.basis.z.normalized()
-	
-	core.velocitySandbox.x = facingDir.x * current_speed
-	core.velocitySandbox.z = facingDir.z * current_speed
+	core.velocitySandbox.x = core.flatDir.x * current_speed
+	core.velocitySandbox.z = core.flatDir.z * current_speed
 
 	if current_speed < core.slideCancelVelocity and core.spriteRotation <= 0:
 		ExitSlide()

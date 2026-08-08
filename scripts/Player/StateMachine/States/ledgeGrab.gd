@@ -6,24 +6,31 @@ func enter() -> void:
 	
 	playback.travel("LedgeGrab")
 	core.velocitySandbox = Vector3.ZERO
+	core.canChangeDir = false
 	
 	core.position = core.onLedgePosition
 	
 	#NOTE: temporary animation offset
-	core.VisualsNode.position.x = -.25 * core.facingDirection
+	core.VisualsNode.position.x = -.25 * core.flatDir.x
+	core.VisualsNode.position.z = -.25 * core.flatDir.z
 	core.VisualsNode.position.y = -.4
 	pass
 
 func exit() -> void:
 	super.exit()
+	core.canChangeDir = true
+	
 	#NOTE: temporary animation offset
 	core.VisualsNode.position.x = 0
 	core.VisualsNode.position.y = 0
+	core.VisualsNode.position.z = 0
 	pass
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: return
+	
+	core.velocitySandbox = Vector3.ZERO
 	
 	if inputHandler.blockInput:
 		if core.CanParry():
@@ -36,9 +43,7 @@ func physics_update(_delta: float) -> void:
 	if inputHandler.lookDirection < 0:
 		core.position.y -= 0.15
 		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
-	elif not core.IsLedgeDetected():
-		machine.ChangeStateMoveOrIdle("FallIdle", "FallMove")
-	elif inputHandler.lookDirection > 0 and core.IsSpaceToClimb():
+	elif Input.is_action_just_pressed("moveUp") and core.IsSpaceToClimb():
 		machine.rpc("change_state", "LedgeClimb")
 	elif core.jumpInputBufferTimer > 0:
 		machine.rpc("change_state", "Jump")

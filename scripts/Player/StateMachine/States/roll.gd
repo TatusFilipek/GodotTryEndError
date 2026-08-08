@@ -62,10 +62,8 @@ func physics_update(_delta: float) -> void:
 			core.VisualsNode.global_transform.basis = Basis(interpolated_quat)
 			core.checks.global_transform.basis = core.VisualsNode.global_transform.basis
 		
-		var facingDir := core.VisualsNode.global_transform.basis.z.normalized()
-		
-		core.velocitySandbox.x = facingDir.x * newVelocity
-		core.velocitySandbox.z = facingDir.z * newVelocity
+		core.velocitySandbox.x = core.flatDir.x * newVelocity
+		core.velocitySandbox.z = core.flatDir.z * newVelocity
 	else:
 		core.velocitySandbox.x = 0
 		core.velocitySandbox.z = 0

@@ -109,8 +109,6 @@
 [ext_resource type="Script" uid="uid://dqdxma8wlxahj" path="res://scripts/Player/StateMachine/States/slide.gd" id="96_o0srm"]
 [ext_resource type="Script" uid="uid://bntmo2bm6v3f4" path="res://scripts/Player/StateMachine/States/ledgeGrab.gd" id="97_20d6p"]
 [ext_resource type="Script" uid="uid://bd8y141svybmq" path="res://scripts/Player/StateMachine/States/ledgeClimb.gd" id="98_dacrs"]
-[ext_resource type="Script" uid="uid://cmy5pimb4msiu" path="res://scripts/Player/StateMachine/States/wallTouch.gd" id="99_kelcc"]
-[ext_resource type="Script" uid="uid://c8egsmms5t7tf" path="res://scripts/Player/StateMachine/States/wallGrab.gd" id="100_jbhfx"]
 [ext_resource type="Script" uid="uid://bpx3ue6tq56la" path="res://scripts/Player/StateMachine/States/dash.gd" id="101_558ft"]
 [ext_resource type="Script" uid="uid://cfsed1jj5fm0s" path="res://scripts/Player/StateMachine/States/rollGround.gd" id="102_23cvb"]
 [ext_resource type="Script" uid="uid://cfk68igjrqgiw" path="res://scripts/Player/StateMachine/States/rollInAir.gd" id="103_14if0"]
@@ -2444,10 +2442,10 @@ properties/12/replication_mode = 1
 properties/13/path = NodePath(".:rotation")
 properties/13/spawn = true
 properties/13/replication_mode = 1
-properties/14/path = NodePath("CameraOrigin:quaternion")
+properties/14/path = NodePath("Armature:rotation")
 properties/14/spawn = true
 properties/14/replication_mode = 1
-properties/15/path = NodePath("Armature:rotation")
+properties/15/path = NodePath("Checks:rotation")
 properties/15/spawn = true
 properties/15/replication_mode = 1
 
@@ -2458,6 +2456,7 @@ VisualsNode = NodePath("Armature")
 
 [node name="Checks" type="Node3D" parent="." unique_id=1782051520]
 unique_name_in_owner = true
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="BasicAttackHurtBox" type="Area3D" parent="Checks" unique_id=847224408]
 unique_name_in_owner = true
@@ -2480,7 +2479,7 @@ max_results = 1
 
 [node name="CheckSpace" type="ShapeCast3D" parent="Checks" unique_id=1093941031]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.527, -1.028)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.527, 1.028)
 shape = SubResource("BoxShape3D_1hh3j")
 target_position = Vector3(0, 0, 0)
 
@@ -3351,14 +3350,6 @@ metadata/_custom_type_script = "uid://bntmo2bm6v3f4"
 script = ExtResource("98_dacrs")
 metadata/_custom_type_script = "uid://bd8y141svybmq"
 
-[node name="WallTouch" type="Node" parent="StateMachine" unique_id=835936422]
-script = ExtResource("99_kelcc")
-metadata/_custom_type_script = "uid://cmy5pimb4msiu"
-
-[node name="WallGrab" type="Node" parent="StateMachine" unique_id=1457335474]
-script = ExtResource("100_jbhfx")
-metadata/_custom_type_script = "uid://c8egsmms5t7tf"
-
 [node name="Dash" type="Node" parent="StateMachine" unique_id=206484443]
 script = ExtResource("101_558ft")
 metadata/_custom_type_script = "uid://bpx3ue6tq56la"
@@ -3408,6 +3399,7 @@ animationName = "BasicAttack"
 [node name="NamePlate" type="Label3D" parent="." unique_id=1242254546]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+billboard = 2
 text = "Peer Id"
 font = ExtResource("113_mve82")
 font_size = 44
@@ -3418,10 +3410,11 @@ libraries/ = SubResource("AnimationLibrary_l5pvy")
 
 [node name="CurentState" type="Label3D" parent="." unique_id=220943021]
 unique_name_in_owner = true
-transform = Transform3D(0.57658887, 0, 0, 0, 0.57658887, 0, 0, 0, 1, 0, 2.5861912, 0)
-fixed_size = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2817566, 0)
+billboard = 2
 text = "Idle"
 font = ExtResource("113_mve82")
+font_size = 44
 
 [node name="InputHandler" type="MultiplayerSynchronizer" parent="." unique_id=259776153]
 unique_name_in_owner = true

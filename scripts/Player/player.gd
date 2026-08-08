@@ -73,7 +73,7 @@ class_name Player
 @onready var name_plate: Label3D = %NamePlate
 @onready var curentState: Label3D = %CurentState
 @onready var camera: Camera3D = %Camera
-@onready var camera_origin: Node3D = %CameraOrigin
+@onready var camera_origin: CameraOrigin = %CameraOrigin
 @onready var menu: HBoxContainer = %Menu
 @onready var exit: Button = %Exit
 @onready var session_id: Label = %SessionId
@@ -123,10 +123,7 @@ var authority : int
 @export var lookDir : Vector3
 @export var flatDir : Vector3
 
-@export var isShiftLock : bool = false
 @export var canRotate : bool = true
-@export var shiftLockCameraOffset : Vector3 = Vector3(0.7, 0.2, 0)
-var defaultCameraPosition : Vector3
 
 func _enter_tree() -> void:
 	authority = int(name)
@@ -144,10 +141,7 @@ func _ready() -> void:
 	AddToHotbar("Action2")
 	
 	if is_multiplayer_authority():
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		
 		camera.current = true
-		defaultCameraPosition = camera.position
 		
 		menu.hide()
 		input_settings.hide()
@@ -180,16 +174,6 @@ func _process(delta: float) -> void:
 			dashUses = dashGroundUses
 		else:
 			dashUses = dashInAirUses
-	
-	if is_multiplayer_authority():
-		if Input.is_action_just_pressed("shiftLock"):
-			isShiftLock = !isShiftLock
-		
-		var targetCamPos := defaultCameraPosition
-		
-		if isShiftLock: targetCamPos += shiftLockCameraOffset
-		
-		camera.position = camera.position.lerp(targetCamPos, 12 * delta)
 
 func SwitchWeaponState() -> void:
 	if inputHandler.weaponOutInput:
@@ -215,7 +199,8 @@ func _physics_process(delta: float) -> void:
 	
 	direction = (cam_yaw_basis * input_vector).normalized()
 	lookDir = -camera_origin.global_transform.basis.z
-	flatDir = Vector3(lookDir.x, 0, lookDir.z).normalized()
+	flatDir = VisualsNode.global_transform.basis.z
+	flatDir = Vector3(flatDir.x, 0, flatDir.z).normalized()
 	
 	velocity = velocitySandbox
 	
@@ -242,11 +227,9 @@ func _physics_process(delta: float) -> void:
 			parryCooldownIcon.self_modulate = Color("4e4e4eff")
 		
 		if Input.is_action_just_pressed("menu") and menu.visible == false:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			menu.show()
 			input_settings.show()
 		elif Input.is_action_just_pressed("menu") and menu.visible:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			menu.hide()
 			input_settings.hide()
 
@@ -256,6 +239,7 @@ func TickTimers(delta:float) -> void:
 	
 	parryTimer -= delta
 	
+	#TODO: change this to is on ledge insted of is ledge detected
 	if isOnGround() or IsLedgeDetected():
 		coyoteTimer = coyoteTime
 	else:
@@ -281,7 +265,7 @@ func AddToHotbar(stateName: String) -> void:
 
 func GetSpriteOrientation(delta: float) -> void:
 	if canChangeDir:
-		if isShiftLock:
+		if camera_origin.shift_lock:
 			VisualsNode.rotation_degrees.y = camera_origin.rotation_degrees.y + visualNodeStartRotation.y
 			checks.global_transform.basis = VisualsNode.global_transform.basis
 		else:
@@ -319,33 +303,26 @@ func IsSpaceToClimb() -> bool:
 func SetLedgePosition() -> void:
 	ledgePosition.x = check_wall_top.get_collision_point().x
 	ledgePosition.y = check_ledge.get_collision_point().y
-	# Ensure Z matches character baseline
-	ledgePosition.z = 0.0
+	ledgePosition.z = check_wall_top.get_collision_point().z
 	
 	onLedgePosition = SetLedgeOffset(ledgePosition)
 
 func SetLedgeOffset(ledgePos : Vector3) -> Vector3:
-	ledgePos.x -= check_wall_top.position.x * facingDirection
+	ledgePos.x -= check_wall_top.position.x * flatDir.x
+	ledgePos.z -= check_wall_top.position.z * flatDir.z
 	ledgePos.y -= check_ledge.position.y
 	return ledgePos
 
 func isOnGround() -> bool:
-	# Godot 3D safely checks is_on_floor()
 	return is_on_floor()
-	#return is_on_floor() and (isCollidingRaycast(CheckFloorBack) or isCollidingRaycast(CheckFloorFront))
-	#return isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
 
 func isOnGroundFully() -> bool:
-	#return is_on_floor()
 	return is_on_floor() and isCollidingRaycast(check_floor_front) and isCollidingRaycast(check_floor_back)
-	#return isCollidingRaycast(CheckFloorFront) and isCollidingRaycast(CheckFloorBack)
 
 func isOnWall() -> bool:
-	#return is_on_wall()
 	return isCollidingRaycast(check_wall_top)
 
 func resizeCollider(_size : float) -> void:
-	# Resizes 3D Capsule or Box height parameters safely
 	if hit_box.shape.has_method("set_height"):
 		hit_box.shape.set_height(1.8 - _size)
 	hit_box.position.y = (1.8 - _size) / 2
@@ -355,8 +332,7 @@ func CalcGravity() -> float:
 	if not isOnGround():
 		if(velocitySandbox.y <= -gravityBuffer): gravityMultiplier = normalGravityMult
 		else: if(velocitySandbox.y > -gravityBuffer): gravityMultiplier = fallingGravityMult
-		
-	#return get_gravity().y
+	
 	return gravityMultiplier * gravityForce + velocitySandbox.y * gravityMultiplier/100
 
 func CanJump() -> bool:

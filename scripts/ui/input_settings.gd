@@ -59,7 +59,7 @@ func _on_input_button_pressed(button, action):
 		remapping_button = button
 		button.find_child("InputLabel").text = "Press key to bind"
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if is_remapping:
 		if event is InputEventKey || (event is InputEventMouseButton && event.is_pressed()):
 			if event is InputEventMouseButton && event.double_click:
