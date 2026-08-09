@@ -19,14 +19,6 @@ func physics_update(_delta: float) -> void:
 			core.isCrouching = false
 	
 	#before all those state changing ifs add ifs checking for action inputs and change state to said action
-	if inputHandler.blockInput:
-		if core.CanParry():
-			#machine.rpc("change_state", "Parry")
-			machine.rpc("change_state", "Parry")
-		else:
-			#machine.rpc("change_state", "Block")
-			machine.rpc("change_state", "Block")
-		return
 	
 	if core.isOnGround():
 		machine.ChangeStateMoveOrIdle("Idle", "Walk")

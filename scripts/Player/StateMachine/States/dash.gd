@@ -54,16 +54,6 @@ func physics_update(_delta: float) -> void:
 	
 	dashTimer -= _delta
 	
-	if inputHandler.blockInput:
-		core.dashUses = 0
-		if core.CanParry():
-			#machine.rpc("change_state", "Parry")
-			machine.rpc("change_state", "Parry")
-		else:
-			#machine.rpc("change_state", "Block")
-			machine.rpc("change_state", "Block")
-		return
-	
 	if inputHandler.feintInput:
 		if core.isOnGround():
 			machine.rpc("change_state", "RollGround")

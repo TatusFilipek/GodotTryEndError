@@ -126,6 +126,9 @@ var authority : int
 
 @export var canRotate : bool = true
 
+@export var parryWindow: float = .3
+var parryWindowTimer: float = 0
+
 func _enter_tree() -> void:
 	authority = int(name)
 	set_multiplayer_authority(authority, true)
@@ -207,6 +210,9 @@ func _physics_process(delta: float) -> void:
 	
 	velocity = velocitySandbox
 	
+	Defensive()
+	Parrying()
+	
 	if is_multiplayer_authority():
 		move_and_slide()
 		
@@ -241,6 +247,7 @@ func TickTimers(delta:float) -> void:
 	attackComboTimer -= delta
 	
 	parryTimer -= delta
+	parryWindowTimer += delta
 	
 	#TODO: change this to is on ledge insted of is ledge detected
 	if isOnGround() or IsLedgeDetected():
@@ -266,15 +273,50 @@ func AddToHotbar(stateName: String) -> void:
 		inputHandler.hotbarInputs["hb" + str(hotbarItems)] = false
 	pass
 
+func Parrying() -> void:
+	if parryWindowTimer >= parryWindow:
+		if inputHandler.blockInput:
+			Block()
+		else:
+			parrying = false
+			blocking = false
+
+func Defensive() -> void:
+	if inputHandler.blockInput and not parrying and not blocking:
+		if CanParry():
+			rpc("Parry")
+		else:
+			rpc("Block")
+
+@rpc("authority", "call_local", "reliable")
+func Parry() -> void:
+	parryTimer = parryCooldown
+	parryWindowTimer = 0
+	
+	parrying = true
+	blocking = false
+	animationTree.get("parameters/Defensive/playback").travel("Parry")
+
+@rpc("authority", "call_local", "reliable")
+func Block() -> void:
+	parrying = false
+	blocking = true
+	animationTree.get("parameters/Defensive/playback").travel("Block")
+
 func Animations() -> void:
 	var target_ascend_blend : float = clamp(remap(velocitySandbox.y, -jumpApex, jumpApex, 0, .85), 0, 1)
 	var target_apex_blend : float = clamp(remap(abs(velocitySandbox.y), jumpApex, 0, 0, .85), 0, 1)
 	
-	animationTree.set("parameters/InAir/AscendBlend/blend_amount", target_ascend_blend)
-	animationTree.set("parameters/InAir/ApexBlend/blend_amount", target_apex_blend)
+	animationTree.set("parameters/Player Core Movement/InAir/AscendBlend/blend_amount", target_ascend_blend)
+	animationTree.set("parameters/Player Core Movement/InAir/ApexBlend/blend_amount", target_apex_blend)
+	
+	var target_defensive_blend : float = 0
+	if parrying or blocking: target_defensive_blend = 1
+	
+	animationTree.set("parameters/Blend2/blend_amount", target_defensive_blend)
 
 func GetSpriteOrientation(delta: float) -> void:
-	if canChangeDir:
+	if canChangeDir and is_multiplayer_authority():
 		if camera_origin.shift_lock:
 			VisualsNode.rotation_degrees.y = camera_origin.rotation_degrees.y + visualNodeStartRotation.y
 			checks.global_transform.basis = VisualsNode.global_transform.basis

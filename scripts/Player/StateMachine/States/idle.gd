@@ -3,7 +3,6 @@ class_name Idle
 
 func enter() -> void:
 	super.enter()
-	
 	playback.travel("Idle")
 
 func exit() -> void:

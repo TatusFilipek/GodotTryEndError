@@ -14,7 +14,7 @@ var parent : Player
 func _ready() -> void:
 	parent = get_parent()
 	var animationTree = parent.get_node("AnimationTree")
-	var playback = animationTree.get("parameters/playback")
+	var playback = animationTree.get("parameters/Player Core Movement/playback")
 	var animationPlayer = parent.get_node("AnimationPlayer")
 	
 	for child in get_children():

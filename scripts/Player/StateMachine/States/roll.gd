@@ -36,15 +36,6 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if not isActive: return
 	
-	if inputHandler.blockInput:
-		if core.CanParry():
-			machine.rpc("change_state", "Parry")
-		else:
-			machine.rpc("change_state", "Block")
-		
-		core.VisualsNode.rotation_degrees.y = 180
-		return
-	
 	var currentVelocity := Vector2(core.velocitySandbox.x, core.velocitySandbox.z).length()
 	
 	if currentVelocity > core.rollVelocityTreshold:
